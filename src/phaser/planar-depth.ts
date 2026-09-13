@@ -214,8 +214,6 @@ class FilterPlanarDepth extends Phaser.Renderer.WebGL.RenderNodes.BaseFilterShad
 
   public setupUniforms(controller: Phaser.Filters.Controller): void {
     const perspective = controller as PlanarDepthController;
-    // Signal 2000 established that horizontal pointer-follow reads naturally with
-    // X flipped at the projection boundary while pitch remains unchanged.
     const projectedYaw = -perspective.yaw;
     const [invH0, invH1, invH2] = buildInverseHomography(projectedYaw, perspective.pitch);
     this.programManager.setUniform('invH0', invH0);
@@ -237,19 +235,47 @@ class FilterPlanarDepth extends Phaser.Renderer.WebGL.RenderNodes.BaseFilterShad
   }
 }
 
+export type PlanarDepthDescendantScaler = (
+  target: Phaser.GameObjects.Container,
+  factor: number,
+) => void;
+
 export interface AttachPlanarDepthOptions {
   width: number;
   height: number;
   supersampleBoost?: number;
   maxSupersample?: number;
+  /**
+   * Optional project-specific descendant scaling strategy. The kit always applies the inverse
+   * scale to the filtered parent. The default scales direct child Containers, matching the
+   * production hierarchy this workaround was extracted from.
+   */
+  scaleDescendants?: PlanarDepthDescendantScaler;
 }
 
 const attachments = new WeakMap<Phaser.GameObjects.Container, PlanarDepthController>();
 
-const resolveFilterSupersample = (target: Phaser.GameObjects.Container): number => {
+export const resolvePlanarDepthSupersample = (
+  displayScale: number,
+  supersampleBoost = 1,
+  maxSupersample = DEFAULT_MAX_SUPERSAMPLE,
+): number => Phaser.Math.Clamp(
+  (Number.isFinite(displayScale) ? Math.max(1, displayScale) : 1) * Math.max(0.1, supersampleBoost),
+  1,
+  Math.max(1, maxSupersample),
+);
+
+const resolveFilterDisplayScale = (target: Phaser.GameObjects.Container): number => {
   const world = target.getWorldTransformMatrix().decomposeMatrix();
-  const displayScale = Math.max(Math.abs(world.scaleX), Math.abs(world.scaleY));
-  return Number.isFinite(displayScale) ? Math.max(1, displayScale) : 1;
+  return Math.max(Math.abs(world.scaleX), Math.abs(world.scaleY));
+};
+
+const scaleNestedContainers: PlanarDepthDescendantScaler = (target, factor): void => {
+  for (const child of target.list) {
+    if (child instanceof Phaser.GameObjects.Container) {
+      child.setScale(child.scaleX * factor, child.scaleY * factor);
+    }
+  }
 };
 
 const supersampleFilterTargetOnce = (
@@ -257,21 +283,14 @@ const supersampleFilterTargetOnce = (
   factor: number,
   baseWidth: number,
   baseHeight: number,
+  scaleDescendants: PlanarDepthDescendantScaler,
 ): void => {
   if (factor <= 1.001) {
     target.setSize(baseWidth, baseHeight);
     return;
   }
 
-  // Phaser 4 internal filters rasterize at raw object bounds before parent/world
-  // scaling. Increase the local raster size, then cancel that scale on the filtered
-  // parent. Attachment is guarded by a WeakMap, so this transform cannot compound
-  // accidentally when attachPlanarDepth is called twice for the same target.
-  for (const child of target.list) {
-    if (child instanceof Phaser.GameObjects.Container) {
-      child.setScale(child.scaleX * factor, child.scaleY * factor);
-    }
-  }
+  scaleDescendants(target, factor);
   target.setScale(target.scaleX / factor, target.scaleY / factor);
   target.setSize(baseWidth * factor, baseHeight * factor);
 };
@@ -290,17 +309,25 @@ export const attachPlanarDepth = (
     renderer.renderNodes.addNodeConstructor(FILTER_NODE, FilterPlanarDepth);
   }
 
-  const maxSupersample = Math.max(1, options.maxSupersample ?? DEFAULT_MAX_SUPERSAMPLE);
-  const supersample = Phaser.Math.Clamp(
-    resolveFilterSupersample(target) * Math.max(0.1, options.supersampleBoost ?? 1),
-    1,
-    maxSupersample,
-  );
-  supersampleFilterTargetOnce(target, supersample, options.width, options.height);
+  // Validate Phaser's filter bootstrap before mutating target/child scales. A failed
+  // attachment must not leave a visually resized hierarchy behind.
   target.enableFilters();
   const camera = target.filterCamera;
   const filters = target.filters;
   if (!camera || !filters) return null;
+
+  const supersample = resolvePlanarDepthSupersample(
+    resolveFilterDisplayScale(target),
+    options.supersampleBoost ?? 1,
+    options.maxSupersample ?? DEFAULT_MAX_SUPERSAMPLE,
+  );
+  supersampleFilterTargetOnce(
+    target,
+    supersample,
+    options.width,
+    options.height,
+    options.scaleDescendants ?? scaleNestedContainers,
+  );
 
   const controller = new PlanarDepthController(camera);
   controller.texelSize = [1 / Math.max(1, target.width), 1 / Math.max(1, target.height)];
