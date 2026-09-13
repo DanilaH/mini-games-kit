@@ -58,7 +58,7 @@ const hasUsefulAlpha = async (input: Buffer): Promise<boolean> => {
   const alphaIndex = info.channels - 1;
   let transparent = 0;
   for (let pixel = 0; pixel < info.width * info.height; pixel += 1) {
-    if (data[pixel * info.channels + alphaIndex] < 250) transparent += 1;
+    if ((data[pixel * info.channels + alphaIndex] ?? 0) < 250) transparent += 1;
   }
   return transparent / (info.width * info.height) > 0.005;
 };
@@ -73,7 +73,7 @@ const averagePatch = (
   patchWidth: number,
   patchHeight: number,
 ): [number, number, number] => {
-  const sum = [0, 0, 0];
+  const sum: [number, number, number] = [0, 0, 0];
   let count = 0;
   for (let y = startY; y < Math.min(height, startY + patchHeight); y += 1) {
     for (let x = startX; x < Math.min(width, startX + patchWidth); x += 1) {
@@ -84,7 +84,7 @@ const averagePatch = (
       count += 1;
     }
   }
-  return [sum[0]! / Math.max(1, count), sum[1]! / Math.max(1, count), sum[2]! / Math.max(1, count)];
+  return [sum[0] / Math.max(1, count), sum[1] / Math.max(1, count), sum[2] / Math.max(1, count)];
 };
 
 const bilinear = (
@@ -152,7 +152,7 @@ export const removeBorderBackground = async (
   let tail = 0;
 
   const enqueue = (pixel: number): void => {
-    if (queued[pixel] || !isBackgroundCandidate(pixel)) return;
+    if ((queued[pixel] ?? 0) !== 0 || !isBackgroundCandidate(pixel)) return;
     queued[pixel] = 1;
     queue[tail] = pixel;
     tail += 1;
@@ -168,7 +168,7 @@ export const removeBorderBackground = async (
   }
 
   while (head < tail) {
-    const pixel = queue[head]!;
+    const pixel = queue[head] ?? 0;
     head += 1;
     background[pixel] = 1;
     const x = pixel % width;
@@ -182,7 +182,7 @@ export const removeBorderBackground = async (
   let foregroundPixels = 0;
   const mask = Buffer.alloc(pixelCount);
   for (let pixel = 0; pixel < pixelCount; pixel += 1) {
-    if (!background[pixel]) {
+    if ((background[pixel] ?? 0) === 0) {
       mask[pixel] = 255;
       foregroundPixels += 1;
     }
@@ -247,10 +247,10 @@ const prepareCutout = async (
   }
 
   const deterministic = (): Promise<Buffer> => removeBorderBackground(sourceBuffer, {
-    colorTolerance: options.backgroundColorTolerance,
-    edgeFeather: options.edgeFeather,
-    foregroundMin: options.foregroundMin,
-    foregroundMax: options.foregroundMax,
+    ...(options.backgroundColorTolerance === undefined ? {} : { colorTolerance: options.backgroundColorTolerance }),
+    ...(options.edgeFeather === undefined ? {} : { edgeFeather: options.edgeFeather }),
+    ...(options.foregroundMin === undefined ? {} : { foregroundMin: options.foregroundMin }),
+    ...(options.foregroundMax === undefined ? {} : { foregroundMax: options.foregroundMax }),
   });
 
   if (mode === 'deterministic') {
