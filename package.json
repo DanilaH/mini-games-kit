@@ -19,6 +19,10 @@
       "types": "./dist/feel/index.d.ts",
       "import": "./dist/feel/index.js"
     },
+    "./audio": {
+      "types": "./dist/audio/index.d.ts",
+      "import": "./dist/audio/index.js"
+    },
     "./phaser": {
       "types": "./dist/phaser/index.d.ts",
       "import": "./dist/phaser/index.js"
