@@ -18,12 +18,51 @@ Current reference project: `DanilaH/cases-yg` (`Signal 2000`).
 - A new consumer is allowed to correct or reshape an existing primitive.
 - Durable gameplay state must never be owned by animation, audio or presentation callbacks.
 
-## Planned first slice
+## Available now
 
-- pure core utilities: presentation checkpoints, RNG boundary, bounded value-transfer planning;
-- continuous interaction semantics;
-- Phaser 4 pointer-responsive planar depth/material response;
-- presentation-audio ownership primitives;
-- small Phaser feel helpers such as silhouette-following accents and contextual placement.
+### `@danilah/mini-games-kit/core`
+
+- presentation skip/checkpoint controller;
+- explicit injectable gameplay RNG boundary;
+- normalized continuous-interaction semantics;
+- bounded value-transfer planning with semantic amount separated from visual/audio density.
+
+### `@danilah/mini-games-kit/feel`
+
+- pointer normalization;
+- delayed idle micro-drift;
+- frame-rate-independent pose response;
+- layered environment parallax math.
+
+### `@danilah/mini-games-kit/phaser`
+
+- Phaser 4.2.1 pointer-responsive planar homography/material filter;
+- explicit sheen/rim/material response parameters;
+- bounded/idempotent filter supersampling attachment.
+
+### `@danilah/mini-games-kit/audio`
+
+- persistent presentation-state audio ownership/mixing;
+- baseline ducking + state replacement + mute/block lifecycle;
+- continuous progress/velocity-driven tactile noise texture;
+- bounded repeated-cue pitch variation and accumulation contours.
+
+See `docs/` for provenance, Signal 2000 parity notes and non-goals.
+
+## Consuming the private repository
+
+The package is intentionally not published yet. For local/private projects, install a pinned Git commit over SSH:
+
+```bash
+npm install git+ssh://git@github.com/DanilaH/mini-games-kit.git#<commit-sha>
+```
+
+The `prepare` script builds `dist` automatically for Git installs. Pin a commit rather than tracking `main`; `0.x` APIs are intentionally allowed to change.
+
+CI must have credentials that can read this private repository. Do not silently add this dependency to a project whose CI token cannot access cross-repository private Git dependencies; configure access first or use an explicitly reviewed vendoring strategy.
+
+## Still intentionally local to Signal 2000
 
 Signal 2000-specific rarity tuning, CHIPS/Signal/Hidden Pocket/Overcharge rules, pouch geometry, Y2K art/audio identity and `OpeningScene` orchestration stay in the game repository.
+
+Small helpers such as silhouette-following accents and contextual transformed-bounds placement remain candidates for a later extraction pass.

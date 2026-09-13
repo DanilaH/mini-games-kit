@@ -34,7 +34,9 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "build": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
+    "pack:check": "npm pack --dry-run"
   },
   "peerDependencies": {
     "phaser": "4.2.1"
