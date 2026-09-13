@@ -2,7 +2,7 @@
 
 Experimental reusable production primitives extracted from small Yandex Games projects.
 
-The goal is not to build a generic game engine. The goal is to preserve expensive, repeatedly useful mechanics and game-feel infrastructure so new projects do not have to rediscover or re-extract them from old games.
+The goal is not to build a generic game engine. The goal is to preserve expensive, repeatedly useful mechanics, platform plumbing, asset-production tooling and game-feel infrastructure so new projects do not have to rediscover or re-extract them from old games.
 
 ## Status
 
@@ -18,36 +18,20 @@ Current reference project: `DanilaH/cases-yg` (`Signal 2000`).
 - A new consumer is allowed to correct or reshape an existing primitive.
 - Durable gameplay state must never be owned by animation, audio or presentation callbacks.
 
-## Available now
+## Public subpaths
 
-### `@danilah/mini-games-kit/core`
+- `@danilah/mini-games-kit/core` — generic state/presentation/RNG/value-transfer/render-density primitives.
+- `@danilah/mini-games-kit/feel` — pointer response, idle drift and parallax math.
+- `@danilah/mini-games-kit/audio` — WebAudio presentation lifecycle and tactile audio utilities.
+- `@danilah/mini-games-kit/platform` — platform-independent activity, analytics, storage and interstitial eligibility seams.
+- `@danilah/mini-games-kit/yandex` — hardened Yandex ads, Player Data mirroring and Metrica adapters.
+- `@danilah/mini-games-kit/layout` — configurable logical landscape layout/safe-area math.
+- `@danilah/mini-games-kit/phaser` — Phaser 4 planar depth, text sharpness and runtime image loading.
+- `@danilah/mini-games-kit/assets` — Node-only image cutout/normalization/validation tooling for generated game art.
 
-- presentation skip/checkpoint controller;
-- explicit injectable gameplay RNG boundary;
-- normalized continuous-interaction semantics;
-- bounded value-transfer planning with semantic amount separated from visual/audio density.
+## Public API documentation
 
-### `@danilah/mini-games-kit/feel`
-
-- pointer normalization;
-- delayed idle micro-drift;
-- frame-rate-independent pose response;
-- layered environment parallax math.
-
-### `@danilah/mini-games-kit/phaser`
-
-- Phaser 4.2.1 pointer-responsive planar homography/material filter;
-- explicit sheen/rim/material response parameters;
-- bounded/idempotent filter supersampling attachment.
-
-### `@danilah/mini-games-kit/audio`
-
-- persistent presentation-state audio ownership/mixing;
-- baseline ducking + state replacement + mute/block lifecycle;
-- continuous progress/velocity-driven tactile noise texture;
-- bounded repeated-cue pitch variation and accumulation contours.
-
-See `docs/` for provenance, Signal 2000 parity notes and non-goals.
+Start at [`docs/API.md`](docs/API.md). Every exported reusable utility is expected to have a dedicated explanation of its purpose, public API, usage pattern and non-goals. Provenance and Signal 2000 parity notes remain in the older topic docs under `docs/`.
 
 ## Consuming the private repository
 
@@ -61,8 +45,10 @@ The `prepare` script builds `dist` automatically for Git installs. Pin a commit 
 
 CI must have credentials that can read this private repository. Do not silently add this dependency to a project whose CI token cannot access cross-repository private Git dependencies; configure access first or use an explicitly reviewed vendoring strategy.
 
+`phaser` and `sharp` are optional peers. Browser/framework-independent consumers do not need either merely because other subpaths exist. A project that uses `/phaser` installs Phaser 4.2.1; a Node tool that uses `/assets` installs Sharp.
+
 ## Still intentionally local to Signal 2000
 
-Signal 2000-specific rarity tuning, CHIPS/Signal/Hidden Pocket/Overcharge rules, pouch geometry, Y2K art/audio identity and `OpeningScene` orchestration stay in the game repository.
+Signal 2000-specific rarity tuning, CHIPS/Signal/Hidden Pocket/Overcharge rules, pouch geometry, save conflict policy, Y2K art/audio identity and `OpeningScene` orchestration stay in the game repository.
 
-Small helpers such as silhouette-following accents and contextual transformed-bounds placement remain candidates for a later extraction pass.
+Reusable platform and asset utilities deliberately accept injected policy rather than embedding those Signal 2000 decisions.

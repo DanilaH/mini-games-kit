@@ -28,11 +28,23 @@ export interface PersistentAudioLayerSpec<State> {
   create(context: AudioContext, output: AudioNode, state: State): ManagedAudioLayer;
 }
 
+export type AudioDestinationResolver = (context: AudioContext) => AudioNode;
+export type AudioStateComparator<State> = (left: State, right: State) => boolean;
+
 export interface PresentationAudioMixerOptions<State> {
   base: BaseAudioLayerSpec;
   resolvePersistent(state: State): PersistentAudioLayerSpec<State>;
+  /** Existing context. If omitted, the mixer lazily creates and owns one. */
   context?: AudioContext;
   contextFactory?: () => AudioContext;
+  /** Optional master bus/destination. Defaults to `context.destination`. */
+  destination?: AudioNode | AudioDestinationResolver;
+  /**
+   * Equality used to decide whether a requested persistent state already owns the mix.
+   * Primitive state keys work well with the default `Object.is` comparator. Object-shaped
+   * states should normally provide a semantic comparator to avoid needless layer recreation.
+   */
+  areStatesEqual?: AudioStateComparator<State>;
 }
 
 interface ActivePersistent<State> {
@@ -41,6 +53,8 @@ interface ActivePersistent<State> {
   bus: GainNode;
   layer: ManagedAudioLayer;
 }
+
+type TimerHandle = ReturnType<typeof globalThis.setTimeout>;
 
 const safeGain = (value: number): number => Math.max(0.0001, Number.isFinite(value) ? value : 0.0001);
 
@@ -52,6 +66,7 @@ const safeGain = (value: number): number => Math.max(0.0001, Number.isFinite(val
  * - baseline ambience remains alive and is mixed down/up rather than recreated per result;
  * - mute/block suspend the existing context rather than creating replacement stacks;
  * - state replacement and clearing deterministically retire old layer ownership;
+ * - delayed cleanup is flushed synchronously on dispose;
  * - this class never owns gameplay/durable state.
  */
 export class PresentationAudioMixer<State> {
@@ -65,6 +80,7 @@ export class PresentationAudioMixer<State> {
   private muted = false;
   private blocked = false;
   private disposed = false;
+  private readonly pendingCleanups = new Map<TimerHandle, () => void>();
 
   public constructor(private readonly options: PresentationAudioMixerOptions<State>) {
     this.context = options.context ?? null;
@@ -169,6 +185,7 @@ export class PresentationAudioMixer<State> {
     const context = this.context;
     if (context) {
       this.stopPersistent(context, false, true);
+      this.flushPendingCleanups();
       if (this.baseLayer) {
         try { this.baseLayer.stop(context.currentTime); } catch { /* already stopped */ }
         try { this.baseLayer.disconnect(); } catch { /* already disconnected */ }
@@ -177,6 +194,8 @@ export class PresentationAudioMixer<State> {
       this.baseLayer = null;
       this.baseBus = null;
       if (this.ownsContext && context.state !== 'closed') void context.close().catch(() => undefined);
+    } else {
+      this.flushPendingCleanups();
     }
     this.context = null;
   }
@@ -185,13 +204,18 @@ export class PresentationAudioMixer<State> {
     if (this.context) return this.context;
     if (this.disposed) return null;
     try {
-      const factory = this.options.contextFactory
-        ?? (() => new AudioContext());
+      const factory = this.options.contextFactory ?? (() => new AudioContext());
       this.context = factory();
       return this.context;
     } catch {
       return null;
     }
+  }
+
+  private getDestination(context: AudioContext): AudioNode {
+    const configured = this.options.destination;
+    if (typeof configured === 'function') return configured(context);
+    return configured ?? context.destination;
   }
 
   private ensureBase(context: AudioContext): void {
@@ -203,7 +227,7 @@ export class PresentationAudioMixer<State> {
       safeGain(this.options.base.gain * this.steadyBaseMultiplier),
       now + Math.max(0, this.options.base.fadeInMs) / 1000,
     );
-    bus.connect(context.destination);
+    bus.connect(this.getDestination(context));
     this.baseBus = bus;
     this.baseLayer = this.options.base.create(context, bus);
   }
@@ -214,7 +238,8 @@ export class PresentationAudioMixer<State> {
       this.stopPersistent(context, true);
       return;
     }
-    if (this.activePersistent?.state === desired) return;
+    const comparator = this.options.areStatesEqual ?? Object.is;
+    if (this.activePersistent && comparator(this.activePersistent.state, desired)) return;
 
     this.stopPersistent(context, false);
     const spec = this.options.resolvePersistent(desired);
@@ -223,7 +248,7 @@ export class PresentationAudioMixer<State> {
     const bus = context.createGain();
     bus.gain.setValueAtTime(0.0001, now);
     bus.gain.linearRampToValueAtTime(safeGain(spec.gain), now + Math.max(0, spec.fadeInMs) / 1000);
-    bus.connect(context.destination);
+    bus.connect(this.getDestination(context));
     const layer = spec.create(context, bus, desired);
     this.activePersistent = { state: desired, spec, bus, layer };
   }
@@ -252,7 +277,7 @@ export class PresentationAudioMixer<State> {
       try { active.bus.disconnect(); } catch { /* already disconnected */ }
     };
     if (immediate) cleanup();
-    else globalThis.setTimeout(cleanup, fadeMs + 80);
+    else this.scheduleCleanup(cleanup, fadeMs + 80);
 
     if (restoreBase) this.setSteadyBaseMultiplier(context, 1, Math.max(180, fadeMs));
   }
@@ -269,6 +294,23 @@ export class PresentationAudioMixer<State> {
       safeGain(this.options.base.gain * this.steadyBaseMultiplier),
       now + Math.max(0, rampMs) / 1000,
     );
+  }
+
+  private scheduleCleanup(cleanup: () => void, delayMs: number): void {
+    let timer: TimerHandle;
+    timer = globalThis.setTimeout(() => {
+      this.pendingCleanups.delete(timer);
+      cleanup();
+    }, Math.max(0, delayMs));
+    this.pendingCleanups.set(timer, cleanup);
+  }
+
+  private flushPendingCleanups(): void {
+    for (const [timer, cleanup] of this.pendingCleanups) {
+      globalThis.clearTimeout(timer);
+      cleanup();
+    }
+    this.pendingCleanups.clear();
   }
 
   private syncSuspension(): void {

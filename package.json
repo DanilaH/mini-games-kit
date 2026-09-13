@@ -23,9 +23,25 @@
       "types": "./dist/audio/index.d.ts",
       "import": "./dist/audio/index.js"
     },
+    "./platform": {
+      "types": "./dist/platform/index.d.ts",
+      "import": "./dist/platform/index.js"
+    },
+    "./yandex": {
+      "types": "./dist/yandex/index.d.ts",
+      "import": "./dist/yandex/index.js"
+    },
+    "./layout": {
+      "types": "./dist/layout/index.d.ts",
+      "import": "./dist/layout/index.js"
+    },
     "./phaser": {
       "types": "./dist/phaser/index.d.ts",
       "import": "./dist/phaser/index.js"
+    },
+    "./assets": {
+      "types": "./dist/assets/index.d.ts",
+      "import": "./dist/assets/index.js"
     }
   },
   "files": [
@@ -39,11 +55,21 @@
     "pack:check": "npm pack --dry-run"
   },
   "peerDependencies": {
-    "phaser": "4.2.1"
+    "phaser": "4.2.1",
+    "sharp": ">=0.35.0"
+  },
+  "peerDependenciesMeta": {
+    "phaser": {
+      "optional": true
+    },
+    "sharp": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/node": "26.4.1",
     "phaser": "4.2.1",
+    "sharp": "0.35.4",
     "typescript": "7.0.2",
     "vitest": "4.1.11"
   }
