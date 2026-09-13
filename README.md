@@ -20,11 +20,11 @@ Current reference project: `DanilaH/cases-yg` (`Signal 2000`).
 
 ## Public subpaths
 
-- `@danilah/mini-games-kit/core` — generic state/presentation/RNG/value-transfer/render-density primitives, including interruption-safe durable pending transactions.
+- `@danilah/mini-games-kit/core` — generic state/presentation/RNG/value-transfer/render-density primitives.
 - `@danilah/mini-games-kit/feel` — pointer response, idle drift and parallax math.
 - `@danilah/mini-games-kit/audio` — WebAudio presentation lifecycle and tactile audio utilities.
-- `@danilah/mini-games-kit/platform` — platform-independent activity, analytics, storage and interstitial eligibility seams.
-- `@danilah/mini-games-kit/yandex` — hardened Yandex ads, Player Data mirroring and Metrica adapters.
+- `@danilah/mini-games-kit/platform` — platform-independent activity, browser blockers, analytics, storage, versioned JSON repositories and interstitial eligibility seams.
+- `@danilah/mini-games-kit/yandex` — Yandex SDK bootstrap/runtime, hardened ads, Player Data mirroring and Metrica adapters.
 - `@danilah/mini-games-kit/layout` — configurable logical landscape layout/safe-area math.
 - `@danilah/mini-games-kit/phaser` — Phaser 4 planar depth, text sharpness and runtime image loading.
 - `@danilah/mini-games-kit/assets` — Node-only image cutout/normalization/validation tooling for generated game art.
@@ -51,4 +51,4 @@ CI must have credentials that can read this private repository. Do not silently 
 
 Signal 2000-specific rarity tuning, CHIPS/Signal/Hidden Pocket/Overcharge rules, pouch geometry, save conflict policy, Y2K art/audio identity and `OpeningScene` orchestration stay in the game repository.
 
-Reusable platform and asset utilities deliberately accept injected policy rather than embedding those Signal 2000 decisions.
+Reusable platform, persistence and asset utilities deliberately accept injected policy rather than embedding those Signal 2000 decisions.
