@@ -14,7 +14,9 @@ export const installSceneTextSharpness = (
   };
 
   scene.events.on(Phaser.Scenes.Events.ADDED_TO_SCENE, applyTextResolution);
-  const uninstall = (): void => scene.events.off(Phaser.Scenes.Events.ADDED_TO_SCENE, applyTextResolution);
+  const uninstall = (): void => {
+    scene.events.off(Phaser.Scenes.Events.ADDED_TO_SCENE, applyTextResolution);
+  };
   scene.events.once(Phaser.Scenes.Events.SHUTDOWN, uninstall);
   return uninstall;
 };
