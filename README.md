@@ -47,7 +47,9 @@ Current reference project: `DanilaH/cases-yg` (`Signal 2000`).
 - continuous progress/velocity-driven tactile noise texture;
 - bounded repeated-cue pitch variation and accumulation contours.
 
-See `docs/` for provenance, Signal 2000 parity notes and non-goals.
+## Public API documentation
+
+Start at [`docs/API.md`](docs/API.md). Every exported reusable utility is expected to have a dedicated explanation of its purpose, public API, usage pattern and non-goals. Provenance and Signal 2000 parity notes remain in the older topic docs under `docs/`.
 
 ## Consuming the private repository
 
@@ -60,6 +62,8 @@ npm install git+ssh://git@github.com/DanilaH/mini-games-kit.git#<commit-sha>
 The `prepare` script builds `dist` automatically for Git installs. Pin a commit rather than tracking `main`; `0.x` APIs are intentionally allowed to change.
 
 CI must have credentials that can read this private repository. Do not silently add this dependency to a project whose CI token cannot access cross-repository private Git dependencies; configure access first or use an explicitly reviewed vendoring strategy.
+
+`phaser` is an optional peer dependency. Projects consuming only framework-independent subpaths such as `/core`, `/feel` or `/audio` do not need Phaser merely because the repository also exposes `/phaser`.
 
 ## Still intentionally local to Signal 2000
 

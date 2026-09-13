@@ -41,6 +41,11 @@
   "peerDependencies": {
     "phaser": "4.2.1"
   },
+  "peerDependenciesMeta": {
+    "phaser": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@types/node": "26.4.1",
     "phaser": "4.2.1",
