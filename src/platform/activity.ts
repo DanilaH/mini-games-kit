@@ -65,3 +65,41 @@ export const installDocumentVisibilityBlocker = (
   handleVisibility();
   return () => document.removeEventListener('visibilitychange', handleVisibility);
 };
+
+export interface ViewportSizeSource {
+  innerWidth: number;
+  innerHeight: number;
+  addEventListener(type: 'resize', listener: () => void): void;
+  removeEventListener(type: 'resize', listener: () => void): void;
+}
+
+export interface ViewportOrientationBlockerOptions {
+  reason?: string;
+  isBlocked?: (width: number, height: number) => boolean;
+  onChange?: (blocked: boolean) => void;
+}
+
+/**
+ * Mirrors a viewport-derived orientation constraint into the activity coordinator.
+ * The default policy blocks portrait viewports; games can inject another predicate.
+ */
+export const installViewportOrientationBlocker = (
+  activity: Pick<GameplayActivityCoordinator, 'setBlocked'>,
+  source?: ViewportSizeSource,
+  options: ViewportOrientationBlockerOptions = {},
+): (() => void) => {
+  const viewport = source ?? (typeof window === 'undefined' ? null : window);
+  if (viewport === null) return () => undefined;
+
+  const reason = options.reason ?? 'orientation';
+  const isBlocked = options.isBlocked ?? ((width: number, height: number) => height > width);
+  const sync = (): void => {
+    const blocked = isBlocked(viewport.innerWidth, viewport.innerHeight);
+    activity.setBlocked(reason, blocked);
+    options.onChange?.(blocked);
+  };
+
+  viewport.addEventListener('resize', sync);
+  sync();
+  return () => viewport.removeEventListener('resize', sync);
+};

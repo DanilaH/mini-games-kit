@@ -25,12 +25,14 @@ Every reusable primitive should have a short dedicated document that answers fou
 
 ## Platform-independent runtime
 
-- [`GameplayActivityCoordinator`](platform/GAMEPLAY_ACTIVITY.md) — aggregate external blockers without premature resume.
+- [`GameplayActivityCoordinator` + browser blockers](platform/GAMEPLAY_ACTIVITY.md) — aggregate external blockers, visibility and viewport-orientation bridges without premature resume.
 - [`ActionInterstitialGate`](platform/INTERSTITIAL_GATE.md) — local ad-request eligibility policy.
 - [`StorageAdapter`](platform/STORAGE.md) — async storage seam and Web Storage adapter.
+- [`JsonStorageRepository`](platform/JSON_REPOSITORY.md) — versioned JSON parsing/migration seam with serialized writes.
 
 ## Yandex Games
 
+- [`Yandex platform runtime`](yandex/RUNTIME.md) — SDK script/init orchestration, pause/resume capture, safe-storage setup, optional Player Data mirroring, readiness and cleanup.
 - [`YandexAdsAdapter`](yandex/ADS.md) — hardened fullscreen/rewarded/sticky ad lifecycle.
 - [`YandexMirroredStorageAdapter`](yandex/MIRRORED_STORAGE.md) — local-first Player Data mirroring with injected conflict policy.
 - [`MetricaAnalyticsAdapter`](yandex/METRICA.md) — minimal Metrica goals adapter.

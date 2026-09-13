@@ -1,6 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { GameplayActivityCoordinator } from '../src/platform/index';
+import {
+  GameplayActivityCoordinator,
+  installViewportOrientationBlocker,
+  type ViewportSizeSource,
+} from '../src/platform/index';
 
 describe('GameplayActivityCoordinator', () => {
   it('does not resume until every blocker is removed', () => {
@@ -26,5 +30,35 @@ describe('GameplayActivityCoordinator', () => {
     expect(listener.mock.calls).toEqual([[true]]);
     activity.setBlocked('platform', false);
     expect(listener.mock.calls).toEqual([[true], [false]]);
+  });
+
+  it('bridges viewport orientation into a semantic blocker and cleans up the resize listener', () => {
+    const activity = new GameplayActivityCoordinator(() => undefined, () => undefined);
+    let resizeListener: (() => void) | null = null;
+    const viewport: ViewportSizeSource = {
+      innerWidth: 600,
+      innerHeight: 900,
+      addEventListener: (_type, listener) => {
+        resizeListener = listener;
+      },
+      removeEventListener: (_type, listener) => {
+        if (resizeListener === listener) resizeListener = null;
+      },
+    };
+    const onChange = vi.fn();
+
+    const dispose = installViewportOrientationBlocker(activity, viewport, { onChange });
+    expect(activity.isBlocked()).toBe(true);
+    expect(onChange).toHaveBeenLastCalledWith(true);
+
+    viewport.innerWidth = 1000;
+    viewport.innerHeight = 700;
+    expect(resizeListener).not.toBeNull();
+    (resizeListener as unknown as () => void)();
+    expect(activity.isBlocked()).toBe(false);
+    expect(onChange).toHaveBeenLastCalledWith(false);
+
+    dispose();
+    expect(resizeListener).toBeNull();
   });
 });
