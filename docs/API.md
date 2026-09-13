@@ -44,4 +44,8 @@ Every reusable primitive should have a short dedicated document that answers fou
 - [`text sharpness`](phaser/TEXT_SHARPNESS.md) — Scene-scoped Phaser Text resolution.
 - [`runtime image loader`](phaser/RUNTIME_IMAGE_LOADER.md) — shutdown-safe lazy image loading.
 
+## Node asset tooling
+
+- [`image asset pipeline`](assets/ASSET_PIPELINE.md) — background removal, normalization and validation for generated 2D art.
+
 Additional modules added later must be linked here as part of the same change that exposes their public API.

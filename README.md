@@ -2,7 +2,7 @@
 
 Experimental reusable production primitives extracted from small Yandex Games projects.
 
-The goal is not to build a generic game engine. The goal is to preserve expensive, repeatedly useful mechanics, platform plumbing and game-feel infrastructure so new projects do not have to rediscover or re-extract them from old games.
+The goal is not to build a generic game engine. The goal is to preserve expensive, repeatedly useful mechanics, platform plumbing, asset-production tooling and game-feel infrastructure so new projects do not have to rediscover or re-extract them from old games.
 
 ## Status
 
@@ -27,6 +27,7 @@ Current reference project: `DanilaH/cases-yg` (`Signal 2000`).
 - `@danilah/mini-games-kit/yandex` — hardened Yandex ads, Player Data mirroring and Metrica adapters.
 - `@danilah/mini-games-kit/layout` — configurable logical landscape layout/safe-area math.
 - `@danilah/mini-games-kit/phaser` — Phaser 4 planar depth, text sharpness and runtime image loading.
+- `@danilah/mini-games-kit/assets` — Node-only image cutout/normalization/validation tooling for generated game art.
 
 ## Public API documentation
 
@@ -44,10 +45,10 @@ The `prepare` script builds `dist` automatically for Git installs. Pin a commit 
 
 CI must have credentials that can read this private repository. Do not silently add this dependency to a project whose CI token cannot access cross-repository private Git dependencies; configure access first or use an explicitly reviewed vendoring strategy.
 
-`phaser` is an optional peer dependency. Projects consuming only framework-independent subpaths do not need Phaser merely because the repository also exposes `/phaser`.
+`phaser` and `sharp` are optional peers. Browser/framework-independent consumers do not need either merely because other subpaths exist. A project that uses `/phaser` installs Phaser 4.2.1; a Node tool that uses `/assets` installs Sharp.
 
 ## Still intentionally local to Signal 2000
 
 Signal 2000-specific rarity tuning, CHIPS/Signal/Hidden Pocket/Overcharge rules, pouch geometry, save conflict policy, Y2K art/audio identity and `OpeningScene` orchestration stay in the game repository.
 
-Reusable platform utilities deliberately accept injected conflict/eligibility policies rather than embedding those Signal 2000 decisions.
+Reusable platform and asset utilities deliberately accept injected policy rather than embedding those Signal 2000 decisions.
