@@ -23,6 +23,18 @@
       "types": "./dist/audio/index.d.ts",
       "import": "./dist/audio/index.js"
     },
+    "./platform": {
+      "types": "./dist/platform/index.d.ts",
+      "import": "./dist/platform/index.js"
+    },
+    "./yandex": {
+      "types": "./dist/yandex/index.d.ts",
+      "import": "./dist/yandex/index.js"
+    },
+    "./layout": {
+      "types": "./dist/layout/index.d.ts",
+      "import": "./dist/layout/index.js"
+    },
     "./phaser": {
       "types": "./dist/phaser/index.d.ts",
       "import": "./dist/phaser/index.js"

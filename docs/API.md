@@ -6,10 +6,11 @@ Every reusable primitive should have a short dedicated document that answers fou
 
 ## Core
 
-- [`PresentationSkipController`](core/PRESENTATION_SKIP.md) — make presentation beats skippable without moving durable/gameplay state into animation callbacks.
-- [`RandomSource`, `pickWeighted`](core/RANDOM.md) — explicit injectable gameplay-randomness boundary.
-- [`normalizePositiveProgress`, `sampleContinuousInteraction`](core/CONTINUOUS_INTERACTION.md) — convert project-specific geometry into normalized progress/velocity semantics.
-- [`createValueTransferPlan`](core/VALUE_TRANSFER.md) — animate large semantic value transfers with bounded visual/audio density.
+- [`PresentationSkipController`](core/PRESENTATION_SKIP.md) — skippable presentation beats without durable-state ownership.
+- [`RandomSource`, `pickWeighted`](core/RANDOM.md) — injectable gameplay-randomness boundary.
+- [`continuous interaction`](core/CONTINUOUS_INTERACTION.md) — normalized progress/velocity semantics.
+- [`value transfer`](core/VALUE_TRANSFER.md) — bounded visual/audio density for already-owned values.
+- [`render density`](core/RENDER_DENSITY.md) — DPR caps and backing-store sizing.
 
 ## Feel
 
@@ -21,8 +22,26 @@ Every reusable primitive should have a short dedicated document that answers fou
 - [`ContinuousNoiseTexture`](audio/CONTINUOUS_NOISE_TEXTURE.md) — progress/velocity-driven tactile WebAudio texture.
 - [`pitch`](audio/PITCH.md) — bounded one-shot variation and rising accumulation pitch contours.
 
+## Platform-independent runtime
+
+- [`GameplayActivityCoordinator`](platform/GAMEPLAY_ACTIVITY.md) — aggregate external blockers without premature resume.
+- [`ActionInterstitialGate`](platform/INTERSTITIAL_GATE.md) — local ad-request eligibility policy.
+- [`StorageAdapter`](platform/STORAGE.md) — async storage seam and Web Storage adapter.
+
+## Yandex Games
+
+- [`YandexAdsAdapter`](yandex/ADS.md) — hardened fullscreen/rewarded/sticky ad lifecycle.
+- [`YandexMirroredStorageAdapter`](yandex/MIRRORED_STORAGE.md) — local-first Player Data mirroring with injected conflict policy.
+- [`MetricaAnalyticsAdapter`](yandex/METRICA.md) — minimal Metrica goals adapter.
+
+## Layout
+
+- [`logical layout`](layout/LOGICAL_LAYOUT.md) — fixed-height landscape metrics, safe areas and a configurable Yandex 2:1 preset.
+
 ## Phaser
 
-- [`planar-depth`](phaser/PLANAR_DEPTH.md) — Phaser 4 planar homography, material sheen/rim response and bounded supersampling.
+- [`planar-depth`](phaser/PLANAR_DEPTH.md) — Phaser 4 planar homography/material response.
+- [`text sharpness`](phaser/TEXT_SHARPNESS.md) — Scene-scoped Phaser Text resolution.
+- [`runtime image loader`](phaser/RUNTIME_IMAGE_LOADER.md) — shutdown-safe lazy image loading.
 
 Additional modules added later must be linked here as part of the same change that exposes their public API.
