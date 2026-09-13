@@ -102,9 +102,9 @@ describe('DurablePendingTransactionSession', () => {
   it('blocks reroll/retry after an ambiguous stage when recovery reload also fails', async () => {
     const store = new MemoryStore();
     store.throwAfterWriteOn.add(1);
-    store.failNextLoad = true;
     const session = new DurablePendingTransactionSession(createAdapter(store));
     await session.load();
+    store.failNextLoad = true;
 
     await expect(session.prepare()).rejects.toThrow('ambiguous write 1');
     expect(session.requiresRecovery()).toBe(true);
