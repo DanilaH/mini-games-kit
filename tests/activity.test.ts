@@ -53,7 +53,8 @@ describe('GameplayActivityCoordinator', () => {
 
     viewport.innerWidth = 1000;
     viewport.innerHeight = 700;
-    resizeListener?.();
+    expect(resizeListener).not.toBeNull();
+    (resizeListener as unknown as () => void)();
     expect(activity.isBlocked()).toBe(false);
     expect(onChange).toHaveBeenLastCalledWith(false);
 
