@@ -7,6 +7,7 @@ Every reusable primitive should have a short dedicated document that answers fou
 ## Core
 
 - [`PresentationSkipController`](core/PRESENTATION_SKIP.md) — skippable presentation beats without durable-state ownership.
+- [`DurablePendingTransactionSession`](core/DURABLE_PENDING_TRANSACTION.md) — interruption-safe staged durable work with exact pending recovery and ambiguous-write verification.
 - [`RandomSource`, `pickWeighted`](core/RANDOM.md) — injectable gameplay-randomness boundary.
 - [`continuous interaction`](core/CONTINUOUS_INTERACTION.md) — normalized progress/velocity semantics.
 - [`value transfer`](core/VALUE_TRANSFER.md) — bounded visual/audio density for already-owned values.

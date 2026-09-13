@@ -20,7 +20,7 @@ Current reference project: `DanilaH/cases-yg` (`Signal 2000`).
 
 ## Public subpaths
 
-- `@danilah/mini-games-kit/core` — generic state/presentation/RNG/value-transfer/render-density primitives.
+- `@danilah/mini-games-kit/core` — generic state/presentation/RNG/value-transfer/render-density primitives, including interruption-safe durable pending transactions.
 - `@danilah/mini-games-kit/feel` — pointer response, idle drift and parallax math.
 - `@danilah/mini-games-kit/audio` — WebAudio presentation lifecycle and tactile audio utilities.
 - `@danilah/mini-games-kit/platform` — platform-independent activity, analytics, storage and interstitial eligibility seams.
