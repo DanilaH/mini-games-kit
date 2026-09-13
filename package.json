@@ -14,6 +14,14 @@
     "./core": {
       "types": "./dist/core/index.d.ts",
       "import": "./dist/core/index.js"
+    },
+    "./feel": {
+      "types": "./dist/feel/index.d.ts",
+      "import": "./dist/feel/index.js"
+    },
+    "./phaser": {
+      "types": "./dist/phaser/index.d.ts",
+      "import": "./dist/phaser/index.js"
     }
   },
   "files": [
@@ -24,8 +32,12 @@
     "test": "vitest run",
     "build": "tsc -p tsconfig.build.json"
   },
+  "peerDependencies": {
+    "phaser": "4.2.1"
+  },
   "devDependencies": {
     "@types/node": "26.4.1",
+    "phaser": "4.2.1",
     "typescript": "7.0.2",
     "vitest": "4.1.11"
   }
