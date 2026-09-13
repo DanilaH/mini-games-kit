@@ -75,6 +75,15 @@ export interface MockPlatformRuntimeOptions<Language extends string> {
   ads?: Omit<AdsAdapterOptions, 'analytics'>;
 }
 
+class RuntimeMockAdsAdapter extends MockAdsAdapter {
+  public constructor(
+    activity: Pick<GameplayActivityCoordinator, 'setBlocked'>,
+    options: AdsAdapterOptions,
+  ) {
+    super(activity, options);
+  }
+}
+
 const resolveYandexGlobal = (globalObject: typeof globalThis): YandexGamesGlobal | null => {
   const value = (globalObject as typeof globalThis & { YaGames?: unknown }).YaGames;
   if (typeof value !== 'object' || value === null || !('init' in value) || typeof value.init !== 'function') {
@@ -198,7 +207,7 @@ export const createMockPlatformRuntime = <Language extends string>(
     options.startGameplay ?? (() => undefined),
     options.stopGameplay ?? (() => undefined),
   );
-  const ads = new MockAdsAdapter(activity, { ...options.ads, analytics });
+  const ads = new RuntimeMockAdsAdapter(activity, { ...options.ads, analytics });
   const removeVisibilityBlocker = options.visibilityBlockReason === false
     ? () => undefined
     : installDocumentVisibilityBlocker(activity, options.visibilityBlockReason ?? 'visibility');
