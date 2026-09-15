@@ -13,9 +13,6 @@ export const createPlatformRuntime = async (): Promise<PlatformRuntime<GameLangu
   if (isYandexBuild()) {
     return bootstrapYandexPlatformRuntime<GameLanguage>({
       normalizeLanguage: normalizeGameLanguage,
-      cloud: {
-        onPlayerUnavailable: (error) => console.warn('Yandex Player Data unavailable; using safe storage only', error),
-      },
     });
   }
 
