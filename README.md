@@ -10,6 +10,20 @@ The goal is not to build a generic game engine. The goal is to preserve expensiv
 
 Current reference project: `DanilaH/cases-yg` (`Signal 2000`). The v0.2 extraction additionally incorporates its real mobile-browser, cold-start and hosted Yandex DRAFT evidence from September 2026.
 
+## Mandatory bootstrap for new Yandex + Phaser games
+
+Every new Yandex Games project using Phaser starts from [`bootstrap/yandex-phaser`](bootstrap/yandex-phaser). This is the mandatory minimum production baseline: real/mock platform separation, semantic Game Ready, startup shell/diagnostics, AVIF/WebP selection hook, hardened mobile viewport handling, strict TS/Vite/Phaser setup, CI and Yandex release audit/checklist.
+
+Create a project from an exact kit revision:
+
+```bash
+npm run bootstrap:create -- ../my-new-game
+```
+
+The generator pins the produced project to the current exact `mini-games-kit` commit. After creation, the agent must still inspect the whole kit beginning at [`docs/API.md`](docs/API.md) and add any other relevant primitives. Bootstrap is the floor, not the complete architecture.
+
+See [`docs/BOOTSTRAP.md`](docs/BOOTSTRAP.md) for the repository policy and upgrade/deviation rules.
+
 ## Extraction rule
 
 - Reuse production knowledge immediately.
@@ -39,17 +53,15 @@ Start at [`docs/API.md`](docs/API.md). Every exported reusable utility is expect
 
 Production lessons that should shape a new project before code is copied live in [`docs/PERFORMANCE_PLAYBOOK.md`](docs/PERFORMANCE_PLAYBOOK.md), [`docs/ONBOARDING_PLAYBOOK.md`](docs/ONBOARDING_PLAYBOOK.md) and the Yandex DRAFT playbook.
 
-## Consuming the private repository
+## Consuming the repository
 
-The package is intentionally not published yet. For local/private projects, install a pinned Git commit over SSH:
+The package is intentionally not published yet. Install a pinned Git commit:
 
 ```bash
-npm install git+ssh://git@github.com/DanilaH/mini-games-kit.git#<commit-sha>
+npm install github:DanilaH/mini-games-kit#<commit-sha>
 ```
 
 The `prepare` script builds `dist` automatically for Git installs. Pin a commit rather than tracking `main`; `0.x` APIs are intentionally allowed to change.
-
-CI must have credentials that can read this repository. Do not silently add this dependency to a project whose CI token cannot access cross-repository Git dependencies; configure access first or use an explicitly reviewed vendoring strategy.
 
 `phaser` and `sharp` are optional peers. Browser/framework-independent consumers do not need either merely because other subpaths exist. A project that uses `/phaser` installs Phaser 4.2.1; a Node tool that uses `/assets` installs Sharp.
 
