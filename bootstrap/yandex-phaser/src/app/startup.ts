@@ -1,6 +1,8 @@
 import { detectPreferredRuntimeImageFormat, type RuntimeImageFormat } from '@danilah/mini-games-kit/runtime-assets';
 import { StartupTimeline } from '@danilah/mini-games-kit/startup';
 
+import { setRuntimeImageFormat } from './runtimeImages';
+
 export type BootstrapStartupPhase = 'platformReady' | 'artFormatReady' | 'gamePresentable' | 'ready';
 
 export const startupTimeline = new StartupTimeline<BootstrapStartupPhase>();
@@ -10,6 +12,7 @@ export const isDebugBuild = (): boolean =>
 
 export const detectRuntimeImageFormat = async (): Promise<RuntimeImageFormat> => {
   const format = await detectPreferredRuntimeImageFormat({ overrideEnabled: isDebugBuild() });
+  setRuntimeImageFormat(format);
   startupTimeline.mark('artFormatReady');
   return format;
 };
