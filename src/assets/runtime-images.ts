@@ -87,7 +87,20 @@ export interface ValidateAvifCompanionsOptions {
   minAggregateSavingRatio?: number;
 }
 
-export interface AvifValidationReport extends AvifCompanionReport {
+export interface AvifValidationItemReport {
+  id: string;
+  category: string | undefined;
+  sourceBytes: number;
+  avifBytes: number;
+  savingRatio: number;
+}
+
+export interface AvifValidationReport {
+  count: number;
+  sourceBytes: number;
+  avifBytes: number;
+  savingRatio: number;
+  items: AvifValidationItemReport[];
   errors: string[];
 }
 
@@ -95,7 +108,7 @@ export const validateAvifCompanions = async (
   assets: readonly RuntimeImageAssetPair[],
   options: ValidateAvifCompanionsOptions = {},
 ): Promise<AvifValidationReport> => {
-  const items: AvifCompanionItemReport[] = [];
+  const items: AvifValidationItemReport[] = [];
   const errors: string[] = [];
 
   for (const asset of assets) {
@@ -119,7 +132,6 @@ export const validateAvifCompanions = async (
       items.push({
         id: asset.id,
         category: asset.category,
-        quality: 0,
         sourceBytes: sourceStat.size,
         avifBytes: avifStat.size,
         savingRatio: sourceStat.size === 0 ? 0 : 1 - avifStat.size / sourceStat.size,
