@@ -25,9 +25,9 @@ describe('mobile viewport runtime', () => {
     )).toEqual({ width: 400, height: 800, portrait: true });
   });
 
-  it('boots a landscape-only engine behind a portrait gate with provisional landscape geometry', () => {
+  it('boots a landscape-only engine behind a portrait gate with provisional capped landscape geometry', () => {
     const viewport = { width: 390, height: 844, portrait: true };
-    expect(resolveInitialLandscapeGameCssSize(viewport)).toEqual({ width: 844, height: 390 });
+    expect(resolveInitialLandscapeGameCssSize(viewport)).toEqual({ width: 780, height: 390 });
     expect(shouldSyncLandscapeBackingStore(viewport)).toBe(false);
   });
 });
