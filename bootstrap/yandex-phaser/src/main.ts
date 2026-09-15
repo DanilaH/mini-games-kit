@@ -47,6 +47,9 @@ try {
   });
 
   const viewport = installViewportRuntime(game, platform.activity);
+  const removeBlockedListener = platform.activity.onBlockedChange((blocked) => {
+    game.sound.mute = blocked;
+  });
   const debug = installDebugPanel(() => getStartupSnapshot(runtimeImageFormat));
 
   void presentable.then(async () => {
@@ -60,6 +63,7 @@ try {
 
   window.addEventListener('pagehide', () => {
     platform.activity.setGameplayDesired(false);
+    removeBlockedListener();
     debug.destroy();
     viewport.destroy();
     preload.destroy();
