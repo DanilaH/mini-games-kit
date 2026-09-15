@@ -18,6 +18,7 @@
     "src/app/language.ts",
     "src/app/platform.ts",
     "src/app/startup.ts",
+    "src/app/runtimeImages.ts",
     "src/app/viewport.ts",
     "src/app/debug.ts",
     "src/game/BootstrapScene.ts",
