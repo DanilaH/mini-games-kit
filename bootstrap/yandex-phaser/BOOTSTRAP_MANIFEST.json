@@ -4,6 +4,8 @@
   "requiredFiles": [
     "AGENTS.md",
     "BOOTSTRAP.md",
+    "README.md",
+    ".gitignore",
     "package.json",
     "tsconfig.json",
     "vite.config.ts",
