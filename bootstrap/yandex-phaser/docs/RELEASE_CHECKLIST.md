@@ -6,6 +6,7 @@ Minimum hosted gate:
 
 - production build uses the real Yandex runtime, not mock;
 - `index.html` is at upload-root level and `npm run release:check` is clean;
+- if CI/artifact storage wraps an upload ZIP inside another archive, upload the **inner game ZIP** whose root contains `index.html`, not the outer artifact wrapper;
 - first correct/usable frame is visible before semantic Game Ready is sent;
 - `LoadingAPI.ready()` is sent once from the semantic ready path;
 - GameplayAPI pause/resume, document visibility and orientation blockers do not resume prematurely;
