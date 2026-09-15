@@ -8,6 +8,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import {
   buildAvifCompanions,
   inspectRuntimeImageBudget,
+  trimCanonicalTransparentWebp,
   trimTransparentWebp,
   validateAvifCompanions,
   validateLogicalTrimFrame,
@@ -41,6 +42,23 @@ describe('runtime image tooling', () => {
     expect(result.afterPixels).toBeLessThan(result.beforePixels);
     expect(result.rgbMae).toBeLessThanOrEqual(5);
     expect(result.alphaMae).toBeLessThanOrEqual(0.5);
+  });
+
+  it('keeps an already-trimmed image + logical frame canonical across repeated builds', async () => {
+    const first = await trimTransparentWebp(await makeTransparentWebp(), { webpQuality: 90 });
+    expect(first.frame).toBeDefined();
+
+    const second = await trimCanonicalTransparentWebp(first.buffer, {
+      webpQuality: 90,
+      existingFrame: first.frame,
+    });
+
+    expect(second.trimmed).toBe(true);
+    expect(second.frame).toEqual(first.frame);
+    expect(second.buffer.equals(first.buffer)).toBe(true);
+    expect(second.beforePixels).toBe(10_000);
+    expect(second.afterPixels).toBe(first.afterPixels);
+    expect(second.encodedSavingRatio).toBe(0);
   });
 
   it('builds/validates AVIF companions and reports encoded plus RGBA budgets', async () => {
