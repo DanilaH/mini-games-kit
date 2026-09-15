@@ -6,6 +6,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, '../..');
 const templateRoot = path.join(repoRoot, 'bootstrap/yandex-phaser');
+const TEMPLATE_MANIFEST = 'BOOTSTRAP_MANIFEST.json';
 const PLACEHOLDER_PROJECT = '__PROJECT_NAME__';
 const PLACEHOLDER_REF = '__MINI_GAMES_KIT_REF__';
 
@@ -64,7 +65,7 @@ export const createYandexPhaserBootstrap = async ({ destination, kitRef, project
   }
   await fs.mkdir(target, { recursive: true });
 
-  const files = await listFiles(templateRoot);
+  const files = (await listFiles(templateRoot)).filter((relative) => relative !== TEMPLATE_MANIFEST);
   for (const relative of files) {
     const source = path.join(templateRoot, relative);
     const output = path.join(target, relative);
