@@ -1,6 +1,6 @@
 {
   "name": "@danilah/mini-games-kit",
-  "version": "0.1.0-experimental.0",
+  "version": "0.2.0-experimental.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -31,6 +31,10 @@
       "types": "./dist/yandex/index.d.ts",
       "import": "./dist/yandex/index.js"
     },
+    "./yandex-tooling": {
+      "types": "./dist/yandex-tooling/index.d.ts",
+      "import": "./dist/yandex-tooling/index.js"
+    },
     "./layout": {
       "types": "./dist/layout/index.d.ts",
       "import": "./dist/layout/index.js"
@@ -42,6 +46,14 @@
     "./assets": {
       "types": "./dist/assets/index.d.ts",
       "import": "./dist/assets/index.js"
+    },
+    "./runtime-assets": {
+      "types": "./dist/runtime-assets/index.d.ts",
+      "import": "./dist/runtime-assets/index.js"
+    },
+    "./startup": {
+      "types": "./dist/startup/index.d.ts",
+      "import": "./dist/startup/index.js"
     }
   },
   "files": [
