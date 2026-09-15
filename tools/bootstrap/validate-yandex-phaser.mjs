@@ -8,7 +8,8 @@ import { createYandexPhaserBootstrap } from './create-yandex-phaser.mjs';
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, '../..');
 const templateRoot = path.join(repoRoot, 'bootstrap/yandex-phaser');
-const manifest = JSON.parse(await fs.readFile(path.join(templateRoot, 'BOOTSTRAP_MANIFEST.json'), 'utf8'));
+const manifestPath = path.join(templateRoot, 'BOOTSTRAP_MANIFEST.json');
+const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf8'));
 const errors = [];
 
 for (const required of manifest.requiredFiles ?? []) {
@@ -21,7 +22,7 @@ for (const required of manifest.requiredFiles ?? []) {
 
 const packageTemplate = await fs.readFile(path.join(templateRoot, 'package.json'), 'utf8');
 for (const placeholder of manifest.placeholders ?? []) {
-  if (!packageTemplate.includes(placeholder) && placeholder !== '__PROJECT_NAME__') {
+  if (!packageTemplate.includes(placeholder)) {
     errors.push(`package template does not contain required placeholder: ${placeholder}`);
   }
 }
@@ -62,7 +63,31 @@ try {
       errors.push(`generated project missing required file: ${required}`);
     }
   }
-  if (result.files !== templateFiles.length) errors.push('generator file count differs from template file count');
+  try {
+    await fs.access(path.join(target, 'BOOTSTRAP_MANIFEST.json'));
+    errors.push('template-only BOOTSTRAP_MANIFEST.json leaked into generated project');
+  } catch (error) {
+    if (error?.code !== 'ENOENT') throw error;
+  }
+
+  const generatedFiles = [];
+  const collectGenerated = async (relative = '') => {
+    for (const entry of await fs.readdir(path.join(target, relative), { withFileTypes: true })) {
+      const next = relative ? path.join(relative, entry.name) : entry.name;
+      if (entry.isDirectory()) await collectGenerated(next);
+      else if (entry.isFile()) generatedFiles.push(next);
+    }
+  };
+  await collectGenerated();
+  if (result.files !== generatedFiles.length) errors.push('generator reported file count differs from actual generated output');
+
+  for (const relative of generatedFiles) {
+    if (/\.(png|jpe?g|webp|avif|gif|woff2?|mp3|ogg|wav|zip)$/i.test(relative)) continue;
+    const content = await fs.readFile(path.join(target, relative), 'utf8');
+    for (const placeholder of manifest.placeholders ?? []) {
+      if (content.includes(placeholder)) errors.push(`${relative}: unresolved generated placeholder ${placeholder}`);
+    }
+  }
 } finally {
   await fs.rm(tempRoot, { recursive: true, force: true });
 }
@@ -72,5 +97,5 @@ if (errors.length > 0) {
   for (const error of errors) console.error(`- ${error}`);
   process.exitCode = 1;
 } else {
-  console.log(`Yandex Phaser bootstrap validation passed: ${templateFiles.length} template files, mandatory manifest intact.`);
+  console.log(`Yandex Phaser bootstrap validation passed: ${templateFiles.length - 1} generated files, mandatory manifest intact.`);
 }
