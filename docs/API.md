@@ -29,6 +29,7 @@ Every reusable primitive should have a short dedicated document that answers fou
 - [`ActionInterstitialGate`](platform/INTERSTITIAL_GATE.md) — local ad-request eligibility policy.
 - [`StorageAdapter`](platform/STORAGE.md) — async storage seam and Web Storage adapter.
 - [`JsonStorageRepository`](platform/JSON_REPOSITORY.md) — versioned JSON parsing/migration seam with serialized writes.
+- [`recoverable save repair`](platform/SAVE_REPAIR.md) — policy for preserving valid durable progression while repairing only deterministic transient/current-version inconsistencies.
 
 ## Startup
 
