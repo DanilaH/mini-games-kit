@@ -50,7 +50,7 @@ describe('runtime image tooling', () => {
 
     const second = await trimCanonicalTransparentWebp(first.buffer, {
       webpQuality: 90,
-      existingFrame: first.frame,
+      existingFrame: first.frame!,
     });
 
     expect(second.trimmed).toBe(true);
