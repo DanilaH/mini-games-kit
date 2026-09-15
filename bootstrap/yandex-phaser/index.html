@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>__PROJECT_NAME__</title>
+  </head>
+  <body>
+    <main id="game-shell" aria-label="Game">
+      <div id="game-root"></div>
+      <section id="rotate-gate" aria-live="polite" aria-hidden="true">
+        <strong>ROTATE DEVICE</strong>
+        <span>This game uses landscape orientation.</span>
+      </section>
+      <section id="startup-preload" data-state="idle" aria-hidden="true">
+        <div class="startup-card">
+          <strong id="startup-preload-heading">LOADING</strong>
+          <span id="startup-preload-status">Preparing game…</span>
+          <div id="startup-preload-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div id="startup-preload-progress-fill"></div>
+          </div>
+          <span id="startup-preload-progress-percent">00%</span>
+        </div>
+      </section>
+      <aside id="debug-root" hidden></aside>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

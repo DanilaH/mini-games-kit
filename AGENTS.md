@@ -2,7 +2,15 @@
 
 This repository is an experimental reusable kit for small games. It exists to preserve expensive production work without turning one game's architecture into a speculative framework.
 
-Before changing code:
+## Mandatory new-project bootstrap
+
+For every **new Yandex Games project using Phaser**, start from `bootstrap/yandex-phaser` before project-specific implementation. Do not cherry-pick only the convenient files. Use `npm run bootstrap:create -- <destination>` so the generated project pins an exact `mini-games-kit` commit.
+
+After bootstrapping, independently inspect the current repository starting from `docs/API.md` and add any other reusable primitives that fit the new game's requirements. The bootstrap is the mandatory minimum, not a substitute for reviewing the rest of the kit.
+
+A consumer may replace/remove bootstrap behavior when the new project genuinely needs a different contract, but that deviation must be explicit and evidence-backed in the generated project's `docs/PROJECT_DECISIONS.md`.
+
+Before changing kit code:
 
 1. Identify the real source project and concrete production behavior being preserved.
 2. Separate reusable mechanism from project policy, naming, balance, content and aesthetics.
