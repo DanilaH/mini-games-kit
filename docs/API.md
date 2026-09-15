@@ -60,6 +60,7 @@ Every reusable primitive should have a short dedicated document that answers fou
 - [`image asset pipeline`](assets/ASSET_PIPELINE.md) — background removal, normalization and validation for generated 2D art.
 - [`runtime image production`](assets/RUNTIME_IMAGES.md) — transparent trimming, logical-frame metadata, AVIF companion generation/validation and encoded/RGBA budgeting.
 - [`runtime image format selection`](runtime-assets/FORMAT_SELECTION.md) — browser AVIF probe and WebP fallback request mapping.
+- [`runtime asset loading policy`](assets/LOADING_POLICY.md) — classify startup/session/deferred assets and make post-ready loading an explicit UX contract rather than an accidental stall.
 
 ## Production playbooks
 
