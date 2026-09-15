@@ -61,7 +61,11 @@ try {
     preload.complete();
   });
 
-  window.addEventListener('pagehide', () => {
+  const handlePageHide = (event: PageTransitionEvent): void => {
+    // A persisted pagehide enters the back-forward cache. Destroying Phaser and
+    // platform listeners there leaves the restored document alive but unusable.
+    if (event.persisted) return;
+    window.removeEventListener('pagehide', handlePageHide);
     platform.activity.setGameplayDesired(false);
     removeBlockedListener();
     debug.destroy();
@@ -69,7 +73,8 @@ try {
     preload.destroy();
     platform.destroy();
     game.destroy(true);
-  }, { once: true });
+  };
+  window.addEventListener('pagehide', handlePageHide);
 } catch (error: unknown) {
   const message = error instanceof Error ? error.message : String(error);
   preload.fail(message);
