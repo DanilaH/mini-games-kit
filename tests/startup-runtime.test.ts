@@ -2,10 +2,52 @@ import { describe, expect, it, vi } from 'vitest';
 
 import {
   exportTextWithFallback,
+  StartupPreloadController,
   StartupResourceDiagnostics,
   StartupTimeline,
   computeStartupFakeProgress,
+  type StartupPreloadScheduler,
+  type StartupPreloadSnapshot,
 } from '../src/startup/index';
+
+class TestScheduler implements StartupPreloadScheduler {
+  public nowValue = 0;
+  private nextHandle = 1;
+  private readonly timeouts = new Map<number, () => void>();
+  private readonly intervals = new Map<number, () => void>();
+
+  public now(): number {
+    return this.nowValue;
+  }
+
+  public setTimeout(callback: () => void): number {
+    const handle = this.nextHandle++;
+    this.timeouts.set(handle, callback);
+    return handle;
+  }
+
+  public clearTimeout(handle: number): void {
+    this.timeouts.delete(handle);
+  }
+
+  public setInterval(callback: () => void): number {
+    const handle = this.nextHandle++;
+    this.intervals.set(handle, callback);
+    return handle;
+  }
+
+  public clearInterval(handle: number): void {
+    this.intervals.delete(handle);
+  }
+
+  public fireNextTimeout(): void {
+    const next = [...this.timeouts.keys()].sort((left, right) => left - right)[0];
+    if (next === undefined) throw new Error('No pending timeout');
+    const callback = this.timeouts.get(next)!;
+    this.timeouts.delete(next);
+    callback();
+  }
+}
 
 describe('startup runtime primitives', () => {
   it('measures caller-defined overlapping phases without imposing phase names', () => {
@@ -76,5 +118,39 @@ describe('startup runtime primitives', () => {
     expect(computeStartupFakeProgress(0)).toBeGreaterThan(0);
     expect(computeStartupFakeProgress(30_000)).toBeLessThan(1);
     expect(computeStartupFakeProgress(30_000)).toBeGreaterThan(computeStartupFakeProgress(1_000));
+  });
+
+  it('can recover a diagnostic timeout when the real presentable-ready signal arrives later', () => {
+    const scheduler = new TestScheduler();
+    const snapshots: StartupPreloadSnapshot[] = [];
+    const controller = new StartupPreloadController(
+      { render: (snapshot) => snapshots.push(snapshot) },
+      { showDelayMs: 1, minVisibleMs: 0, completionHoldMs: 0, fatalTimeoutMs: 10 },
+      scheduler,
+    );
+
+    controller.begin();
+    scheduler.fireNextTimeout(); // delayed show
+    controller.fail('slow host');
+    expect(controller.getPhase()).toBe('failed');
+
+    controller.complete();
+    expect(controller.getPhase()).toBe('completing');
+    scheduler.fireNextTimeout(); // completion hold
+    expect(controller.getPhase()).toBe('hidden');
+    expect(snapshots.at(-1)?.progress).toBe(1);
+  });
+
+  it('never flashes the preload surface when startup completes before the show delay', () => {
+    const scheduler = new TestScheduler();
+    const controller = new StartupPreloadController(
+      { render: () => undefined },
+      { showDelayMs: 200 },
+      scheduler,
+    );
+
+    controller.begin();
+    controller.complete();
+    expect(controller.getPhase()).toBe('hidden');
   });
 });
