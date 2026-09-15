@@ -64,7 +64,10 @@
     "test": "vitest run",
     "build": "tsc -p tsconfig.build.json",
     "prepare": "npm run build",
-    "pack:check": "npm pack --dry-run"
+    "pack:check": "npm pack --dry-run",
+    "bootstrap:create": "node tools/bootstrap/create-yandex-phaser.mjs",
+    "bootstrap:check": "node tools/bootstrap/validate-yandex-phaser.mjs",
+    "bootstrap:smoke": "node tools/bootstrap/smoke-yandex-phaser.mjs"
   },
   "peerDependencies": {
     "phaser": "4.2.1",
