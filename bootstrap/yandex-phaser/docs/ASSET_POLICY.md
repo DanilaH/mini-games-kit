@@ -2,6 +2,8 @@
 
 Image production is a mandatory project decision, not an afterthought. Start from the current `mini-games-kit` docs for `assets/RUNTIME_IMAGES.md`, `runtime-assets/FORMAT_SELECTION.md`, `assets/LOADING_POLICY.md` and `PERFORMANCE_PLAYBOOK.md`.
 
+The bootstrap initializes the selected runtime image format before Phaser construction. Keep canonical manifests/asset ids on fallback `.webp` paths and call `runtimeImageRequestPath()` from `src/app/runtimeImages.ts` at the actual loader/request boundary. That preserves one logical asset identity while modern browsers request AVIF and unsupported browsers stay on WebP.
+
 Before committing a large art set, record:
 
 - source/master provenance and whether future re-encoding can start from pristine masters;
