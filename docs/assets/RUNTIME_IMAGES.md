@@ -10,6 +10,8 @@ This layer starts **after** source art has been generated/cut out/normalized. It
 
 The function rejects a candidate when reconstructed visible RGB/alpha MAE exceeds configured safety thresholds. If transparent-pixel savings are below `minPixelSavingRatio`, it returns the original bytes unchanged instead of performing a pointless lossy re-encode.
 
+For a committed file pipeline, prefer `trimCanonicalTransparentWebp(input, { existingFrame, ...options })`. If the current physical image already has exactly the dimensions described by `existingFrame`, the image + frame pair is treated as canonical and returned without another lossy crop/re-encode. If a source-generation step later restores the full logical canvas, the dimensions no longer match the saved frame and a fresh trim is computed. This preserves the idempotence that proved important in repeated Signal 2000 asset builds.
+
 The consumer owns how `LogicalTrimFrame` is applied in Phaser or another engine. Persist that metadata beside the asset manifest and treat the image + frame as one canonical runtime asset.
 
 ## AVIF companions
@@ -36,7 +38,7 @@ This distinction matters: an optimization can save requests or encoded bytes whi
 2. Remove background and normalize to a canonical logical canvas.
 3. Determine actual maximum presentation size/DPR before choosing runtime dimensions.
 4. Produce the fallback WebP.
-5. Trim transparent physical bounds and persist logical-frame metadata.
+5. Trim transparent physical bounds and persist logical-frame metadata; make repeated builds idempotent with the canonical frame.
 6. Generate AVIF companions from the best practical source available.
 7. Validate dimensions, alpha and aggregate payload budget in CI.
 8. Measure encoded bytes **and** physical decoded-pixel proxy.
