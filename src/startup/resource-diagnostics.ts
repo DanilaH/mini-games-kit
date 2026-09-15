@@ -57,10 +57,16 @@ const defaultResourceEntries = (): readonly StartupResourceTimingLike[] => {
   return performance.getEntriesByType('resource') as PerformanceResourceTiming[];
 };
 
+const defaultBaseUrl = (): string | undefined =>
+  typeof document === 'undefined' ? undefined : document.baseURI;
+
 const rounded = (value: number): number => Math.max(0, Math.round(value));
 const roundedKiB = (bytes: number): number => Math.max(0, Math.round(bytes / 102.4) / 10);
 
-export const toAbsoluteResourceUrl = (requestPath: string, baseUrl?: string): string | undefined => {
+export const toAbsoluteResourceUrl = (
+  requestPath: string,
+  baseUrl: string | undefined = defaultBaseUrl(),
+): string | undefined => {
   if (!baseUrl) return requestPath;
   try {
     return new URL(requestPath, baseUrl).href;
