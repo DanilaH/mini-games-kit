@@ -66,5 +66,6 @@ Every reusable primitive should have a short dedicated document that answers fou
 
 - [`performance`](PERFORMANCE_PLAYBOOK.md) — measured startup/image optimization method and rejected shortcuts.
 - [`onboarding`](ONBOARDING_PLAYBOOK.md) — event-driven first-run guidance and durable grant/recovery boundaries.
+- [`localization and authentic store media`](LOCALIZATION_AND_STORE_MEDIA.md) — context-aware game copy, counted-resource formatting, in-engine screenshot provenance and per-locale acceptance; guidance only, no new API.
 
 Additional modules added later must be linked here as part of the same change that exposes their public API.
