@@ -9,7 +9,7 @@ Recommended order:
 3. **Storage / recovery:** interrupt durable actions at several presentation points and verify exact once-only recovery against real Yandex storage.
 4. **Content/navigation:** visit all immediately reachable content and verify there is no hidden network/decode stall that violates the project's loading contract.
 5. **Ads:** rewarded grant exactly once, close-without-reward grants zero, interstitial/sticky error/no-fill behavior does not deadlock activity/audio.
-6. **Localization/layout:** supported Yandex languages, desktop/mobile landscape, resize/orientation/input edge cases.
+6. **Localization/layout:** supported Yandex languages, desktop/mobile landscape, resize/orientation/input edge cases. Review rendered player-facing copy and capture truthful, per-locale store screenshots using the [localization and store-media playbook](../LOCALIZATION_AND_STORE_MEDIA.md); a passing string-table test is insufficient.
 7. **Repeated use:** ordinary play long enough to expose accumulating listeners, audio, tweens, stale scene state and fatigue problems.
 
 For diagnostics, a dedicated hosted-debug build is legitimate. It must still use the **real Yandex runtime**, not the standalone/mock runtime. Keep internal debug/economy mutation controls out of the public candidate unless that is an explicit release decision.
