@@ -1,6 +1,6 @@
 # Что переносим из Sudoku Doku 0.17
 
-Дата: 2026-10-23. Статус: ТЗ на перенос и проверенные практики; новых runtime API этот документ не добавляет.
+Дата: 2026-10-23. Статус: исходное ТЗ и проверенные практики. Очередь снимков и геометрия баннера реализованы отдельными API; перенос из «Семечек» добавляет [DurableReceiptQueue](../platform/DURABLE_RECEIPT_QUEUE.md). Текущие результаты и границы переноса — в [SUDOKU_INTEGRATION.md](SUDOKU_INTEGRATION.md); совместная запись снимков и наград описана в [протоколе координации](../platform/DURABLE_RECEIPT_QUEUE.md#combining-with-revision-snapshot-saves). Профиль/облако/каталог и нативный SDK-адаптер остаются отдельной работой. Наличие кода в kit не означает его внедрения в выпущенные APK.
 
 Источник: [DanilaH/sudoku-doku](https://github.com/DanilaH/sudoku-doku), runtime `f97cc1ed1c32e7d2f438fbaea6671530b1a5fc59`, тесты `664e982c1321d9df1ea5e4da1678ab34281b2667`.
 Сравнение с mini-games-kit: `43913152e5b409cdb84515eabb69166f6caaa8bb`.

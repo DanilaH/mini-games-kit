@@ -4,3 +4,6 @@ export * from './interstitial-gate.js';
 export * from './json-repository.js';
 export * from './storage.js';
 export * from './durable-receipt-queue.js';
+
+
+export * from './revision-snapshot-queue.js';

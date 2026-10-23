@@ -50,6 +50,20 @@ The queue does not validate SDK authenticity, grant amounts, choose a reward tar
 
 Use the existing [`DurablePendingTransactionSession`](../core/DURABLE_PENDING_TRANSACTION.md) for transactions the game itself creates/stages. This queue covers an **externally persisted receipt and its acknowledgement**, which is a different boundary.
 
+## Combining with revision snapshot saves
+
+[`RevisionSnapshotQueue`](REVISION_SNAPSHOT_QUEUE.md) coalesces complete ordinary snapshots. `DurableReceiptQueue` serializes receipt deliveries. Neither queue is a lock shared with the other. `await snapshots.flush()` by itself is insufficient: a producer can enqueue again during the receipt write, or enqueue an old snapshot with a revision that the old queue has never seen. It can overwrite both the reward and its deduplication marker.
+
+A consumer can use this explicit handoff without adding another kit coordinator:
+
+1. Enter the consumer's exclusive save/profile operation and **quiesce ordinary snapshot producers**, including pending autosave timers and asynchronous callbacks. Reject or retain incoming actions for later rebasing; do not silently discard gameplay.
+2. Settle all accepted ordinary writes and handle individual failures. Flush is a barrier only while producers are excluded. Keep the same profile identity throughout the operation.
+3. Load/establish authoritative state, deduplicate and apply the receipt, increment the local revision, and durably replace the effect and ledger together. Return `'applied'` or `'already-applied'` only when authoritative durable truth proves it.
+4. Construct a fresh snapshot queue using that durable state as `initial`, and update the state/revision from which ordinary producers derive their next snapshots. Retire the old queue. A failed acknowledgement does not undo the grant or allow restoring an old pre-reward baseline.
+5. Acknowledge the exact native receipt after confirmed commit. Resume ordinary producers only after their baseline is safe. If a write outcome is ambiguous and authoritative reload fails, keep the save mutation gate closed until recovery establishes the truth; the receipt remains pending.
+
+The consumer may implement a different coordinated writer, but must prove the same ordering and stale-state exclusion. A Promise chain around disk I/O alone does not make an already-created stale snapshot current. This is a consumer integration recipe, not an atomic transaction guarantee provided by either queue. See `tests/receipt-snapshot-integration.test.ts` for executable happy-path and acknowledgement-recovery examples with both real kit APIs.
+
 ## Runtime and provenance
 
 No Capacitor, ad SDK, Phaser or storage dependency. Requires Promises and `structuredClone` (Node 20+ and modern browsers/WebViews); receipts must be structured-cloneable data.

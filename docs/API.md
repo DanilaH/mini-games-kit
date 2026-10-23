@@ -25,6 +25,8 @@ Every reusable primitive should have a short dedicated document that answers fou
 
 ## Platform-independent runtime
 
+- [`RevisionSnapshotQueue`](platform/REVISION_SNAPSHOT_QUEUE.md) — opt-in coalescing of complete revisioned save snapshots with immediate capture and conflict rejection.
+
 - [`GameplayActivityCoordinator` + browser blockers](platform/GAMEPLAY_ACTIVITY.md) — aggregate external blockers, visibility and viewport-orientation bridges without premature resume.
 - [`ActionInterstitialGate`](platform/INTERSTITIAL_GATE.md) — local ad-request eligibility policy.
 - [`StorageAdapter`](platform/STORAGE.md) — async storage seam and Web Storage adapter.
@@ -46,6 +48,8 @@ Every reusable primitive should have a short dedicated document that answers fou
 - [`Yandex DRAFT playbook`](yandex/DRAFT_RELEASE_PLAYBOOK.md) — hosted validation order and debug-build boundaries.
 
 ## Layout
+
+- [`native banner placement`](layout/NATIVE_BANNER_PLACEMENT.md) — CSS-to-native slot geometry, safe containment and SDK-height reservation; pure math, no bundled native SDK.
 
 - [`logical layout`](layout/LOGICAL_LAYOUT.md) — fixed-height landscape metrics, safe areas and a configurable Yandex 2:1 preset.
 - [`mobile viewport runtime`](layout/VIEWPORT_RUNTIME.md) — coherent geometry resolution plus settle/watchdog observation for Android/WebView rotation behavior.

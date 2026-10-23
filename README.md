@@ -12,6 +12,8 @@ Current reference project: `DanilaH/cases-yg` (`Signal 2000`). The v0.2 extracti
 
 The [Seeds extraction](docs/SEEDS_EXTRACTION.md) adds a tested external reward-receipt queue and production specifications for Android WebView ads, puzzle UX/progression, release verification and phone/tablet store media. It does not turn the kit into a Capacitor template or import the game's rules/content.
 
+Sudoku Doku 0.17 contributes opt-in revision snapshot persistence and native banner placement geometry. See [extraction evidence and integration limits](docs/extraction/SUDOKU_INTEGRATION.md). These modules do not require Phaser or Capacitor.
+
 ## Mandatory bootstrap for new Yandex + Phaser games
 
 Every new Yandex Games project using Phaser starts from [`bootstrap/yandex-phaser`](bootstrap/yandex-phaser). This is the mandatory minimum production baseline: real/mock platform separation, semantic Game Ready, startup shell/diagnostics, AVIF/WebP selection hook, hardened mobile viewport handling, strict TS/Vite/Phaser setup, CI and Yandex release audit/checklist.
