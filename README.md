@@ -10,6 +10,8 @@ The goal is not to build a generic game engine. The goal is to preserve expensiv
 
 Current reference project: `DanilaH/cases-yg` (`Signal 2000`). The v0.2 extraction additionally incorporates its real mobile-browser, cold-start and hosted Yandex DRAFT evidence from September 2026.
 
+Sudoku Doku 0.17 contributes opt-in revision snapshot persistence and native banner placement geometry. See [extraction evidence and integration limits](docs/extraction/SUDOKU_INTEGRATION.md). These modules do not require Phaser or Capacitor.
+
 ## Mandatory bootstrap for new Yandex + Phaser games
 
 Every new Yandex Games project using Phaser starts from [`bootstrap/yandex-phaser`](bootstrap/yandex-phaser). This is the mandatory minimum production baseline: real/mock platform separation, semantic Game Ready, startup shell/diagnostics, AVIF/WebP selection hook, hardened mobile viewport handling, strict TS/Vite/Phaser setup, CI and Yandex release audit/checklist.
