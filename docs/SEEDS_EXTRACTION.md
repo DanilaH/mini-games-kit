@@ -4,6 +4,8 @@ Source: [`DanilaH/seeds-bits`](https://github.com/DanilaH/seeds-bits), revision 
 
 This is an extraction map, not a declaration that every source implementation is safe to copy. The kit already contains many suitable primitives. Preserve production knowledge without turning the whole puzzle application into a framework.
 
+Related: the independently added [Sudoku 0.17 extraction plan](extraction/SUDOKU_017.md) covers several of the same Android boundaries. Use the receipt queue and Android specifications here together with that plan rather than creating a second receipt processor or banner geometry contract. Its profile isolation, revision snapshot queue and cloud requirements are not implemented by this contribution.
+
 | Practice | Reusable form | Source and boundary |
 | --- | --- | --- |
 | Earned video reward survives interruption and duplicate callbacks | New [`DurableReceiptQueue`](platform/DURABLE_RECEIPT_QUEUE.md), focused tests and adapter contract | `main.ts::receiveReward`, `hint-budget.ts`, native receipt/ack/persist methods; no hint economy or SDK dependency |

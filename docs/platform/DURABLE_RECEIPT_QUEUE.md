@@ -44,6 +44,7 @@ await receive(pendingReceipt);
 4. A failed acknowledgement retains the external receipt. On recovery, `commit` returns `'already-applied'`, then acknowledgement is retried. Do not let a failed save or acknowledgement silently erase earned rewards.
 5. Keep deduplication ids for the possible replay horizon. Trimming an arbitrary number of ids is unsafe unless the external source can no longer replay those ids. The kit chooses no ledger cap.
 6. If the rewarded game attempt disappeared after restoring an older backup, explicitly choose a consumer recovery policy. Do not silently acknowledge an ungranted reward. Seeds assigns the earned help to the current attempt; that is not a universal default.
+7. When profiles exist, include the owning profile and destination in the receipt and validate them during commit. A profile switch must not redirect an earned receipt to another user. Seeds has no account model; its current-attempt fallback is not a cross-profile recovery policy.
 
 The queue does not validate SDK authenticity, grant amounts, choose a reward target, implement storage, automatically reload ambiguous writes, prove server-side exactly-once processing or provide a durable transaction by itself. A resolved adapter promise is a trust boundary. Avoid reentrant calls to `deliver` from an adapter callback that waits for that same queue.
 

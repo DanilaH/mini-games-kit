@@ -65,6 +65,8 @@ Every reusable primitive should have a short dedicated document that answers fou
 
 ## Production playbooks
 
+- [Sudoku 0.17 extraction plan](extraction/SUDOKU_017.md) — Android ads/rewards, optional profiles, daily catalogs, progress and responsive UX; implementation specification and evidence, no new runtime API.
+
 - [`Seeds extraction map`](SEEDS_EXTRACTION.md) — code versus specification boundaries, source revisions and known defects excluded from reuse.
 - [`Android ads and lifecycle`](android/ADS_AND_LIFECYCLE.md) — native banner reservation/geometry in both orientations, earned rewards, blockers and live-integration proof; specification, not a Capacitor plugin.
 - [`puzzle UI, progress and feel`](PUZZLE_PRODUCTION.md) — undo-safe progression, daily/catalog validation, bounded worker analysis, large-field UX and restrained feedback.
