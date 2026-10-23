@@ -38,6 +38,10 @@ console.log(queue.getCommittedRevision()); // 1
 
 No loading, schema validation, cloud merging, cross-tab locking, multi-writer arbitration, profile ownership, event persistence or transactions. Do not use for payments, receipt acknowledgements, incremental commands or durable transaction staging: coalescing may erase intermediate facts. Use JsonStorageRepository when every write must occur, and the durable transaction/receipt protocols for rewarded operations.
 
+## Combining with earned-reward transactions
+
+Use the [receipt/snapshot coordination protocol](DURABLE_RECEIPT_QUEUE.md#combining-with-revision-snapshot-saves). `flush()` does not acquire a writer lock, reject future stale objects from another producer or refresh this queue's accepted baseline after a separate durable transaction. An old queue left alive after a reward commit can overwrite the reward with a complete but stale snapshot. Quiesce producers, settle their writes, commit the receipt and rebuild the queue from authoritative durable state before resuming ordinary saves. Do not coalesce receipt commands or acknowledge before durable proof.
+
 ## Source and intentional improvements
 
 Extracted from Sudoku Doku 0.17 `src/platform/storage.ts` (`f97cc1ed1c32e7d2f438fbaea6671530b1a5fc59`). Unlike source saveLocal, bytes are captured immediately. Stale inputs and conflicting equal revisions reject rather than silently resolve. No Sudoku State, storage IDs, reducers or global schema imported.
