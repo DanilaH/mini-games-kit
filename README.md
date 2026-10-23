@@ -10,6 +10,8 @@ The goal is not to build a generic game engine. The goal is to preserve expensiv
 
 Current reference project: `DanilaH/cases-yg` (`Signal 2000`). The v0.2 extraction additionally incorporates its real mobile-browser, cold-start and hosted Yandex DRAFT evidence from September 2026.
 
+The [Seeds extraction](docs/SEEDS_EXTRACTION.md) adds a tested external reward-receipt queue and production specifications for Android WebView ads, puzzle UX/progression, release verification and phone/tablet store media. It does not turn the kit into a Capacitor template or import the game's rules/content.
+
 ## Mandatory bootstrap for new Yandex + Phaser games
 
 Every new Yandex Games project using Phaser starts from [`bootstrap/yandex-phaser`](bootstrap/yandex-phaser). This is the mandatory minimum production baseline: real/mock platform separation, semantic Game Ready, startup shell/diagnostics, AVIF/WebP selection hook, hardened mobile viewport handling, strict TS/Vite/Phaser setup, CI and Yandex release audit/checklist.
@@ -39,6 +41,7 @@ See [`docs/BOOTSTRAP.md`](docs/BOOTSTRAP.md) for the repository policy and upgra
 - `@danilah/mini-games-kit/feel` — pointer response, idle drift and parallax math.
 - `@danilah/mini-games-kit/audio` — WebAudio presentation lifecycle and tactile audio utilities.
 - `@danilah/mini-games-kit/platform` — platform-independent activity, browser blockers, analytics, storage, versioned JSON repositories and interstitial eligibility seams.
+- The same `/platform` subpath exports `DurableReceiptQueue` for commit-before-ack delivery of externally persisted rewards; storage and reward policy remain consumer-owned.
 - `@danilah/mini-games-kit/yandex` — Yandex SDK bootstrap/runtime, hardened ads, Player Data mirroring and Metrica adapters.
 - `@danilah/mini-games-kit/yandex-tooling` — Node-only Yandex upload-directory audit and artifact hashing.
 - `@danilah/mini-games-kit/layout` — configurable logical landscape layout/safe-area math plus hardened mobile viewport/orientation observation.
