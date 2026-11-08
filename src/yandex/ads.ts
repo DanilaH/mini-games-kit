@@ -96,7 +96,7 @@ abstract class BaseAdsAdapter {
   }
 
   protected track(event: string, params?: Readonly<Record<string, boolean | number | string>>): void {
-    this.options.analytics?.track(event, params);
+    try { this.options.analytics?.track(event, params); } catch { /* Telemetry must not interrupt ad settlement. */ }
   }
 }
 

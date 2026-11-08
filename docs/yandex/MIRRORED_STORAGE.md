@@ -29,3 +29,5 @@ Signal 2000 compared `totalOpens` and deliberately kept pending reveal transacti
 ## Failure behavior
 
 Cloud read/write/clear failures can be reported through `onError`. A failed mirror does not erase the already-written local copy.
+
+Local writes/removals resolve after local persistence, independently of cloud completion. One cloud write runs at a time; waiting complete snapshots coalesce into the newest value. A hung cloud request retains at most one waiting value and is never treated as cancelled. Cloud reads have a 3-second deadline; obsolete reads cannot overwrite a local mutation. Recreate the adapter on a new profile/session. This is best-effort synchronization, not guaranteed delivery or cross-device locking.

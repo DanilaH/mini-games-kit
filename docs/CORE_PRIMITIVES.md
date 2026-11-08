@@ -1,5 +1,7 @@
 # Core primitives
 
+Historical extraction overview. For current contracts and examples, start at [the API guide](API.md).
+
 Initial extraction source: `DanilaH/cases-yg` / Signal 2000, reference revision `26598606c8b0e143c9c97961bcdd8e03fd37bc61`.
 
 ## `PresentationSkipController`

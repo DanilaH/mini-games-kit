@@ -85,6 +85,7 @@ export class ContinuousNoiseTexture {
   private idleTimer: ReturnType<typeof setTimeout> | null = null;
   private envelopeStartedAt: number | null = null;
   private disposed = false;
+  private retired = new Map<ReturnType<typeof setTimeout>, () => void>();
 
   public constructor(
     private readonly context: AudioContext,
@@ -149,13 +150,17 @@ export class ContinuousNoiseTexture {
     } catch {
       // Already stopped during rapid teardown.
     }
-    globalThis.setTimeout(() => this.disconnectGraph(source, filter, gain), this.profile.releaseMs + 70);
+    const cleanup = (): void => this.teardownGraph(source, filter, gain);
+    const timer = globalThis.setTimeout(() => { this.retired.delete(timer); cleanup(); }, this.profile.releaseMs + 70);
+    this.retired.set(timer, cleanup);
   }
 
   public dispose(): void {
     if (this.disposed) return;
     this.disposed = true;
     this.stop(true);
+    for (const [timer, cleanup] of this.retired) { clearTimeout(timer); cleanup(); }
+    this.retired.clear();
   }
 
   private ensureGraph(): void {

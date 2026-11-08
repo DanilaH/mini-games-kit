@@ -52,7 +52,8 @@ const listFiles = async (root, relative = '') => {
 
 const isTextFile = (file) => !/\.(png|jpe?g|webp|avif|gif|woff2?|mp3|ogg|wav|zip)$/i.test(file);
 
-export const createYandexPhaserBootstrap = async ({ destination, kitRef, projectName }) => {
+export const createYandexPhaserBootstrap = async ({ destination, kitRef, projectName, orientation = 'landscape' }) => {
+  if (!['portrait', 'landscape'].includes(orientation)) throw new Error('Invalid orientation');
   const target = path.resolve(destination);
   const ref = assertExactGitSha(kitRef ?? resolveCurrentSha());
   const name = normalizeProjectName(projectName ?? path.basename(target));
@@ -74,9 +75,12 @@ export const createYandexPhaserBootstrap = async ({ destination, kitRef, project
       await fs.copyFile(source, output);
       continue;
     }
-    const content = (await fs.readFile(source, 'utf8'))
+    let content = (await fs.readFile(source, 'utf8'))
       .replaceAll(PLACEHOLDER_PROJECT, name)
       .replaceAll(PLACEHOLDER_REF, ref);
+    if (orientation === 'portrait' && relative === 'src/app/viewport.ts') {
+      content = content.replace('resolveInitialLandscapeGameCssSize(readInitialViewport())', 'readInitialViewport()').replace("activity.setBlocked('orientation', viewport.portrait);", "activity.setBlocked('orientation', !viewport.portrait);").replace("viewport.portrait ? 'false' : 'true'", "viewport.portrait ? 'true' : 'false'").replace('if (viewport.portrait) return;', 'if (!viewport.portrait) return;').replace('resolveLandscapeGameCssSize(viewport)', 'viewport');
+    }
     await fs.writeFile(output, content);
   }
 
@@ -97,15 +101,17 @@ const parseCli = (argv) => {
   if (!destination) throw new Error('Usage: npm run bootstrap:create -- <destination> [--kit-ref <sha>] [--name <npm-name>]');
   let kitRef;
   let projectName;
+  let orientation;
   while (args.length > 0) {
     const flag = args.shift();
     const value = args.shift();
     if (!value) throw new Error(`Missing value for ${flag}`);
     if (flag === '--kit-ref') kitRef = value;
     else if (flag === '--name') projectName = value;
+    else if (flag === '--orientation') orientation = value;
     else throw new Error(`Unknown option: ${flag}`);
   }
-  return { destination, kitRef, projectName };
+  return { destination, kitRef, projectName, orientation };
 };
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {

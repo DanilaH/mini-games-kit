@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { destroyRenderer } from '@danilah/mini-games-kit/phaser';
 
 import { createStartupPreloadDomView, StartupPreloadController } from '@danilah/mini-games-kit/startup';
 
@@ -47,24 +48,32 @@ try {
   });
 
   const viewport = installViewportRuntime(game, platform.activity);
-  const removeBlockedListener = platform.activity.onBlockedChange((blocked) => {
+  let alive = true;
+  const applyBlocked = (blocked: boolean): void => {
     game.sound.mute = blocked;
-  });
+    game.input.enabled = !blocked;
+    if (blocked) game.loop.sleep();
+    else game.loop.wake();
+  };
+  const removeBlockedListener = platform.activity.onBlockedChange(applyBlocked);
   const debug = installDebugPanel(() => getStartupSnapshot(runtimeImageFormat));
 
   void presentable.then(async () => {
     startupTimeline.mark('gamePresentable');
     await afterPaintFrames(2);
+    if (!alive) return;
+    applyBlocked(platform.activity.isBlocked());
     startupTimeline.mark('ready');
     platform.markReady();
     platform.activity.setGameplayDesired(true);
     preload.complete();
-  });
+  }).catch((error: unknown) => { preload.fail(String(error)); });
 
   const handlePageHide = (event: PageTransitionEvent): void => {
     // A persisted pagehide enters the back-forward cache. Destroying Phaser and
     // platform listeners there leaves the restored document alive but unusable.
     if (event.persisted) return;
+    alive = false;
     window.removeEventListener('pagehide', handlePageHide);
     platform.activity.setGameplayDesired(false);
     removeBlockedListener();
@@ -72,7 +81,7 @@ try {
     viewport.destroy();
     preload.destroy();
     platform.destroy();
-    game.destroy(true);
+    destroyRenderer(game);
   };
   window.addEventListener('pagehide', handlePageHide);
 } catch (error: unknown) {

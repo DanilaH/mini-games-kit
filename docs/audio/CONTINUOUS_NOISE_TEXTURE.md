@@ -31,3 +31,5 @@ const mix = resolveContinuousNoiseTextureMix(profile, progress, velocity, startu
 ## Boundary
 
 The class never reads pointer events. Feed it values from `sampleContinuousInteraction()` or equivalent game logic. Stop/dispose it on cancellation and scene teardown.
+
+dispose also cancels retiring fade timers and synchronously stops/disconnects their graphs.

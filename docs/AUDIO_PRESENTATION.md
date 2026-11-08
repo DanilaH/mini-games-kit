@@ -1,5 +1,7 @@
 # Audio presentation primitives
 
+Historical extraction overview. For current contracts and examples, start at [the API guide](API.md).
+
 Initial extraction source: `DanilaH/cases-yg` / Signal 2000, reference revision `26598606c8b0e143c9c97961bcdd8e03fd37bc61`.
 
 The expensive reusable lesson is not Signal 2000's exact Y2K sounds. It is the ownership model behind them.

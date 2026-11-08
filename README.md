@@ -4,17 +4,23 @@ Experimental reusable production primitives extracted from small Yandex Games pr
 
 The goal is not to build a generic game engine. The goal is to preserve expensive, repeatedly useful mechanics, platform plumbing, asset-production tooling and game-feel infrastructure so new projects do not have to rediscover or re-extract them from old games.
 
+## Start here
+
+| Need | Entry point | Status |
+| --- | --- | --- |
+| New Yandex + Phaser game | [Bootstrap](docs/BOOTSTRAP.md) | Generated runnable project |
+| Select reusable mechanisms | [API guide](docs/API.md) | Implemented APIs with focused usage docs |
+| Android advertising | [Integration contract](docs/android/ADS_AND_LIFECYCLE.md) | Specification and geometry; no bundled native SDK |
+| Review source-game evidence | [Extraction history](docs/EXTRACTION_SOURCE.md) | Historical acceptance, not a deployed consumer upgrade |
+
+Choose portrait or landscape explicitly when generating a game:
+`npm run bootstrap:create -- ../game --orientation portrait`.
+
 ## Status
 
 `0.x` / experimental. APIs are allowed to change when a new real project exposes a better abstraction.
 
-Current reference project: `DanilaH/cases-yg` (`Signal 2000`). The v0.2 extraction additionally incorporates its real mobile-browser, cold-start and hosted Yandex DRAFT evidence from September 2026.
-
-The [Seeds extraction](docs/SEEDS_EXTRACTION.md) adds a tested external reward-receipt queue and production specifications for Android WebView ads, puzzle UX/progression, release verification and phone/tablet store media. It does not turn the kit into a Capacitor template or import the game's rules/content.
-
-Sudoku Doku 0.17 contributes opt-in revision snapshot persistence and native banner placement geometry. See [extraction evidence and integration limits](docs/extraction/SUDOKU_INTEGRATION.md). These modules do not require Phaser or Capacitor.
-
-Water Sort adds inverse native safe-area feedback and continuous damped motion, plus ad-return, assistance/economy, historical campaign and UI acceptance recipes. See [integration and consumer evidence](docs/extraction/WATER_SORT_INTEGRATION.md). Its Phaser3 integration probe does not migrate the released game or import its art/rules.
+Source-game history and integration limits are indexed in [extraction provenance](docs/EXTRACTION_SOURCE.md). Current usage contracts live in [the API guide](docs/API.md).
 
 ## Mandatory bootstrap for new Yandex + Phaser games
 
@@ -72,10 +78,14 @@ The `prepare` script builds `dist` automatically for Git installs. Pin a commit 
 
 `phaser` and `sharp` are optional peers. Browser/framework-independent consumers do not need either merely because other subpaths exist. A project that uses `/phaser` installs Phaser 4.2.1; a Node tool that uses `/assets` installs Sharp.
 
-## Still intentionally local to Signal 2000
+## Scope and verification
 
-Signal 2000-specific rarity tuning, CHIPS/Signal/Hidden Pocket/Overcharge rules, pouch geometry, save conflict policy, Y2K art/audio identity and `OpeningScene` orchestration stay in the game repository.
+Game rules, economy, content, art and platform policy stay in consuming projects.
+The kit supplies mechanisms with explicit ownership and lifecycle boundaries.
 
-Likewise, measured Signal values such as a 672px collectible budget, its current AVIF quality profile and its exact loader concurrency are evidence, not universal kit defaults. Reusable utilities accept policy instead of embedding those numbers.
+- `npm ci && npm run typecheck && npm test` checks portable contracts.
+- `npm run bootstrap:check && npm run bootstrap:smoke` validates generation and installs/builds the packed kit in a separate project.
+- `npm run test:browser` checks browser input, audio and Phaser teardown.
+- Consumer probes under `tools/*consumer-probe.mjs` are opt-in integration experiments requiring a source checkout; they do not upgrade released games.
 
-Road Lines contributes reason-aware blocker observation, captured-touch activation, continuous polyline markers, tuned sample sequences, bounded one-shot playback and sleeping-renderer teardown. Start at [the extraction/integration guide](docs/extraction/ROAD_LINES_INTEGRATION.md); Android optional-SDK recovery and release/analytics checks extend the existing Seeds/Sudoku contracts rather than adding a second receipt processor or native SDK dependency.
+See [test organization](tests/README.md) for the scope and limits of each layer.

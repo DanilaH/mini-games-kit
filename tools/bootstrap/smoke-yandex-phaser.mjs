@@ -19,7 +19,10 @@ try {
 
   const packagePath = path.join(target, 'package.json');
   const pkg = JSON.parse(await fs.readFile(packagePath, 'utf8'));
-  pkg.dependencies['@danilah/mini-games-kit'] = `file:${repoRoot}`;
+  execFileSync('npm', ['pack', '--pack-destination', tempRoot], { cwd: repoRoot, stdio: 'ignore' });
+  const archive = (await fs.readdir(tempRoot)).find(name => name.endsWith('.tgz'));
+  if (!archive) throw new Error('Package archive missing');
+  pkg.dependencies['@danilah/mini-games-kit'] = `file:${path.join(tempRoot, archive)}`;
   await fs.writeFile(packagePath, `${JSON.stringify(pkg, null, 2)}\n`);
 
   runNpm(['install', '--no-audit', '--no-fund']);
