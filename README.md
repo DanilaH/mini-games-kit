@@ -4,6 +4,18 @@ Experimental reusable production primitives extracted from small Yandex Games pr
 
 The goal is not to build a generic game engine. The goal is to preserve expensive, repeatedly useful mechanics, platform plumbing, asset-production tooling and game-feel infrastructure so new projects do not have to rediscover or re-extract them from old games.
 
+## Start here
+
+| Need | Entry point | Status |
+| --- | --- | --- |
+| New Yandex + Phaser game | [Bootstrap](docs/BOOTSTRAP.md) | Generated runnable project |
+| Select reusable mechanisms | [API guide](docs/API.md) | Implemented APIs with focused usage docs |
+| Android advertising | [Integration contract](docs/android/ADS_AND_LIFECYCLE.md) | Specification and geometry; no bundled native SDK |
+| Review source-game evidence | [Extraction history](docs/EXTRACTION_SOURCE.md) | Historical acceptance, not a deployed consumer upgrade |
+
+Choose portrait or landscape explicitly when generating a game:
+`npm run bootstrap:create -- ../game --orientation portrait`.
+
 ## Status
 
 `0.x` / experimental. APIs are allowed to change when a new real project exposes a better abstraction.

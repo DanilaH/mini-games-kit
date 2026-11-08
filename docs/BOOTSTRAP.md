@@ -48,3 +48,5 @@ Those choices must come from the new game's product and measurement evidence. Re
 `tools/bootstrap/create-yandex-phaser.mjs` copies the full template and substitutes project name plus an **exact 40-character kit commit SHA**. It refuses a non-empty destination and leaves no unresolved placeholders.
 
 `npm run bootstrap:check` validates the mandatory manifest and generator output. `npm run bootstrap:smoke` creates a temporary real project, installs the current kit locally, and runs its typecheck, tests, production build and Yandex upload-root audit. Both are part of kit CI so template drift fails the repository gate rather than surfacing in the next game.
+
+The generator accepts --orientation portrait or --orientation landscape (compatibility default). The template blocks game input and the Phaser loop during external blockers, uses sleeping-loop-safe renderer destruction, and deduplicates Phaser. Smoke installation uses a packed archive rather than a source symlink.

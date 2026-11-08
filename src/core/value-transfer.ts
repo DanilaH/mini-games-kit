@@ -80,7 +80,7 @@ export const createValueTransferPlan = (
     flightBaseMs + visualTokenCount * flightPerVisualTokenMs,
   );
   const emissionWindowMs = Math.max(0, durationMs - flightDurationMs);
-  const audioStride = Math.max(1, Math.ceil(Math.max(1, visualTokenCount) / maxAudioEvents));
+  const audioStride = Math.max(1, maxAudioEvents === 1 ? Math.max(1, visualTokenCount) : Math.ceil(Math.max(1, visualTokenCount - 1) / (maxAudioEvents - 1)));
 
   return {
     semanticAmount,
@@ -117,5 +117,5 @@ export const valueTransferProgress = (plan: ValueTransferPlan, visualIndex: numb
 export const shouldPlayValueTransferCue = (plan: ValueTransferPlan, visualIndex: number): boolean => {
   if (plan.visualTokenCount <= 0) return false;
   const clampedIndex = clampInteger(visualIndex, 0, plan.visualTokenCount - 1);
-  return clampedIndex % plan.audioStride === 0 || clampedIndex === plan.visualTokenCount - 1;
+  return clampedIndex === plan.visualTokenCount - 1 || (plan.audioStride < plan.visualTokenCount && clampedIndex % plan.audioStride === 0);
 };

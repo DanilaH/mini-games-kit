@@ -1,3 +1,4 @@
+import { withDeadline } from './deadline.js';
 import { GameplayActivityCoordinator, installDocumentVisibilityBlocker } from '../platform/activity.js';
 import { ConsoleAnalyticsAdapter, type AnalyticsAdapter } from '../platform/analytics.js';
 import { WebStorageAdapter, type StorageAdapter } from '../platform/storage.js';
@@ -152,7 +153,7 @@ export const createYandexPlatformRuntime = async <Language extends string = stri
 
     if (options.cloud) {
       try {
-        const player = await sdk.getPlayer();
+        const player = await withDeadline(sdk.getPlayer(), 3000);
         const { onPlayerUnavailable: _onPlayerUnavailable, ...mirrorOptions } = options.cloud;
         storage = new YandexMirroredStorageAdapter(safeStorage, player, mirrorOptions);
       } catch (error: unknown) {

@@ -43,11 +43,20 @@ export class DurablePendingTransactionRecoveryRequiredError extends Error {
 export class DurablePendingTransactionSession<State, Pending> {
   private state!: State;
   private loaded = false;
+  private mutationTail: Promise<unknown> = Promise.resolve();
+
+  private serialize<T>(operation: () => Promise<T>): Promise<T> {
+    const result = this.mutationTail.then(operation);
+    this.mutationTail = result.catch(() => undefined);
+    return result;
+  }
   private recoveryRequired = false;
 
   public constructor(private readonly adapter: DurablePendingTransactionAdapter<State, Pending>) {}
 
-  public async load(): Promise<State> {
+  public load(): Promise<State> { return this.serialize(() => this.loadExclusive()); }
+
+  private async loadExclusive(): Promise<State> {
     try {
       const state = await this.adapter.load();
       this.state = state;
@@ -75,7 +84,9 @@ export class DurablePendingTransactionSession<State, Pending> {
     return this.recoveryRequired;
   }
 
-  public async prepare(): Promise<Pending> {
+  public prepare(): Promise<Pending> { return this.serialize(() => this.prepareExclusive()); }
+
+  private async prepareExclusive(): Promise<Pending> {
     this.assertMutationSafe();
     const current = this.getState();
     const existing = this.adapter.getPending(current);
@@ -105,7 +116,9 @@ export class DurablePendingTransactionSession<State, Pending> {
     }
   }
 
-  public async commit(): Promise<State> {
+  public commit(): Promise<State> { return this.serialize(() => this.commitExclusive()); }
+
+  private async commitExclusive(): Promise<State> {
     this.assertMutationSafe();
     const current = this.getState();
     const pending = this.adapter.getPending(current);

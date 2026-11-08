@@ -152,3 +152,5 @@ It only owns the local lifecycle and the safety rule: **never create/apply anoth
 Extracted from the proven `OpeningSession` / `pendingReveal` pattern in Signal 2000 (`DanilaH/cases-yg`). The shared contract intentionally removes CHIPS, Signal, Overcharge, Hidden Pocket, loot-pool and collection types.
 
 It also strengthens the source behavior: if an ambiguous write is followed by a failed recovery reload, mutation is explicitly blocked until a successful `load()` re-establishes authoritative durable state.
+
+Calls to load, prepare and commit serialize per session. Simultaneous prepare calls observe the same staged transaction. Rejections do not poison later calls; ambiguous-write recovery rules still apply. Adapter callbacks must not recursively call the session.

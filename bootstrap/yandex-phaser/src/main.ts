@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { destroyRenderer } from '@danilah/mini-games-kit/phaser';
 
 import { createStartupPreloadDomView, StartupPreloadController } from '@danilah/mini-games-kit/startup';
 
@@ -49,6 +50,9 @@ try {
   const viewport = installViewportRuntime(game, platform.activity);
   const removeBlockedListener = platform.activity.onBlockedChange((blocked) => {
     game.sound.mute = blocked;
+    game.input.enabled = !blocked;
+    if (blocked) game.loop.sleep();
+    else game.loop.wake();
   });
   const debug = installDebugPanel(() => getStartupSnapshot(runtimeImageFormat));
 
@@ -59,7 +63,7 @@ try {
     platform.markReady();
     platform.activity.setGameplayDesired(true);
     preload.complete();
-  });
+  }).catch((error: unknown) => { preload.fail(String(error)); });
 
   const handlePageHide = (event: PageTransitionEvent): void => {
     // A persisted pagehide enters the back-forward cache. Destroying Phaser and
@@ -72,7 +76,7 @@ try {
     viewport.destroy();
     preload.destroy();
     platform.destroy();
-    game.destroy(true);
+    destroyRenderer(game);
   };
   window.addEventListener('pagehide', handlePageHide);
 } catch (error: unknown) {

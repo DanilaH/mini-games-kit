@@ -34,3 +34,5 @@ A transfer of `+5000` can animate 24 objects and 12 sound events while the count
 ## Non-goals
 
 This planner does not mutate currency and does not decide flight paths, sprites, easing or destination anchors. Commit value first; presentation observes it.
+
+The final arrival sound is included inside maxAudioEvents, including a budget of one.

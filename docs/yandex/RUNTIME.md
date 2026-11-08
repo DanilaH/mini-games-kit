@@ -103,3 +103,5 @@ The runtime does not:
 - grant ad rewards itself.
 
 The game still wires `activity.onBlockedChange()` into Phaser/audio and calls `activity.setGameplayDesired()` around actual gameplay states.
+
+Optional cloud player acquisition has a 3-second deadline. If it does not settle, startup continues with safe local storage; late resolution does not replace the active storage adapter.
