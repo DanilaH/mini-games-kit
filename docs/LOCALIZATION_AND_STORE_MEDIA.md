@@ -50,6 +50,10 @@ The source inventory used five phone frames (pairs, notebooks, daily archive, co
 
 Reference: `DanilaH/seeds-bits` revision `96caff6aac357e06b8373301b2b895544c9ef179`, `scripts/store-capture.mjs` and `scripts/store-frames.mjs`. This extends the authentic-media contract below; it does not replace it.
 
+## Water Sort composition and motion evidence
+
+See the [Water Sort acceptance recipe](extraction/WATER_SORT_PRODUCTION.md) for portrait gameplay inside horizontal store compositions, parameterized capture tooling, final launcher/payload consistency and original-frame/lossless animation checks. A horizontal marketing card does not establish landscape support. Recheck current storefront rules for the intended asset type; keep raw captures distinct from composites.
+
 ## Provenance and extraction boundary
 
 These lessons came from [Signal 2000's Russian Hidden Pocket copy correction (#191)](https://github.com/DanilaH/cases-yg/pull/191), [follow-up localization fixes and regression tests (#194)](https://github.com/DanilaH/cases-yg/pull/194), and the accompanying RU/EN screenshot-selection work. The source experience revealed both literal-translation pitfalls and how easily synthetic artwork or repetitive collection captures can be mistaken for useful store screenshots. This document preserves the **review and provenance method**, not Signal-specific content or implementation. No new public API or localization dependency is introduced.

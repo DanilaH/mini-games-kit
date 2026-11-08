@@ -1,5 +1,7 @@
 # Small web-game performance playbook
 
+Water Sort adds [unfinished reflow, per-object material-cache invalidation and visual/geometry acceptance cases](extraction/WATER_SORT_PRODUCTION.md). Preserve a final rendered frame for every motion owner, not only the shortest entry animation.
+
 This document records production lessons from Signal 2000 that are reusable as **method**, not as universal numeric settings.
 
 ## Measure the right budgets

@@ -1,5 +1,7 @@
 # Android release and independent acceptance
 
+Water Sort's [acceptance matrix](extraction/WATER_SORT_PRODUCTION.md) adds visible-frame versus DOM readiness, launcher-icon/payload consistency, historical attempts and interruption cases. Its [integration record](extraction/WATER_SORT_INTEGRATION.md) deliberately separates browser/native-double acceptance from signed-release/device verification.
+
 Production checklist from [Seeds](SEEDS_EXTRACTION.md). It supplements, rather than replaces, platform-specific documentation. An item is only passed when its evidence is recorded; this document is not evidence that a future consumer has passed it.
 
 ## Reproducible build and size

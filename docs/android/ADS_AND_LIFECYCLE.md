@@ -1,5 +1,7 @@
 # Android WebView ads: implementation specification
 
+Water Sort adds the [independent dismissal/foreground transition recipe](../platform/FOREGROUND_TRANSITION_RECIPE.md) and [inverse safe-area feedback](../layout/NATIVE_BANNER_PLACEMENT.md). A shared preload generation can invalidate the active show's dismissal callback even when JS lifecycle logic is correct; test both sides of the bridge. Diagnostic stages must distinguish rejected geometry/SDK-not-requested from load errors/no-fill; include request/load/show counts and measured spaces without configuration secrets.
+
 Production knowledge from [Seeds](../SEEDS_EXTRACTION.md), not a bundled Java/Capacitor adapter. Native SDK integration must be implemented and tested per consumer; the existing `/yandex` adapter targets **Yandex Games web**, not Yandex Mobile Ads for Android.
 
 ## Banner geometry and reservation

@@ -1,5 +1,7 @@
 # Low-pressure puzzle UI, progress and feel
 
+Water Sort adds [assistance/purchase flows, verified rescue, historical campaign migration, continuous material feel and a UI-state acceptance matrix](extraction/WATER_SORT_PRODUCTION.md). These extend the recipes below; solver/rules/balance stay in each game.
+
 Implementation requirements extracted from [Seeds](SEEDS_EXTRACTION.md). This is a reusable specification; the game supplies its own mechanics, balance and art direction.
 
 ## UI that behaves like a game

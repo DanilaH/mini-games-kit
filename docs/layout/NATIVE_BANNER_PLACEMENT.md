@@ -1,5 +1,26 @@
 # Native banner placement geometry
 
+## Safe-area feedback before measuring the slot
+
+Import `resolveNativeSafeAreaCss` from `@danilah/mini-games-kit/layout`. Call with `{viewport, webView, root, safeInsets?}` in the same CSS/native spaces as placement below. It returns `{kind:'safe', insets, rect}` with conservative **whole CSS-pixel** exclusions and usable CSS rect, or `{kind:'hidden',reason:'invalid-geometry'|'no-safe-area'}`. `insets` and `rect` are CSS pixels; native input insets remain native pixels. No SDK dependency.
+
+```ts
+const safe = resolveNativeSafeAreaCss({ viewport, webView, root, safeInsets });
+if (safe.kind === 'safe') {
+  rootElement.style.setProperty('--native-safe-bottom', `${safe.insets.bottom}px`);
+  // Apply the other exclusions as needed, coalesce remeasurement, then call
+  // resolveNativeBannerPlacement with the actual measured DOM slot.
+}
+```
+
+It intersects root safe bounds with the WebView and inverts the **width-based** mapping on all four edges. Do not compute bottom reserve as just `ceil(nativeBottom/scale)`: CSS viewport height may itself be rounded. Water Sort's observed 1080×2400 WebView/392×872 CSS viewport/safe-bottom 130 px requires 49 CSS px, rather than 48. The existing placement helper correctly rejected the old slot; this helper supplies corrective layout feedback. Apply exclusions once in an explicit layout coordinate contract; do not blindly add them again to CSS env safe-area insets. Hidden/disjoint areas require layout recovery, not showing outside bounds.
+
+Inputs require finite positive sizes and nonnegative finite native exclusions; WebView offsets may be negative. Remeasure after SDK height reservation, native inset or viewport changes; no stale geometry cache. Rounding intentionally sacrifices less than one CSS pixel per edge. This does not measure a device, install observers, select a banner height, style Android navigation bars or guarantee SDK fill.
+
+Source addition: `DanilaH/watery-water-sort@2f86c1e`, `BannerGeometry.requiredBottomInsetCss`; generalized from bottom to all edges with validation. The consumer probe checks existing Java mapping/bottom inverse against shared TypeScript fixtures. Pure geometry evidence is separate from physical-device acceptance.
+
+## Slot placement
+
 Import `resolveNativeBannerPlacement` and its types from `@danilah/mini-games-kit/layout`. Pure TypeScript, no Android/Capacitor/DOM dependency. This is tested geometry, **not a bundled advertising SDK adapter**.
 
 ## Contract
