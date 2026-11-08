@@ -157,7 +157,7 @@ export const createYandexPlatformRuntime = async <Language extends string = stri
         const { onPlayerUnavailable: _onPlayerUnavailable, ...mirrorOptions } = options.cloud;
         storage = new YandexMirroredStorageAdapter(safeStorage, player, mirrorOptions);
       } catch (error: unknown) {
-        options.cloud.onPlayerUnavailable?.(error);
+        try { options.cloud.onPlayerUnavailable?.(error); } catch { /* Optional diagnostic. */ }
       }
     }
 

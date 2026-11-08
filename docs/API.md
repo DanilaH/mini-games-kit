@@ -4,6 +4,18 @@ This index is the entry point for the public surface of `@danilah/mini-games-kit
 
 Every reusable primitive should have a short dedicated document that answers four questions: what problem it solves, what its public API is, how a game should call it, and what it deliberately does **not** own. The code remains `0.x`/experimental; these docs describe the current contract, not a promise of permanent API stability.
 
+## Choose storage by the operation
+
+| Operation | Mechanism | Important boundary |
+| --- | --- | --- |
+| Settings or every ordered JSON write | JsonStorageRepository | Codec owns validation and migration |
+| Frequent complete save snapshots | RevisionSnapshotQueue | Intermediate snapshots may coalesce |
+| Locally staged reward/action | DurablePendingTransactionSession | Exact pending identity survives interruption |
+| Externally earned SDK reward | DurableReceiptQueue | Persist effect and deduplication before acknowledging |
+| Optional Yandex cloud copy | YandexMirroredStorageAdapter | Local durability and best-effort cloud completion are distinct |
+
+For combined receipt/snapshot writers, follow [the coordination contract](platform/DURABLE_RECEIPT_QUEUE.md#combining-with-revision-snapshot-saves).
+
 ## Core
 
 - [`PresentationSkipController`](core/PRESENTATION_SKIP.md) — skippable presentation beats without durable-state ownership.
@@ -79,14 +91,10 @@ Every reusable primitive should have a short dedicated document that answers fou
 
 ## Production playbooks
 
-- [Water Sort extraction](extraction/WATER_SORT_INTEGRATION.md) — safe-area feedback, continuous motion, consumer acceptance and additional puzzle/UX contracts.
 - [Foreground transition recipe](platform/FOREGROUND_TRANSITION_RECIPE.md) — exactly-once continuation after independent ad dismissal and foreground conditions; copyable example, not an SDK adapter.
 
-- [Road Lines extraction](extraction/ROAD_LINES_INTEGRATION.md) — code provenance, semantic changes and integration limits.
 
-- [Sudoku 0.17 extraction plan](extraction/SUDOKU_017.md) — Android ads/rewards, optional profiles, daily catalogs, progress and responsive UX; implementation specification and evidence, no new runtime API.
 
-- [`Seeds extraction map`](SEEDS_EXTRACTION.md) — code versus specification boundaries, source revisions and known defects excluded from reuse.
 - [`Android ads and lifecycle`](android/ADS_AND_LIFECYCLE.md) — native banner reservation/geometry in both orientations, earned rewards, blockers and live-integration proof; specification, not a Capacitor plugin.
 - [`puzzle UI, progress and feel`](PUZZLE_PRODUCTION.md) — undo-safe progression, daily/catalog validation, bounded worker analysis, large-field UX and restrained feedback.
 - [`Android release acceptance`](ANDROID_RELEASE_ACCEPTANCE.md) — release shrinking, signing/artifact identity, independent test layers and honest evidence.
@@ -95,3 +103,12 @@ Every reusable primitive should have a short dedicated document that answers fou
 - [`localization and authentic store media`](LOCALIZATION_AND_STORE_MEDIA.md) — context-aware game copy, counted-resource formatting, in-engine screenshot provenance and per-locale acceptance; guidance only, no new API.
 
 Additional modules added later must be linked here as part of the same change that exposes their public API.
+
+## Provenance and consumer evidence
+
+These record extraction history and validation limits; they are not required setup steps.
+
+- [Water Sort extraction](extraction/WATER_SORT_INTEGRATION.md) — safe-area feedback, continuous motion, consumer acceptance and additional puzzle/UX contracts.
+- [Road Lines extraction](extraction/ROAD_LINES_INTEGRATION.md) — code provenance, semantic changes and integration limits.
+- [Sudoku 0.17 extraction plan](extraction/SUDOKU_017.md) — Android ads/rewards, optional profiles, daily catalogs, progress and responsive UX; implementation specification and evidence, no new runtime API.
+- [`Seeds extraction map`](SEEDS_EXTRACTION.md) — code versus specification boundaries, source revisions and known defects excluded from reuse.

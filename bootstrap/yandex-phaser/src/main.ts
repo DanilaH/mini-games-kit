@@ -48,17 +48,21 @@ try {
   });
 
   const viewport = installViewportRuntime(game, platform.activity);
-  const removeBlockedListener = platform.activity.onBlockedChange((blocked) => {
+  let alive = true;
+  const applyBlocked = (blocked: boolean): void => {
     game.sound.mute = blocked;
     game.input.enabled = !blocked;
     if (blocked) game.loop.sleep();
     else game.loop.wake();
-  });
+  };
+  const removeBlockedListener = platform.activity.onBlockedChange(applyBlocked);
   const debug = installDebugPanel(() => getStartupSnapshot(runtimeImageFormat));
 
   void presentable.then(async () => {
     startupTimeline.mark('gamePresentable');
     await afterPaintFrames(2);
+    if (!alive) return;
+    applyBlocked(platform.activity.isBlocked());
     startupTimeline.mark('ready');
     platform.markReady();
     platform.activity.setGameplayDesired(true);
@@ -69,6 +73,7 @@ try {
     // A persisted pagehide enters the back-forward cache. Destroying Phaser and
     // platform listeners there leaves the restored document alive but unusable.
     if (event.persisted) return;
+    alive = false;
     window.removeEventListener('pagehide', handlePageHide);
     platform.activity.setGameplayDesired(false);
     removeBlockedListener();

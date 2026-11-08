@@ -36,4 +36,13 @@ describe('production failure boundaries', () => {
     const storage=new YandexMirroredStorageAdapter({getItem:async()=>raw,setItem:async(_,v)=>{raw=v;},removeItem:async()=>{raw=null;}},{getData:()=>new Promise(r=>{finish=r;}),setData:async v=>{sent.push(v.s);}},{syncKey:'s',cloudField:'s',reconcile:l=>l});
     const read=storage.getItem('s');await Promise.resolve();await storage.setItem('s','two');finish({s:'old'});expect(await read).toBe('two');expect(sent).toEqual(['two']);
   });
+  it('returns the latest local save when an obsolete cloud read rejects', async () => {
+    let raw: string|null='one';let fail!: (e: Error)=>void;
+    const storage=new YandexMirroredStorageAdapter({getItem:async()=>raw,setItem:async(_,v)=>{raw=v;},removeItem:async()=>{raw=null;}},{getData:()=>new Promise((_,reject)=>{fail=reject;}),setData:async()=>{}},{syncKey:'s',cloudField:'s',reconcile:l=>l});
+    const read=storage.getItem('s');
+    while (!fail) await Promise.resolve();
+    await storage.setItem('s','two');fail(Error('offline'));
+    expect(await read).toBe('two');
+  });
+
 });

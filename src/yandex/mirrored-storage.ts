@@ -65,7 +65,7 @@ export class YandexMirroredStorageAdapter implements StorageAdapter {
     if (key !== this.options.syncKey) return this.local.getItem(key);
 
     const epoch = this.epoch;
-    const localRaw = await this.local.getItem(key);
+    const localRaw = await this.localOperation(() => this.local.getItem(key));
     let cloudRaw: string | null = null;
     try {
       const data = await withDeadline(this.player.getData([this.options.cloudField]), 3000);
@@ -73,13 +73,16 @@ export class YandexMirroredStorageAdapter implements StorageAdapter {
       cloudRaw = typeof value === 'string' && value.length > 0 ? value : null;
     } catch (error: unknown) {
       this.report('read', error);
-      return localRaw;
+      return this.localOperation(() => this.local.getItem(key));
     }
 
     return this.localOperation(async () => {
       if (epoch !== this.epoch) return this.local.getItem(key);
       const selected = this.options.reconcile(localRaw, cloudRaw);
-      if (selected !== null && selected !== localRaw) await this.local.setItem(key, selected);
+      if (selected !== null && selected !== localRaw) {
+        this.epoch++;
+        await this.local.setItem(key, selected);
+      }
       if (selected !== null && selected !== cloudRaw && this.shouldMirror(selected)) this.queueMirror(selected);
       return selected;
     });
