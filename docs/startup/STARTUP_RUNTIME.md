@@ -57,3 +57,7 @@ Call completion from the game's semantic **presentable/usable frame**, not merel
 ## Non-goals
 
 The module does not decide which assets are startup-critical, when Yandex `LoadingAPI.ready()` is correct, how Phaser is configured, or what startup threshold is acceptable. Those remain game/platform policy.
+
+## First paint and optional-service boundary
+
+Do not await optional ad/telemetry status, listener registration or receipt acknowledgement before core lifecycle/first frame. Avoid sleeping a renderer before the first postrender needed by readiness. Remove a covering startup shell, allow the uncovered UI to cross a paint boundary, then publish semantic ready. Test immediate first touch/reload under CPU throttling; merely setting a ready flag in the removal callback is insufficient. Never extend timeouts to conceal a circular readiness dependency. Critical save recovery remains a separate explicit product boundary.

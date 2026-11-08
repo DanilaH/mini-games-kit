@@ -75,3 +75,5 @@ The `prepare` script builds `dist` automatically for Git installs. Pin a commit 
 Signal 2000-specific rarity tuning, CHIPS/Signal/Hidden Pocket/Overcharge rules, pouch geometry, save conflict policy, Y2K art/audio identity and `OpeningScene` orchestration stay in the game repository.
 
 Likewise, measured Signal values such as a 672px collectible budget, its current AVIF quality profile and its exact loader concurrency are evidence, not universal kit defaults. Reusable utilities accept policy instead of embedding those numbers.
+
+Road Lines contributes reason-aware blocker observation, captured-touch activation, continuous polyline markers, tuned sample sequences, bounded one-shot playback and sleeping-renderer teardown. Start at [the extraction/integration guide](docs/extraction/ROAD_LINES_INTEGRATION.md); Android optional-SDK recovery and release/analytics checks extend the existing Seeds/Sudoku contracts rather than adding a second receipt processor or native SDK dependency.

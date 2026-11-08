@@ -55,3 +55,16 @@ Both browser helpers perform an initial sync immediately and return deterministi
 The coordinator does not pause Phaser, audio or timers directly. It only owns blocker aggregation and the start/stop edge; consumers wire those edges to their runtime.
 
 The orientation helper does not render a rotate-device overlay or choose product breakpoints. It only reports the injected viewport rule as a blocker.
+
+## Reason-aware consumers
+
+`getBlockReasons(): readonly string[]` returns a detached frozen snapshot. `onBlockReasonsChange(listener)` immediately delivers the current snapshot and returns unsubscribe. It also notifies on pause → pause+background, where the aggregate boolean does not change. Duplicate assignments do not notify. Subscribers should derive eligibility, not use snapshots as mutable coordinator storage.
+
+```ts
+const dispose = activity.onBlockReasonsChange(reasons => {
+  const hard = reasons.some(r => !['pause', 'shop'].includes(r));
+  player.setEligibility({ gameplay: reasons.length === 0, ui: !hard });
+});
+```
+
+Reason names and permissions are consumer policy. A UI exception does not resume gameplay or permit sound under ads/background. Existing onBlockedChange remains an aggregate edge; do not replace the coordinator with a second blocker Set merely to observe reason changes.

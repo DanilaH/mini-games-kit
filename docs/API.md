@@ -17,11 +17,17 @@ Every reusable primitive should have a short dedicated document that answers fou
 
 - [`pointer-response`](feel/POINTER_RESPONSE.md) — normalized pointer input, idle drift, response smoothing and parallax math.
 
+- [`touch activation`](feel/TOUCH_ACTIVATION.md) — completed touch semantics after captured gestures.
+- [`polyline markers`](feel/POLYLINE_MARKERS.md) — continuous arc-length phase with corner clearance.
+
 ## Audio
 
 - [`PresentationAudioMixer`](audio/PRESENTATION_MIXER.md) — base ambience + one persistent foreground state, ducking and lifecycle ownership.
 - [`ContinuousNoiseTexture`](audio/CONTINUOUS_NOISE_TEXTURE.md) — progress/velocity-driven tactile WebAudio texture.
 - [`pitch`](audio/PITCH.md) — bounded one-shot variation and rising accumulation pitch contours.
+
+- [`musical sample sequences`](audio/SAMPLE_SEQUENCE.md) — tuned discrete phrases and nonrepeating timbres.
+- [`one-shot player`](audio/ONE_SHOT_PLAYER.md) — cold UI feedback, channel eligibility and bounded source lifecycle.
 
 ## Platform-independent runtime
 
@@ -60,6 +66,8 @@ Every reusable primitive should have a short dedicated document that answers fou
 - [`text sharpness`](phaser/TEXT_SHARPNESS.md) — Scene-scoped Phaser Text resolution.
 - [`runtime image loader`](phaser/RUNTIME_IMAGE_LOADER.md) — shutdown-safe lazy image loading for projects that deliberately permit runtime loading.
 
+- [`destroy renderer`](phaser/DESTROY_RENDERER.md) — finish deferred Phaser teardown even from sleep.
+
 ## Image/runtime assets
 
 - [`image asset pipeline`](assets/ASSET_PIPELINE.md) — background removal, normalization and validation for generated 2D art.
@@ -68,6 +76,8 @@ Every reusable primitive should have a short dedicated document that answers fou
 - [`runtime asset loading policy`](assets/LOADING_POLICY.md) — classify startup/session/deferred assets and make post-ready loading an explicit UX contract rather than an accidental stall.
 
 ## Production playbooks
+
+- [Road Lines extraction](extraction/ROAD_LINES_INTEGRATION.md) — code provenance, semantic changes and integration limits.
 
 - [Sudoku 0.17 extraction plan](extraction/SUDOKU_017.md) — Android ads/rewards, optional profiles, daily catalogs, progress and responsive UX; implementation specification and evidence, no new runtime API.
 

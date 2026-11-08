@@ -32,3 +32,17 @@ Use separate banner/interstitial/rewarded ids and an explicit test/live build mo
 Track request, load success/error, show, impression, dismissal, show error, earned reward and durable grant as distinct events. Emit game-start on the first meaningful gameplay action, not every screen open; persist attempt start/completion markers when duplicate events matter. Keep raw saves, boards and identifiers used for configuration out of custom event payloads. A test-event flag does not isolate the SDK's automatic test-device audience/session counters.
 
 A signed APK and mocked SDK tests prove neither live fill nor analytics delivery. Verify the native banner, interstitial, rewarded credit, audio/input return and analytics dashboard on a real device. VPN/network differences are diagnostic variables, not proof that unavailable inventory is an application bug. SDK/configuration/disclosure details must be rechecked against current official docs before a new consumer ships.
+
+## Optional SDK startup and recovery — Road Lines correction
+
+Install core visibility/native lifecycle/Back and render the first presentable frame independently of ad listener/status/pending/ack. These calls run in the background. Missing or failed receipt query/ack must not block Play, Continue, route input, hints or navigation. Do not confuse optional-service failure with an ambiguous valuable-storage write; the latter retains its storage recovery protection.
+
+A request deadline stops waiting, not the native operation. Keep at most one unresolved RPC per operation/receipt ID across retries; use bounded backoff and retain late results. Remove a listener handle even if it arrives after disposal. Do not delete an unconfirmed receipt or infer a reward from timeout. Reconcile a valid receipt against the latest coordinated state, commit effect+ledger, then exact ack; ack failure cannot freeze already confirmed funds. Async storage still needs the shared quiesce/drain/rebase protocol, not an assumed synchronous transaction.
+
+Keep preloading/retry in the background. A preload completion never authorizes showing. A genuinely shown fullscreen remains blocked until native dismissal; a generic timeout must not resume gameplay under it. Shared cadence may count active play time and new progress, defer after rewarded, protect gift/result transitions and persist conservative restart state. Existing ActionInterstitialGate counts requests and keeps its documented semantics; do not silently turn it into an impression-based durable cadence engine.
+
+Required faults: never-resolving status/pending; late pending after deadline; duplicate earned/final callbacks; failed ack plus spending/restart; background while already paused; dispose during init; missing pre-show callback versus genuinely shown ad. Require progress/playability and bounded outstanding calls, not just a visible error dialog.
+
+## Native feedback reference boundary
+
+Road Lines RoadFeedbackPlugin adds Android vibrator/amplitude capability checks, API-level fallbacks, foreground cancellation, priority and freshness guards. Reuse as a separately audited native recipe; keep profiles/durations/amplitudes per game and sound/vibration preferences independent. Test cancel ordering against delayed native pulses: timestamp freshness alone is not a generation barrier. Web vibration support is not proof of native feel. No Capacitor dependency is introduced into portable kit.

@@ -1,0 +1,68 @@
+{
+  "consumer": "b62eb1163ae21aeb34132c93297dac70ca6a7357",
+  "donor": "89c3e067f7f3090fc94212ce05101105481fd4f8",
+  "donorFileHashes": {
+    "platform/activity.ts": "64194da6bd2b90eaf555a8bbb77669849fb606531332e82c0036614cfb397c16",
+    "feel/touch-activation.ts": "9423a79f356e1b72b47e0109f0ea76c00f2183b7c434a12bcb0bbe4b1b9cf271",
+    "feel/polyline-markers.ts": "cc3974410409bea206f3b845145e168d51962d1bdddbcc4bdc45664e6e820ff3",
+    "audio/sample-sequence.ts": "f73b826d957658e643dfdea7152887ad0bb82362158c394e927f5dbf47c5f7b8",
+    "audio/one-shot-player.ts": "14630c12d422176f79a92a62a5479dc989d480db6e088fda6967ba0bb76a2def",
+    "phaser/destroy-renderer.ts": "25a9795a88480803b9ae2137b67ffb66106bac84b067897101a5139f4f8a64fc"
+  },
+  "checks": [
+    {
+      "name": "consumer-types",
+      "exitCode": 0
+    },
+    {
+      "name": "consumer-model-feedback",
+      "exitCode": 0
+    },
+    {
+      "name": "consumer-touch-ui",
+      "exitCode": 0
+    },
+    {
+      "name": "consumer-audio",
+      "exitCode": 0
+    },
+    {
+      "name": "consumer-optional-ads",
+      "exitCode": 0
+    },
+    {
+      "name": "kit-real-sample-playback",
+      "exitCode": 0
+    }
+  ],
+  "limits": [
+    "Temporary integration adapters, not a consumer vendor upgrade or native/device acceptance"
+  ],
+  "publishedConsumer": "5919ca087545604bf9bfaef7d2f7cd5b693e4dc7",
+  "publishedConsumerTree": "353f591f69ffec96ff2040e54ad1b5d2aaf21a4b",
+  "browser": {
+    "checks": [
+      "touch capture/repeat/cancel/mouse/keyboard/dispose CPU1",
+      "Road Lines actual decoded sample CPU1",
+      "real WebAudio cold UI/modal/hard block/single-flight resume/expiry/density/owned+borrowed dispose CPU1",
+      "touch capture/repeat/cancel/mouse/keyboard/dispose CPU4",
+      "Road Lines actual decoded sample CPU4",
+      "real WebAudio cold UI/modal/hard block/single-flight resume/expiry/density/owned+borrowed dispose CPU4",
+      "actual Phaser4.2.1 active/sleeping destroy"
+    ],
+    "errors": []
+  },
+  "kitChecks": [
+    "typecheck: PASS",
+    "130 tests / 28 files: PASS",
+    "build: PASS",
+    "package dry run: PASS",
+    "bootstrap validation: PASS",
+    "generated bootstrap install/types/test/build/audit: PASS"
+  ],
+  "sourceGameChecks": [
+    "241 tests /32 files +5 release config checks: PASS",
+    "analytics browser10 groups: PASS",
+    "Android sync: PASS (disabled local SDK config, not native build)"
+  ]
+}
