@@ -1,0 +1,99 @@
+{
+  "donor": "6373417e2121deb8f3877557115e6712726e6219",
+  "consumer": "2f86c1eaa311e2da1de11f69d5df8b11f28e6c0d",
+  "donorDirty": true,
+  "consumerDirty": false,
+  "donorFileHashes": {
+    "feel/damped-motion.ts": "489428aa9294b768a88b64e7c62e82fcd0eaab5bb01c919a079bc46f3fecf638",
+    "layout/native-banner-placement.ts": "09f3f43b1394fcee5c44ce185d2ccd1ffac41602ef965082c15bc25acab487bb"
+  },
+  "probe": "ignored temporary consumer copy; see local .test-output/water-sort-consumer.json",
+  "checks": [
+    {
+      "name": "consumer-build",
+      "exitCode": 0
+    },
+    {
+      "name": "consumer-model",
+      "exitCode": 0
+    },
+    {
+      "name": "native-geometry-compile",
+      "exitCode": 0
+    },
+    {
+      "name": "native-geometry",
+      "exitCode": 0
+    },
+    {
+      "name": "native-typescript-geometry-parity",
+      "exitCode": 0,
+      "cases": 6
+    },
+    {
+      "name": "native-ads-negative-control",
+      "exitCode": 0
+    },
+    {
+      "name": "native-ads-current",
+      "exitCode": 0
+    },
+    {
+      "name": "consumer-browser",
+      "exitCode": 0
+    },
+    {
+      "name": "consumer-ad-return",
+      "exitCode": 0,
+      "passed": 12
+    },
+    {
+      "name": "consumer-hint-routes",
+      "exitCode": 0,
+      "passed": 3
+    },
+    {
+      "name": "consumer-assistance-ui",
+      "exitCode": 0,
+      "passed": 12
+    }
+  ],
+  "limits": [
+    "Temporary Phaser3 integration, not a released consumer dependency upgrade.",
+    "Native SDK callbacks are doubled; no physical device, live fill, audible/haptic quality or store acceptance is inferred."
+  ],
+  "nativeGeometryHash": "21148369bea54639739271ed1a4faf72f05bfa49d4e6bffd3702366d4ce803c3",
+  "logHashes": {
+    "consumer-ad-return": "4956baf6dac1ad8e62525772ac6ac8c8fe9911194253838601cddfffcc2a3171",
+    "consumer-hint-routes": "f2652cfe2d4d89a6dd4a9d505ee623ed6e14a13dd335d4404942319ee1b231ea",
+    "consumer-assistance-ui": "d77924189665becd22957e66e06d7fad094166715a1a82ac522c9145829702ec",
+    "consumer-build": "7c4920d307a667861bb8d417590802a932ef46a9c82ea4f70a3f39db516ac4e1",
+    "consumer-model": "42189853da95b923d070871cee1c89aac82fc8eb19833b5b38ee0ec3ed703e26",
+    "consumer-browser": "57b4493492bddb9c1f3a8a262cefdeef7e909f07360436fef66ab53f3b90a37b",
+    "native-geometry": "a08e8bcce573d0f91168f393d81661ce9741fa400f7aa4d04f8bcfa8956a48a2",
+    "native-ads-negative-control": "c6b5dbd3fee97f39c51f3347f380a1450f5479e8847edd2572b46972c28db30d",
+    "native-ads-current": "ea98202e88c132091e112ee40bc8a8a21589f49e655f291faae96dd7b659bab7"
+  },
+  "date": "2026-11-08",
+  "kitChecks": [
+    "typecheck: PASS",
+    "145 tests / 29 files: PASS",
+    "build: PASS",
+    "package dry run: PASS",
+    "bootstrap validation: PASS",
+    "generated bootstrap install/typecheck/test/build/audit: PASS",
+    "existing browser touch/WebAudio CPU1x/4x and Phaser4 active/sleeping teardown: PASS"
+  ],
+  "consumerCounts": {
+    "model": 47,
+    "browser": 60,
+    "nativeGeometryFixtures": 6,
+    "nativeAdControlFlow": 9
+  },
+  "notes": [
+    "Donor was a dirty extraction tree over recorded HEAD; donorFileHashes identify exact runtime files used.",
+    "Consumer-model and consumer-hint-routes were run separately; future probe combines them. Additional browser groups were run individually in the same temporary copy.",
+    "Header acceptance excludes the 640x320 case because this extraction does not claim landscape support for the portrait-only Android game. Older source browser suites may exercise browser landscape geometry as regression fixtures.",
+    "ForegroundTransition is tested with the kit activity coordinator; the source controller is verified separately, not replaced by the example."
+  ]
+}

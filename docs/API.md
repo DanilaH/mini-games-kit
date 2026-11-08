@@ -15,6 +15,8 @@ Every reusable primitive should have a short dedicated document that answers fou
 
 ## Feel
 
+- [`continuous damped motion`](feel/DAMPED_MOTION.md) — impulse-preserving underdamped motion with explicit game tuning; no scheduler.
+
 - [`pointer-response`](feel/POINTER_RESPONSE.md) — normalized pointer input, idle drift, response smoothing and parallax math.
 
 - [`touch activation`](feel/TOUCH_ACTIVATION.md) — completed touch semantics after captured gestures.
@@ -76,6 +78,9 @@ Every reusable primitive should have a short dedicated document that answers fou
 - [`runtime asset loading policy`](assets/LOADING_POLICY.md) — classify startup/session/deferred assets and make post-ready loading an explicit UX contract rather than an accidental stall.
 
 ## Production playbooks
+
+- [Water Sort extraction](extraction/WATER_SORT_INTEGRATION.md) — safe-area feedback, continuous motion, consumer acceptance and additional puzzle/UX contracts.
+- [Foreground transition recipe](platform/FOREGROUND_TRANSITION_RECIPE.md) — exactly-once continuation after independent ad dismissal and foreground conditions; copyable example, not an SDK adapter.
 
 - [Road Lines extraction](extraction/ROAD_LINES_INTEGRATION.md) — code provenance, semantic changes and integration limits.
 

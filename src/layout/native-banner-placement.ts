@@ -1,6 +1,15 @@
 /** All rects use x/y at their outer border, without scroll or parent-padding adjustment. */
 export interface BannerRect { x: number; y: number; width: number; height: number }
 export interface BannerInsets { left: number; top: number; right: number; bottom: number }
+export interface NativeSafeAreaInput {
+  viewport: { width: number; height: number };
+  webView: BannerRect;
+  root: { width: number; height: number };
+  safeInsets?: BannerInsets;
+}
+export type NativeSafeAreaCss =
+  | { kind: 'safe'; insets: BannerInsets; rect: BannerRect }
+  | { kind: 'hidden'; reason: 'invalid-geometry' | 'no-safe-area' };
 export interface NativeBannerPlacementInput {
   slot: BannerRect; // CSS viewport coordinates, e.g. getBoundingClientRect()
   viewport: { width: number; height: number }; // same CSS coordinate space as slot
@@ -21,6 +30,34 @@ const positive = (n: number) => finite(n) && n > 0;
 const validRect = (r: BannerRect) => finite(r.x) && finite(r.y) && positive(r.width) && positive(r.height);
 const contains = (outer: BannerRect, inner: BannerRect) => inner.x >= outer.x && inner.y >= outer.y &&
   inner.x + inner.width <= outer.x + outer.width && inner.y + inner.height <= outer.y + outer.height;
+
+/** Invert the placement projection, including CSS/native height rounding and WebView offsets.
+ * Outputs whole CSS-pixel exclusions. Apply to layout, remeasure, then resolve placement.
+ */
+export function resolveNativeSafeAreaCss(input: NativeSafeAreaInput): NativeSafeAreaCss {
+  const { viewport, webView, root } = input;
+  const safe = input.safeInsets ?? { left: 0, top: 0, right: 0, bottom: 0 };
+  if (!validRect(webView) || !positive(viewport.width) || !positive(viewport.height) ||
+    !positive(root.width) || !positive(root.height) ||
+    ![safe.left, safe.top, safe.right, safe.bottom].every(n => finite(n) && n >= 0)) {
+    return { kind: 'hidden', reason: 'invalid-geometry' };
+  }
+  const scale = webView.width / viewport.width;
+  const left = Math.max(webView.x, safe.left), top = Math.max(webView.y, safe.top);
+  const right = Math.min(webView.x + webView.width, root.width - safe.right);
+  const bottom = Math.min(webView.y + webView.height, root.height - safe.bottom);
+  if (!positive(scale) || ![left, top, right, bottom].every(finite)) return { kind: 'hidden', reason: 'invalid-geometry' };
+  const insets = {
+    left: Math.ceil(Math.max(0, (left - webView.x) / scale)),
+    top: Math.ceil(Math.max(0, (top - webView.y) / scale)),
+    right: Math.ceil(Math.max(0, viewport.width - (right - webView.x) / scale)),
+    bottom: Math.ceil(Math.max(0, viewport.height - (bottom - webView.y) / scale)),
+  };
+  const rect = { x: insets.left, y: insets.top, width: viewport.width - insets.left - insets.right,
+    height: viewport.height - insets.top - insets.bottom };
+  if (right <= left || bottom <= top || !validRect(rect)) return { kind: 'hidden', reason: 'no-safe-area' };
+  return { kind: 'safe', insets, rect };
+}
 
 /** Pure geometry only: caller owns SDK measurement, lifecycle, orientation epochs and visibility. */
 export function resolveNativeBannerPlacement(input: NativeBannerPlacementInput): NativeBannerPlacement {

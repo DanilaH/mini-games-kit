@@ -21,3 +21,7 @@ Android ads/layout, puzzle progression/feel and release/media workflows are capt
 ## Sudoku Doku 0.17
 
 Source runtime `DanilaH/sudoku-doku@f97cc1ed1c32e7d2f438fbaea6671530b1a5fc59`: opt-in revision snapshot queue and native banner geometry, strengthened with immediate serialization/conflict rejection and full bounds validation. See [integration and evidence](extraction/SUDOKU_INTEGRATION.md), [queue API](platform/REVISION_SNAPSHOT_QUEUE.md) and [geometry API](layout/NATIVE_BANNER_PLACEMENT.md). Source release behavior is not evidence that the extracted API has shipped in an APK.
+
+## Water Sort / Переливы
+
+`DanilaH/watery-water-sort@2f86c1eaa311e2da1de11f69d5df8b11f28e6c0d`: inverse native safe-area feedback and continuous damped motion, plus ad-return/assistance/content/UX production recipes. Layered over integrated Seeds/Road Lines baseline6373417. [Integration, semantic differences and evidence](extraction/WATER_SORT_INTEGRATION.md). This does not migrate the released Phaser3 game to the kit's Phaser4 modules.
