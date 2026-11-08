@@ -1,4 +1,5 @@
 export type BlockedListener = (blocked: boolean) => void;
+export type BlockReasonsListener = (reasons: readonly string[]) => void;
 
 /**
  * Aggregates independent external blockers and exposes one gameplay-active edge.
@@ -8,6 +9,7 @@ export type BlockedListener = (blocked: boolean) => void;
 export class GameplayActivityCoordinator {
   private readonly blockers = new Set<string>();
   private readonly blockedListeners = new Set<BlockedListener>();
+  private readonly reasonListeners = new Set<BlockReasonsListener>();
   private desiredGameplay = false;
   private markedGameplay = false;
   private externallyBlocked = false;
@@ -23,6 +25,7 @@ export class GameplayActivityCoordinator {
   }
 
   public setBlocked(reason: string, blocked: boolean): void {
+    if (this.blockers.has(reason) === blocked) return;
     if (blocked) this.blockers.add(reason);
     else this.blockers.delete(reason);
 
@@ -33,10 +36,23 @@ export class GameplayActivityCoordinator {
     }
 
     this.syncGameplayMarkup();
+    for (const listener of this.reasonListeners) listener(this.getBlockReasons());
   }
 
   public isBlocked(): boolean {
     return this.externallyBlocked;
+  }
+
+  /** Detached and frozen; observing reasons must not mutate coordinator state. */
+  public getBlockReasons(): readonly string[] {
+    return Object.freeze([...this.blockers]);
+  }
+
+  /** Unlike onBlockedChange, also observes pause -> pause+background. */
+  public onBlockReasonsChange(listener: BlockReasonsListener): () => void {
+    this.reasonListeners.add(listener);
+    listener(this.getBlockReasons());
+    return () => this.reasonListeners.delete(listener);
   }
 
   public onBlockedChange(listener: BlockedListener): () => void {

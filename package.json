@@ -67,7 +67,8 @@
     "pack:check": "npm pack --dry-run",
     "bootstrap:create": "node tools/bootstrap/create-yandex-phaser.mjs",
     "bootstrap:check": "node tools/bootstrap/validate-yandex-phaser.mjs",
-    "bootstrap:smoke": "node tools/bootstrap/smoke-yandex-phaser.mjs"
+    "bootstrap:smoke": "node tools/bootstrap/smoke-yandex-phaser.mjs",
+    "test:browser": "npm run build && node tools/road-lines-browser.mjs"
   },
   "peerDependencies": {
     "phaser": "4.2.1",
@@ -82,6 +83,7 @@
     }
   },
   "devDependencies": {
+    "@playwright/test": "1.56.1",
     "@types/node": "26.4.1",
     "phaser": "4.2.1",
     "sharp": "0.35.4",

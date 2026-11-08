@@ -54,3 +54,9 @@ This is a recipe, not a new worker pool abstraction. Cancellation/stale-result g
 Skipping/cancelling visual feedback must preserve the final displayed total and already-saved progress. Seeds settles outstanding presentation callbacks on `clear`; game state must not depend on those callbacks. Test immediate leave, background, reduced motion, overflow of the active-token budget and repeated reuse for DOM/listener leaks.
 
 Short procedural WebAudio cues can avoid heavy sound assets, with restrained volume, pitch variation and a configurable voice limit. Use the kit's [audio lifecycle](audio/PRESENTATION_MIXER.md) where applicable, and explicitly test suspended context **with every voice slot occupied**: resume/cleanup must not depend on a new free slot. The original Seeds `sound.ts` is excluded from direct extraction because that stress case exposed a deadlock.
+
+## Cosmetic rewards and uninterrupted progression
+
+Theme previews are session-only; ownership/equipment changes require an explicit durable purchase. Rotate unowned offers, prioritize affordability, state shortages, and keep Continue usable. Fix the exact cosmetic reward in durable pending before presentation; define a deterministic duplicate/all-owned fallback and preserve older pending versions. Existing DurablePendingTransactionSession owns that staged lifecycle; no universal wheel is needed.
+
+Gift animations present already-owned rewards. Skip/Back/background/reload must not grant again. Layered art can keep accepted source faces and add an occluded interior/back wall/light; bounded particles and deterministic cleanup matter more than a universal gift class. Preserve whole-bank continuation across set boundaries. A cancelled/unknown hint is not proof of no solution and must not debit resources. Keep solver, catalog, economy and content local.

@@ -51,3 +51,13 @@ A tiny post-response settle tail is strong evidence that network acquisition, no
 ## Final authority
 
 Use controlled synthetic conditions to compare candidates. Use the actual Yandex DRAFT/CDN and hands-on target-device play to decide whether to ship. Convenience hosting remains useful for functional QA, but its routing/CDN behavior must not silently become production truth.
+
+## Dirty layers, idle paint and resource ownership — Road Lines
+
+Separate stable board art, changing route and live effects; rebuild only dirty layers. Sleep after the final postrender, not before the first presentable render. Resize/theme/restore must wake and finish a new paint. A bounded current-state cache is preferable to retaining every visited level/viewport. Budget offscreen texture pixels: Road Lines exchanged CPU/allocation work for two current RenderTextures, not zero-cost speed.
+
+Phaser sleep does not pause CSS/WAAPI animations. Hidden results and background need independent presentation lifecycle. Use [destroyRenderer](phaser/DESTROY_RENDERER.md) when a sleeping Phaser4.2.1 loop must execute deferred destruction; dispose application workers/listeners/timers separately. Particle pools preserve appearance while bounding churn; pool sizes are consumer policy.
+
+A no-op save optimization must not suppress initial canonical save or migration. Never coalesce transactions/receipts as ordinary snapshots. Re-test first load/migration after adding identical-prefix skips.
+
+Pair controlled before/after gestures and cold/idle/active states; retain source provenance. Check active and sleeping dispose, paused resize, repeated UI/FX cycles, worker cancellation, DOM/listeners and live GL resources after warmup. Road Lines measured about79% fewer FillPath operations in one gesture, while live texture handles increased10→14. Those historical browser measurements are not target-device FPS/heat or proof of zero leaks. A zero allocation sample is not mathematically zero allocation.

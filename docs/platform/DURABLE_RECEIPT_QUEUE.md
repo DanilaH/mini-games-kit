@@ -71,3 +71,7 @@ No Capacitor, ad SDK, Phaser or storage dependency. Requires Promises and `struc
 Extracted from `DanilaH/seeds-bits` revision `96caff6aac357e06b8373301b2b895544c9ef179`: `src/main.ts::receiveReward`, `src/hint-budget.ts::grantReward`, `native/android/SeedsMonetizationPlugin.java::{receipt,acknowledge,persistState}`. The source APK code is pinned at `86d950b970a69e5dec3ebc269075143a1c28f94a`.
 
 Intentional changes: domain fields and +3-hint policy are removed; receipt payloads are snapshotted; save/ack errors propagate instead of being swallowed; deduplication and durable storage are explicit adapter responsibilities. This is a tested extraction, not evidence of a second shipped consumer or verified live SDK fill.
+
+## Delivery is not a global gameplay prerequisite
+
+A queue delivery serializes commit then exact ack; it does not own core readiness, navigation or a gameplay blocker. Run native pending queries and acknowledgements in a bounded background service. Query/ack unavailability alone must not prohibit play or spending an already durably committed reward. A deadline does not cancel a bridge Promise: single-flight must track the underlying operation until it settles, and late replies must not be lost. Consumer disposal prevents late mutation. A genuinely ambiguous storage result still requires the storage recovery policy documented above. See [Android optional SDK failures](../android/ADS_AND_LIFECYCLE.md).

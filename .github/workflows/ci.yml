@@ -23,3 +23,11 @@ jobs:
       - run: npm run pack:check
       - run: npm run bootstrap:check
       - run: npm run bootstrap:smoke
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: road-lines-browser-evidence
+          path: .test-output/road-lines
+          if-no-files-found: ignore
