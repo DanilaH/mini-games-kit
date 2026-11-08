@@ -40,6 +40,16 @@ For each supported language, record:
 
 Do not claim a hosted, visual or store check passed if only CI was run. The final artifact should use the latest shipped-game wording; generated marketing art must never silently replace in-game evidence.
 
+## 5. Phone and tablet framing with factual captions
+
+Seeds extended this workflow with real production-browser captures, a soft CSS gradient and one short explanatory line **below** each complete screenshot. Keep the UI as the main content. Avoid slide numbering, repeated app titles, oversized headlines and slogans. Captions should explain a visible rule, navigation or progress feature, not advertise a vague feeling.
+
+Use a per-shot manifest containing source revision, viewport/DPR, theme, fixture provenance, final dimensions, encoded bytes, caption and image/caption bounds. Preserve image aspect ratio, check full-image containment, caption fit and separation from the UI. Review both full-resolution images and gallery thumbnails; phone and landscape-tablet compositions need separate framing rather than a stretched shared template. Verify opacity where required and icon/screenshot limits against the target store's current requirements.
+
+The source inventory used five phone frames (pairs, notebooks, daily archive, collection, dark theme) and five landscape-tablet frames (pairs, a very large scrollable task, dark theme, notebook library, progression). That is a representative inventory for this game, not a mandatory count for another title. Demonstration saves must depict attainable states. Rebuild images after relevant UI changes; a frame/caption-only edit does not require rebuilding an otherwise unchanged APK.
+
+Reference: `DanilaH/seeds-bits` revision `96caff6aac357e06b8373301b2b895544c9ef179`, `scripts/store-capture.mjs` and `scripts/store-frames.mjs`. This extends the authentic-media contract below; it does not replace it.
+
 ## Provenance and extraction boundary
 
 These lessons came from [Signal 2000's Russian Hidden Pocket copy correction (#191)](https://github.com/DanilaH/cases-yg/pull/191), [follow-up localization fixes and regression tests (#194)](https://github.com/DanilaH/cases-yg/pull/194), and the accompanying RU/EN screenshot-selection work. The source experience revealed both literal-translation pitfalls and how easily synthetic artwork or repetitive collection captures can be mistaken for useful store screenshots. This document preserves the **review and provenance method**, not Signal-specific content or implementation. No new public API or localization dependency is introduced.

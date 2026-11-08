@@ -31,6 +31,7 @@ Every reusable primitive should have a short dedicated document that answers fou
 - [`ActionInterstitialGate`](platform/INTERSTITIAL_GATE.md) — local ad-request eligibility policy.
 - [`StorageAdapter`](platform/STORAGE.md) — async storage seam and Web Storage adapter.
 - [`JsonStorageRepository`](platform/JSON_REPOSITORY.md) — versioned JSON parsing/migration seam with serialized writes.
+- [`DurableReceiptQueue`](platform/DURABLE_RECEIPT_QUEUE.md) — serialized delivery of externally persisted earned receipts, with acknowledgement only after an idempotent durable commit.
 - [`recoverable save repair`](platform/SAVE_REPAIR.md) — policy for preserving valid durable progression while repairing only deterministic transient/current-version inconsistencies.
 
 ## Startup
@@ -70,6 +71,10 @@ Every reusable primitive should have a short dedicated document that answers fou
 
 - [Sudoku 0.17 extraction plan](extraction/SUDOKU_017.md) — Android ads/rewards, optional profiles, daily catalogs, progress and responsive UX; implementation specification and evidence, no new runtime API.
 
+- [`Seeds extraction map`](SEEDS_EXTRACTION.md) — code versus specification boundaries, source revisions and known defects excluded from reuse.
+- [`Android ads and lifecycle`](android/ADS_AND_LIFECYCLE.md) — native banner reservation/geometry in both orientations, earned rewards, blockers and live-integration proof; specification, not a Capacitor plugin.
+- [`puzzle UI, progress and feel`](PUZZLE_PRODUCTION.md) — undo-safe progression, daily/catalog validation, bounded worker analysis, large-field UX and restrained feedback.
+- [`Android release acceptance`](ANDROID_RELEASE_ACCEPTANCE.md) — release shrinking, signing/artifact identity, independent test layers and honest evidence.
 - [`performance`](PERFORMANCE_PLAYBOOK.md) — measured startup/image optimization method and rejected shortcuts.
 - [`onboarding`](ONBOARDING_PLAYBOOK.md) — event-driven first-run guidance and durable grant/recovery boundaries.
 - [`localization and authentic store media`](LOCALIZATION_AND_STORE_MEDIA.md) — context-aware game copy, counted-resource formatting, in-engine screenshot provenance and per-locale acceptance; guidance only, no new API.
