@@ -1,5 +1,15 @@
 # Android release and independent acceptance
 
+## Updating an existing audience
+
+Use an upgrade fixture from the actual published source/schema, installed first with the same package and test signing identity as the candidate. Temporary CI signing proves an in-place test update; separately verify the production signer on the delivered APK. Installing a fresh test package or clearing data cannot prove save compatibility.
+
+Carry nontrivial unfinished progress into the update: board, undo/branch history, partially used free hints, earned balances, task completions, collection position and preferences. Include an unacknowledged earned native receipt where supported. Verify the updated game can continue, undo and complete; reloading cannot grant the same receipt or migrate bonuses twice. Future schemas and ambiguous read/write failures must preserve their recovery barriers.
+
+When progression pacing changes, separately assert lifetime total, already earned collection position and current fractional progress; new capacity numbers may intentionally differ. When per-attempt bonuses become a shared wallet, credit only the remaining earned amounts once in the same schema-marked commit. Historical completed archive dates must not fabricate newly introduced live streaks. Define defaults for newly added settings without overriding explicit existing choices.
+
+See [Seeds 1.1 provenance](extraction/SEEDS_110.md), [hint migration boundary](core/HINT_BUDGET.md) and [stable UI transitions](layout/STABLE_PROGRESS_UI.md). No game-specific save decoder or collection curve is provided by the kit.
+
 Water Sort's [acceptance matrix](extraction/WATER_SORT_PRODUCTION.md) adds visible-frame versus DOM readiness, launcher-icon/payload consistency, historical attempts and interruption cases. Its [integration record](extraction/WATER_SORT_INTEGRATION.md) deliberately separates browser/native-double acceptance from signed-release/device verification.
 
 Production checklist from [Seeds](SEEDS_EXTRACTION.md). It supplements, rather than replaces, platform-specific documentation. An item is only passed when its evidence is recorded; this document is not evidence that a future consumer has passed it.

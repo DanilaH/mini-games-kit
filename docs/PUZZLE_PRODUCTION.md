@@ -4,6 +4,8 @@ Water Sort adds [assistance/purchase flows, verified rescue, historical campaign
 
 Implementation requirements extracted from [Seeds](SEEDS_EXTRACTION.md). This is a reusable specification; the game supplies its own mechanics, balance and art direction.
 
+Seeds 1.1 adds [calendar/streak models](core/DAILY_STREAK.md), [free/shared hint budgets](core/HINT_BUDGET.md), [tier progress and reward presentation](core/TIER_PROGRESS.md), [local reminders](android/LOCAL_REMINDERS.md), [rare review requests](android/IN_APP_REVIEW.md) and [stable counter/time-input acceptance](layout/STABLE_PROGRESS_UI.md). Read their focused contracts before implementing another local variant. Use existing receipt/snapshot writers for durable grants; the models do not save on their own. [Provenance and exclusions](extraction/SEEDS_110.md).
+
 ## UI that behaves like a game
 
 Use one clear primary play/continue action, with current progress or the next concrete task visible nearby. Review the whole viewport at actual device sizes: a menu occupying one quarter of a tall screen may feel abandoned. Rebalance composition and useful progress information before adding decorative cards or marketing copy. Retain safe areas and banner reservation while changing composition; removing unused-looking space must not remove an ad slot.
@@ -29,6 +31,12 @@ persist attempt id + checkpoint + progression together
 Undo, replay and branches below the checkpoint cannot repeatedly farm the same depth. This deliberately rewards new depth, not every distinct alternative action; another game's policy may differ. Load/reset/backup behavior must preserve that choice. Collection names, thresholds and growth curve remain consumer policy. UI counters may animate toward already-persisted values; animation completion never earns the reward.
 
 For hints, identify the actual revealed information (in Seeds: board state plus unordered pair), not simply button presses. A repeat reveal after undo/reload can remain free. Persist spent keys and earned bonuses with the attempt. Keep identities bounded in size; do not store a full huge board string for every repeated action. Hashing is an implementation choice, not a reason to copy Seeds' handwritten SHA implementation.
+
+## One collection across modes
+
+Seeds 1.1 makes short tasks contribute to the same long collection as classic play. Preserve the reusable ownership rule: classic can reward newly reached attempt depth, while a finite notebook/archive task rewards its first unique verified completion. Replay and historical imported completion marks do not become new grants. Save the completion identity and collection contribution together before showing the receipt. The contribution formula and any cap are balance owned by the game.
+
+Keep lifetime earned total separate from a display position if collection pacing changes. A migration may preserve earned object index and current fraction while moving to a gentler capacity curve; it must not create another spendable currency or erase the historical total. Test early, late and very large old collections. Daily/monthly collection progress and a live-day streak are separate models: completing the archive can fill a medal without inventing consecutive attendance.
 
 ## Deterministic tasks and daily archive
 

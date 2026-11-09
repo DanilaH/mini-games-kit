@@ -18,6 +18,10 @@ Additional source: `DanilaH/seeds-bits` revision `96caff6aac357e06b8373301b2b895
 
 Android ads/layout, puzzle progression/feel and release/media workflows are captured as specifications. Existing kit activity, value-transfer and audio primitives are referenced rather than duplicated. Known source issues in cross-tab preferences, malformed dates and saturated audio resume are explicitly excluded from direct copying. No game-specific rules, catalog, reward balance, secret configuration or signing key is imported.
 
+## Seeds 1.1 follow-up
+
+[Daily progression and engagement](extraction/SEEDS_110.md), donor repository `3eb2b3cfd6c8aea3ca130f916290818fbf5ce7c5`, runtime `e92bd4915d677caf47f74944402c82d48b483d9c`. Pure immutable calendar/streak, hint-budget and tier models remove source balance/SDK/DOM dependencies. Reminder, review and generation-safe haptic integration remain recipes. New APIs are opt-in; the signed donor APK is not upgraded by this extraction.
+
 ## Sudoku Doku 0.17
 
 Source runtime `DanilaH/sudoku-doku@f97cc1ed1c32e7d2f438fbaea6671530b1a5fc59`: opt-in revision snapshot queue and native banner geometry, strengthened with immediate serialization/conflict rejection and full bounds validation. See [integration and evidence](extraction/SUDOKU_INTEGRATION.md), [queue API](platform/REVISION_SNAPSHOT_QUEUE.md) and [geometry API](layout/NATIVE_BANNER_PLACEMENT.md). Source release behavior is not evidence that the extracted API has shipped in an APK.

@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-10",
+  "kitBase": "a9325265e87583a4872cf6a158e1e881a0d7508e",
+  "donorRepositoryRevision": "3eb2b3cfd6c8aea3ca130f916290818fbf5ce7c5",
+  "donorRuntimeRevision": "e92bd4915d677caf47f74944402c82d48b483d9c",
+  "scope": "Local extraction worktree; GitHub CI records validation of the committed PR revision separately",
+  "portable": {
+    "command": "npm test",
+    "testFiles": 38,
+    "testsPassed": 194,
+    "newProgressionTests": 43,
+    "typecheck": "passed",
+    "build": "passed",
+    "builtRootAndCoreImports": "passed"
+  },
+  "packAndBootstrap": {
+    "npmRunPackCheck": "passed",
+    "npmRunBootstrapCheck": "passed; 27 generated files",
+    "npmRunBootstrapSmoke": "passed; separate packed dependency and generated project"
+  },
+  "browser": {
+    "command": "npm run test:browser",
+    "passed": true,
+    "checks": [
+      "touch capture/repeat/cancel/mouse/keyboard/dispose at CPU 1x and 4x",
+      "real WebAudio cold UI, modal/hard blockers, resume, expiry, density and owned/borrowed disposal at CPU 1x and 4x",
+      "actual Phaser 4.2.1 active/sleeping teardown"
+    ],
+    "scope": "Existing browser contracts; no new Android SDK or DOM reward renderer was introduced"
+  },
+  "documentation": {
+    "relativeLinks": "passed",
+    "publicApiIndexed": true,
+    "nativeRecipesNotRuntimeExports": true
+  },
+  "limits": [
+    "No released consumer was migrated",
+    "No native reminder delivery, real review form, physical motor or live ads/analytics attribution was verified by this kit extraction",
+    "Pure plan tests do not prove storage atomicity, concurrent-tab safety or server-authoritative time"
+  ]
+}
