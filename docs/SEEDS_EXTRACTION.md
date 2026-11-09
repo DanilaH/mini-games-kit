@@ -1,5 +1,7 @@
 # «Семечки»: reusable mechanisms and production specifications
 
+Follow-up: [Seeds 1.1 daily progression and engagement](extraction/SEEDS_110.md) adds portable calendar/streak, hint budget and tier models plus Android reminders/review/haptics and stable-layout recipes. The source revisions and defects below belong to the original 1.0 extraction; they are historical evidence, not a fresh audit of 1.1.
+
 Source: [`DanilaH/seeds-bits`](https://github.com/DanilaH/seeds-bits), revision `96caff6aac357e06b8373301b2b895544c9ef179` (2026-10-23). Shipped APK source: `86d950b970a69e5dec3ebc269075143a1c28f94a`; version 1.0.0 / 1000010. Store media is generated separately from the same game interface. The user submitted the release for moderation; approval and public release are not established.
 
 This is an extraction map, not a declaration that every source implementation is safe to copy. The kit already contains many suitable primitives. Preserve production knowledge without turning the whole puzzle application into a framework.

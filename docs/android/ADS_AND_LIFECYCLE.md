@@ -48,3 +48,5 @@ Required faults: never-resolving status/pending; late pending after deadline; du
 ## Native feedback reference boundary
 
 Road Lines RoadFeedbackPlugin adds Android vibrator/amplitude capability checks, API-level fallbacks, foreground cancellation, priority and freshness guards. Reuse as a separately audited native recipe; keep profiles/durations/amplitudes per game and sound/vibration preferences independent. Test cancel ordering against delayed native pulses: timestamp freshness alone is not a generation barrier. Web vibration support is not proof of native feel. No Capacitor dependency is introduced into portable kit.
+
+Seeds 1.1 supplies the concrete [generation-safe haptic protocol](HAPTICS.md): newer configuration cancels older pulses, native pause invalidates the generation, and resume refreshes configuration. [Review](IN_APP_REVIEW.md) and [notification permission/reminders](LOCAL_REMINDERS.md) share the same external-window coordination requirements; preparing an optional flow must not block core startup or saving.

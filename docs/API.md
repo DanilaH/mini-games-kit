@@ -18,6 +18,10 @@ For combined receipt/snapshot writers, follow [the coordination contract](platfo
 
 ## Core
 
+- [Calendar days and daily streaks](core/DAILY_STREAK.md) — explicit calendar policy, immutable current-day recording, record and next-count projection.
+- [Hint budget](core/HINT_BUDGET.md) — configurable free information reveals and a persistent earned balance; repeat reveals are free.
+- [Tier progress](core/TIER_PROGRESS.md) — keep an earned milestone visible and expose the following reward; no renderer or reward ownership.
+
 - [`PresentationSkipController`](core/PRESENTATION_SKIP.md) — skippable presentation beats without durable-state ownership.
 - [`DurablePendingTransactionSession`](core/DURABLE_PENDING_TRANSACTION.md) — interruption-safe staged durable work with exact pending recovery and ambiguous-write verification.
 - [`RandomSource`, `pickWeighted`](core/RANDOM.md) — injectable gameplay-randomness boundary.
@@ -96,6 +100,10 @@ For combined receipt/snapshot writers, follow [the coordination contract](platfo
 
 
 - [`Android ads and lifecycle`](android/ADS_AND_LIFECYCLE.md) — native banner reservation/geometry in both orientations, earned rewards, blockers and live-integration proof; specification, not a Capacitor plugin.
+- [Local daily reminders](android/LOCAL_REMINDERS.md) — permission, inexact local scheduling, truthful state-based text and current-day entry; Android recipe, no bundled scheduler.
+- [In-app review](android/IN_APP_REVIEW.md) — rare eligibility, prepare/launch generations and external-window coordination; SDK integration recipe.
+- [Native haptics](android/HAPTICS.md) — priority, monotonic generation cancellation and device acceptance; recipe, profiles remain in the game.
+- [Stable progress UI](layout/STABLE_PROGRESS_UI.md) — counters, earned markers, native time input and transition acceptance; no shared CSS component.
 - [`puzzle UI, progress and feel`](PUZZLE_PRODUCTION.md) — undo-safe progression, daily/catalog validation, bounded worker analysis, large-field UX and restrained feedback.
 - [`Android release acceptance`](ANDROID_RELEASE_ACCEPTANCE.md) — release shrinking, signing/artifact identity, independent test layers and honest evidence.
 - [`performance`](PERFORMANCE_PLAYBOOK.md) — measured startup/image optimization method and rejected shortcuts.
@@ -112,3 +120,4 @@ These record extraction history and validation limits; they are not required set
 - [Road Lines extraction](extraction/ROAD_LINES_INTEGRATION.md) — code provenance, semantic changes and integration limits.
 - [Sudoku 0.17 extraction plan](extraction/SUDOKU_017.md) — Android ads/rewards, optional profiles, daily catalogs, progress and responsive UX; implementation specification and evidence, no new runtime API.
 - [`Seeds extraction map`](SEEDS_EXTRACTION.md) — code versus specification boundaries, source revisions and known defects excluded from reuse.
+- [Seeds 1.1 follow-up](extraction/SEEDS_110.md) — daily progression, shared hints, engagement and stable presentation; source revisions, intentional changes and validation limits.
