@@ -43,6 +43,18 @@ Fill this document as product/technical decisions become real. Bootstrap default
 - One-time durable grants:
 - Recovery/re-entry behavior:
 
+## Visual direction (before mass art / UI production)
+
+- Primary gameplay emotion and UX priority:
+- Compared visual concepts / mockup links (same game states):
+- Selected setting depth and rationale (including NONE):
+- Mascot / no-mascot choice, role and exclusion from active field:
+- Art pillars, palette/material/typography and asset style envelope:
+- Icon/store identity and authentic gameplay presentation:
+- Production budget / maintenance risk:
+- Owner approval and Art Bible link:
+- Visual approval status: UNDECIDED / APPROVED / HOLD:
+
 ## Intentional bootstrap deviations
 
 For every removed/replaced baseline mechanism, record the old contract, replacement, reason and validation evidence.

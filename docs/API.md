@@ -112,6 +112,12 @@ For combined receipt/snapshot writers, follow [the coordination contract](platfo
 
 Additional modules added later must be linked here as part of the same change that exposes their public API.
 
+## Visual preproduction (not public API)
+
+- [Visual Direction & UX Preproduction](visual-preproduction/README.md) — pre-art methodology: setting, brand identity, mascot/no-mascot, design concepts, layouts and visual approval.
+- [How to compare concepts](visual-preproduction/METHOD.md) — UX skeleton, same-state A/B/C visual pitches, production costs and evidence gates.
+- [Agent presentation protocol](visual-preproduction/AGENT_PROTOCOL.md) — coherent visual options before mass art creation; project owns the final approved visual identity.
+
 ## Design research (not public API)
 
 - [Puzzle Design entry point](puzzle-design/README.md) — **optional design and evaluation methodology**, not a new runtime export.

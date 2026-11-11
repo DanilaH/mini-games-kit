@@ -27,6 +27,10 @@ If the game adds a custom WebAudio mixer, subscribe it to the same activity coor
 
 Fill `docs/PROJECT_DECISIONS.md` before locking architecture. In particular, decide asset reachability/loading policy, save semantics, orientation/layout behavior, ad boundaries and onboarding durability from the new game's requirements.
 
+## Visual preproduction, consumer-owned
+
+After the core loop is understood and **before full art production**, review the kit's Visual Preproduction methodology and compare a small set of meaningful concepts with gameplay-accurate UI. The player experience, setting, possible mascot, visual language, icon and cost must be selected **for this game**, then approved by its owner. Record the choice in the generated project's decisions and an Art Bible. This is documentation guidance, not a theme, UI framework or mascot bundled with the bootstrap. Do not delay throwaway mechanical prototype work for visual polish.
+
 ## What is deliberately not universal
 
 The bootstrap does not choose art dimensions, AVIF/WebP quality, loader concurrency, zero-runtime-loading, save schema, RNG, economy, onboarding engine or content structure. Those values were intentionally kept out because previous production evidence showed they must be measured per game.

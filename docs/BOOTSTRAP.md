@@ -43,6 +43,10 @@ The template deliberately does not decide:
 
 Those choices must come from the new game's product and measurement evidence. Reusing the mechanism does not mean inheriting another game's numbers.
 
+## Visual direction before art production
+
+For a **new game**, review [Visual Preproduction](visual-preproduction/README.md) after the core action is understood but before authoring the full UI, character/setting content or store art. Agents prepare comparable concept pitches and select a final setting / mascot / visual language with the owner; no character, story or rich artwork is mandatory. Capture the chosen direction in the consumer's project decisions and Art Bible. This documentation gate does not change the technical baseline or block a disposable mechanics prototype.
+
 ## Optional puzzle-design methods
 
 For a new puzzle game, or when explicitly tasked with product/UX improvement, consult [Puzzle Design: choose directions](puzzle-design/PROJECT_SELECTION.md) after establishing the game's core loop and current evidence. Record SELECT / HOLD / REJECT for **relevant** directions in the generated project's decision log. **No selected direction is required**; these methods do not change the mandatory technical bootstrap or create an obligation to add new directors, meta systems or advertising.

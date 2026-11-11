@@ -2,6 +2,8 @@
 
 This project was created from the mandatory `mini-games-kit/bootstrap/yandex-phaser` baseline.
 
+Before mass art/UI production, consult the [Visual Preproduction methodology](https://github.com/DanilaH/mini-games-kit/tree/__MINI_GAMES_KIT_REF__/docs/visual-preproduction) from the **pinned kit revision**, prepare 2–3 comparable concepts (including setting/mascot **none** as valid options), and record the **owner-approved** direction in this project's decisions and art bible. A visual concept is not approval to add extra gameplay/meta. For disposable gameplay prototypes or isolated fixes, do not block mechanics work on illustrative art.
+
 Before material implementation work:
 
 1. Read `BOOTSTRAP.md`, `docs/PROJECT_DECISIONS.md`, `docs/ASSET_POLICY.md` and `docs/RELEASE_CHECKLIST.md`.

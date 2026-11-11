@@ -10,6 +10,10 @@ After bootstrapping, independently inspect the current repository starting from 
 
 A consumer may replace/remove bootstrap behavior when the new project genuinely needs a different contract, but that deviation must be explicit and evidence-backed in the generated project's `docs/PROJECT_DECISIONS.md`.
 
+## Visual direction and visual UX preproduction
+
+For **new games**, after establishing a viable gameplay prototype but **before mass UI/asset creation**, follow [docs/visual-preproduction/AGENT_PROTOCOL.md](docs/visual-preproduction/AGENT_PROTOCOL.md). Propose 2–3 cohesive visual concepts for the SAME game states, each including setting (including none), mascot (including none) with an explicit job, actual gameplay/layout composition, art-production cost, and app-icon/store identity. Show visual comparisons and request owner approval; do not declare a style approved yourself. Record the decision and approved Art Bible in the **consumer** project. For repairs to an existing approved UI, preserve the current direction unless a redesign is explicitly needed; do not restart preproduction as scope creep. The kit does not prescribe the mascot, theme, or palette.
+
 ## Puzzle game design research: selection is required, implementation is not
 
 When asked to audit or improve a game's retention, challenge, experience, novelty, progression or advertising UX, consult [docs/puzzle-design/PROJECT_SELECTION.md](docs/puzzle-design/PROJECT_SELECTION.md). Record which research directions are **SELECT / HOLD / REJECT** in the **consumer's** docs, with a concrete problem, evidence, expected cost and test. Choosing no optional direction is valid; do **not** create a universal Director, add retention mechanics, or modify kit APIs merely because they appear in a study. Read only selected topic reports and [the independent evidence audit](docs/puzzle-design/INDEPENDENT_EVIDENCE_AUDIT_2026-11-11.md). These documents are dated snapshots, not live claims about another game's release status. Product rules, economy, and ad cadence remain consumer-owned.
