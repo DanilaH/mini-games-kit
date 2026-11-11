@@ -118,6 +118,12 @@ Additional modules added later must be linked here as part of the same change th
 - [How to compare concepts](visual-preproduction/METHOD.md) — UX skeleton, same-state A/B/C visual pitches, production costs and evidence gates.
 - [Agent presentation protocol](visual-preproduction/AGENT_PROTOCOL.md) — coherent visual options before mass art creation; project owns the final approved visual identity.
 
+## Store Presence / ASO (not public API)
+
+- [Store Listing, ASO & Conversion Design](store-presence/README.md) — platform-aware, source-verified production method for RuStore, Google Play, App Store and Yandex Games.
+- [Current rules and conflicts](store-presence/PLATFORM_REQUIREMENTS.md) — required vs recommended vs conditional; revalidate at submission.
+- [Store release agent protocol](store-presence/AGENT_PROTOCOL.md) — truthful gameplay capture, per-target exports, owner approval and A/B handoff.
+
 ## Design research (not public API)
 
 - [Puzzle Design entry point](puzzle-design/README.md) — **optional design and evaluation methodology**, not a new runtime export.

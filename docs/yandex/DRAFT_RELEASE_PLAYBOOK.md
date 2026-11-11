@@ -2,6 +2,8 @@
 
 Local CI is a prerequisite, not proof of platform behavior. The first hosted DRAFT should be treated as an evidence gate before moderation or speculative platform refactors.
 
+Before preparing visual materials in the Developer Console, read the [Store Presence / Yandex Games requirements](../store-presence/PLATFORM_REQUIREMENTS.md) and re-check the current official draft form. Icons, covers, screenshots and optional video have **different constraints**; a correct hosted runtime is not evidence of accepted promotional assets.
+
 Recommended order:
 
 1. **Boot / markup:** SDK initializes; `LoadingAPI.ready()` changes only at the real usable frame; gameplay marker is stopped during startup/menu and active only in actual gameplay.

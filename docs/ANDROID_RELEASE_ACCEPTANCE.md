@@ -22,7 +22,11 @@ Measure the actual signed release APK and its contents before optimizing. Distin
 
 After shrinking, check native bridge registration, reflective calls, WebView assets, startup, saved state and all ad paths on the release payload. A debug build passing tests does not verify R8 output. Keep stable package id and signing identity, monotonic store versionCode, human-readable versionName, public certificate fingerprint and SHA-256 of the **delivered** APK. Preserve the signing key privately; never commit it or put it in a store-media ZIP.
 
-## Independent test layers
+## Store listing and pre-submission materials
+
+Use [Store Presence](store-presence/README.md) for RuStore-first store text, true gameplay screenshots, icon and store-specific rules. Art/signing/UI correctness do not guarantee listing compliance or conversion. Consumer must approve target stores, creative direction and actual submission; keep asset provenance and console preview evidence. Do not prepare Google Play / App Store resources unless they are genuine planned release targets.
+
+## Independent test layers:
 
 | Layer | What to challenge | What passing cannot establish |
 | --- | --- | --- |

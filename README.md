@@ -14,6 +14,7 @@ The goal is not to build a generic game engine. The goal is to preserve expensiv
 | Daily progression and engagement | [Calendar/streaks](docs/core/DAILY_STREAK.md), [hints](docs/core/HINT_BUDGET.md), [tiers](docs/core/TIER_PROGRESS.md) | Portable models; Android reminders/review/haptics are linked recipes |
 | Choose puzzle-design research directions | [Puzzle Design selection](docs/puzzle-design/PROJECT_SELECTION.md) | Opt-in design methods; each project records SELECT / HOLD / REJECT instead of installing all mechanics |
 | Choose visual direction, setting and mascot | [Visual Preproduction](docs/visual-preproduction/README.md) | Compare coherent concepts and get owner approval before mass art production; mascot optional |
+| Prepare honest store listings per target market | [Store Presence](docs/store-presence/README.md) | RuStore-first ASO, creative production, per-store rules and checks; opt-in per actual release target |
 | Review source-game evidence | [Extraction history](docs/EXTRACTION_SOURCE.md) | Historical acceptance, not a deployed consumer upgrade |
 
 Choose portrait or landscape explicitly when generating a game:

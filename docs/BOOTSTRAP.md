@@ -47,6 +47,10 @@ Those choices must come from the new game's product and measurement evidence. Re
 
 For a **new game**, review [Visual Preproduction](visual-preproduction/README.md) after the core action is understood but before authoring the full UI, character/setting content or store art. Agents prepare comparable concept pitches and select a final setting / mascot / visual language with the owner; no character, story or rich artwork is mandatory. Capture the chosen direction in the consumer's project decisions and Art Bible. This documentation gate does not change the technical baseline or block a disposable mechanics prototype.
 
+## Store presentation for an actual intended release
+
+During release preparation (not the disposable gameplay prototype), use [Store Presence](store-presence/README.md) to choose a store-aware listing, source authentic gameplay captures, adapt icon/cover/screenshots and metadata to **only the approved target stores**, and verify current official submission rules. The gameplay and visual identity belong to the consumer. This is not a new build-time dependency, and listing approval is not permission to publish.
+
 ## Optional puzzle-design methods
 
 For a new puzzle game, or when explicitly tasked with product/UX improvement, consult [Puzzle Design: choose directions](puzzle-design/PROJECT_SELECTION.md) after establishing the game's core loop and current evidence. Record SELECT / HOLD / REJECT for **relevant** directions in the generated project's decision log. **No selected direction is required**; these methods do not change the mandatory technical bootstrap or create an obligation to add new directors, meta systems or advertising.

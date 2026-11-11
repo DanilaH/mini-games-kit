@@ -2,6 +2,8 @@
 
 Production checklist for small, reward-driven games. This is **guidance, not a new kit runtime API**. Apply it alongside the [hosted Yandex DRAFT playbook](yandex/DRAFT_RELEASE_PLAYBOOK.md); CI and correct dictionary keys do not establish that localized gameplay reads naturally or that store assets represent the shipped game.
 
+For store-specific filename, image and text limits, target-specific creative comparison, and A/B rules, read the [Store Presence playbook](store-presence/README.md). The rules there supplement this generic authenticity/localization guidance, **not** replace product release acceptance. Source build and legitimate gameplay remain authoritative.
+
 ## 1. Localize player meaning, not source-language tokens
 
 Translate a mechanic's *player-facing event* in its actual UI context, not its internal identifier or a dictionary entry in isolation. A literal translation can be grammatically possible and still describe the wrong thing. For an empty collection, describe what the player can actually do (find an item by opening a pack), rather than instructing them to open the item itself. Check that buttons name their destination/action, milestones communicate what was accomplished, and reward copy explains what was earned.

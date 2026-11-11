@@ -2,6 +2,8 @@
 
 Use the current `mini-games-kit/docs/yandex/DRAFT_RELEASE_PLAYBOOK.md` as the detailed source of truth and re-check current Yandex requirements before submission.
 
+Store card/media gate — see the pinned kit's `docs/store-presence/AGENT_PROTOCOL.md` and current Yandex Developer Console instructions. Before moderation, independently verify title/SEO/how-to-play lengths, real gameplay screenshot area and chosen orientation, icon/cover sizes, target mobile/desktop screenshot count, video fields, provenance and localized texts. **Do not fabricate screenshot states or submit/publish without owner approval.**
+
 Minimum hosted gate:
 
 - production build uses the real Yandex runtime, not mock;
