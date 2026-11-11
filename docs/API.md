@@ -112,6 +112,12 @@ For combined receipt/snapshot writers, follow [the coordination contract](platfo
 
 Additional modules added later must be linked here as part of the same change that exposes their public API.
 
+## Design research (not public API)
+
+- [Puzzle Design entry point](puzzle-design/README.md) — **optional design and evaluation methodology**, not a new runtime export.
+- [Choose directions per project](puzzle-design/PROJECT_SELECTION.md) — inspect evidence, record SELECT / HOLD / REJECT, usually test only 1–2 hypotheses per pass; no automatic directors or meta.
+- [Boundaries to existing kit APIs](puzzle-design/INTEGRATION_BOUNDARIES.md) — avoid duplicating the primitives above; keep balance, content, aesthetics and monetization policy in the game.
+
 ## Provenance and consumer evidence
 
 These record extraction history and validation limits; they are not required setup steps.

@@ -10,6 +10,10 @@ After bootstrapping, independently inspect the current repository starting from 
 
 A consumer may replace/remove bootstrap behavior when the new project genuinely needs a different contract, but that deviation must be explicit and evidence-backed in the generated project's `docs/PROJECT_DECISIONS.md`.
 
+## Puzzle game design research: selection is required, implementation is not
+
+When asked to audit or improve a game's retention, challenge, experience, novelty, progression or advertising UX, consult [docs/puzzle-design/PROJECT_SELECTION.md](docs/puzzle-design/PROJECT_SELECTION.md). Record which research directions are **SELECT / HOLD / REJECT** in the **consumer's** docs, with a concrete problem, evidence, expected cost and test. Choosing no optional direction is valid; do **not** create a universal Director, add retention mechanics, or modify kit APIs merely because they appear in a study. Read only selected topic reports and [the independent evidence audit](docs/puzzle-design/INDEPENDENT_EVIDENCE_AUDIT_2026-11-11.md). These documents are dated snapshots, not live claims about another game's release status. Product rules, economy, and ad cadence remain consumer-owned.
+
 Before changing kit code:
 
 1. Identify the real source project and concrete production behavior being preserved.

@@ -1,0 +1,75 @@
+{
+  "package": "Puzzle Design Operating Playbook — source archive inventory",
+  "source_archive_date": "2026-11-11",
+  "source_archive_sha256": "518d1e672f8da985bf9d348908fc720a7e97a8f731cfe658a8573aa2dad9a1ec",
+  "research_reports": 7,
+  "research_topics": 8,
+  "import_note": "Normalized manifest for GitHub import. The thirteen source text files retain their exact original byte content; only this manifest representation and the new selection/integration docs differ from the ZIP.",
+  "files": {
+    "START_HERE_PUZZLE_PLAYBOOK_2026-11-11.md": {
+      "bytes": 4457,
+      "git_blob_sha": "8ffc48c10633e65953cc8b023481c1320bb8f362",
+      "sha256": "6a7b1e75171c99cffd32d653e05f7c09728a5ee0f6e378e13717739f2b22c446"
+    },
+    "PUZZLE_DESIGN_OPERATING_PLAYBOOK_2026-11-11.md": {
+      "bytes": 78906,
+      "git_blob_sha": "a1e37f535bee05fd5a3781deb913b3d75ed99421",
+      "sha256": "ddf1eaaf431b8bf6c5efcf4a8b8b255da72dd9a353ad3d1c22bc888244936453"
+    },
+    "INDEPENDENT_EVIDENCE_AUDIT_2026-11-11.md": {
+      "bytes": 31145,
+      "git_blob_sha": "c3d4e2a409d691873d94007b28fe2936eb26fd59",
+      "sha256": "1896d5a4ccb942a6479b1b3507def4308c50f77bd8f1aac5218c125c0979d403"
+    },
+    "AGENT_EXECUTION_BRIEFS_2026-11-11.md": {
+      "bytes": 15063,
+      "git_blob_sha": "948453a88f07a3f37dd00b4688bb1b918577e31c",
+      "sha256": "cd4c3a78ac026a101b16e207a7120f124627fabadbb3cad03c46ace904cc586e"
+    },
+    "research/puzzle-retention-and-adaptive-director-research.md": {
+      "bytes": 133294,
+      "git_blob_sha": "819fcdf1804a7f25deb119ca019d441ea9f3d287",
+      "sha256": "1e68c474ea176b0313be623c482e2d6021f85cd91e738feedfdfb1904f4c81fd"
+    },
+    "research/puzzle-reverse-engineering-2026-11-11.md": {
+      "bytes": 136052,
+      "git_blob_sha": "fe4290e8f8a6ef9e70507ee7f1772096e995607a",
+      "sha256": "35e7642bfd9d10c4693dcca99a7e09fe359e652389c2c993fa81c8f6de96be9a"
+    },
+    "research/puzzle-experience-novelty-directors-deep-research-2026-11-11.md": {
+      "bytes": 180897,
+      "git_blob_sha": "452960df022e476fea52df4c9ecbedfbb630b1f3",
+      "sha256": "d3480d7e682b87549d5578b4f432dfad594b6f7b53ee83cd79541eeb2813e8f2"
+    },
+    "research/player-motivation-lifecycle-cross-session-research-2026-11-11.md": {
+      "bytes": 204048,
+      "git_blob_sha": "63c301f409867fee183625bac483aad26b8ec7fa",
+      "sha256": "6bff83e60b71db9df9147c57661747506f656da8674af3080906b6213eb8111b"
+    },
+    "research/mastery-boredom-fatigue-puzzle-games-research-2026-11-11.md": {
+      "bytes": 185893,
+      "git_blob_sha": "2880003fa79d08b3004e3d8119e604209ac9ccb4",
+      "sha256": "9b3ac8286ffadba88c4e63fa060b2aa7224a8c7ec04d9fc05e5c028b7109637f"
+    },
+    "research/hidden-friction-monetization-psychology-puzzle-games-2026-11-11.md": {
+      "bytes": 135375,
+      "git_blob_sha": "8371c2982d8d86623990230c0564ee7048aa7a92",
+      "sha256": "1241fc883cbb041de41a258e1a365c997ab2406db94de0c0135d8d024addf1fe"
+    },
+    "research/small-studio-game-experimentation-research-2026-11-11.md": {
+      "bytes": 109446,
+      "git_blob_sha": "7034d653ff0441faf190adbcfdd1abd2a04a73a9",
+      "sha256": "b860af51fda4f351ad691107e9791e0a8213b7ec96a9916400a546b3433f4196"
+    },
+    "templates/EXPERIMENT_BRIEF_TEMPLATE.md": {
+      "bytes": 4436,
+      "git_blob_sha": "6feb30a9a394987a120bd9cfe78e3ceeaa145cc2",
+      "sha256": "f8e5181dcae156a49dbc2032d531463362bebbb220eff3b4c4153825edb02d41"
+    },
+    "tools/stats_reference.py": {
+      "bytes": 3348,
+      "git_blob_sha": "e6283f5693723ccfca0dc189a84ec170f44571a6",
+      "sha256": "d7ff2ebff073145adf43bc6527862d954c37c21a65a4dae5a7f44fff9db883c1"
+    }
+  }
+}

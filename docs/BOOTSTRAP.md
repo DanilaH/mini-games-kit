@@ -43,6 +43,10 @@ The template deliberately does not decide:
 
 Those choices must come from the new game's product and measurement evidence. Reusing the mechanism does not mean inheriting another game's numbers.
 
+## Optional puzzle-design methods
+
+For a new puzzle game, or when explicitly tasked with product/UX improvement, consult [Puzzle Design: choose directions](puzzle-design/PROJECT_SELECTION.md) after establishing the game's core loop and current evidence. Record SELECT / HOLD / REJECT for **relevant** directions in the generated project's decision log. **No selected direction is required**; these methods do not change the mandatory technical bootstrap or create an obligation to add new directors, meta systems or advertising.
+
 ## Generator behavior
 
 `tools/bootstrap/create-yandex-phaser.mjs` copies the full template and substitutes project name plus an **exact 40-character kit commit SHA**. It refuses a non-empty destination and leaves no unresolved placeholders.

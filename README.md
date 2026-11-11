@@ -12,6 +12,7 @@ The goal is not to build a generic game engine. The goal is to preserve expensiv
 | Select reusable mechanisms | [API guide](docs/API.md) | Implemented APIs with focused usage docs |
 | Android advertising | [Integration contract](docs/android/ADS_AND_LIFECYCLE.md) | Specification and geometry; no bundled native SDK |
 | Daily progression and engagement | [Calendar/streaks](docs/core/DAILY_STREAK.md), [hints](docs/core/HINT_BUDGET.md), [tiers](docs/core/TIER_PROGRESS.md) | Portable models; Android reminders/review/haptics are linked recipes |
+| Choose puzzle-design research directions | [Puzzle Design selection](docs/puzzle-design/PROJECT_SELECTION.md) | Opt-in design methods; each project records SELECT / HOLD / REJECT instead of installing all mechanics |
 | Review source-game evidence | [Extraction history](docs/EXTRACTION_SOURCE.md) | Historical acceptance, not a deployed consumer upgrade |
 
 Choose portrait or landscape explicitly when generating a game:
