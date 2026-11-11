@@ -2,6 +2,8 @@
 
 This is production guidance, not a universal onboarding engine API.
 
+For choosing whether to teach at all, what a player needs to discover in the first 30 seconds / 3 / 15 minutes, and how to run a real human FTUE test, consult the separate [FTUE diagnostic protocol](puzzle-design/FTUE_DIAGNOSTIC_PROTOCOL_2026-11-12.md) and its [independent audit](puzzle-design/FTUE_INDEPENDENT_EVIDENCE_AUDIT_2026-11-12.md). This document stays narrowly scoped to **durable, event-driven engineering**, not instructional design or universal tutorial policy. The FTUE time windows are observation heuristics, not runtime timers.
+
 Signal 2000's first-run work showed that tutorial progression is substantially safer when guidance follows **semantic game events** rather than timers or presentation callbacks.
 
 Examples of good gates:
