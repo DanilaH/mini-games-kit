@@ -80,6 +80,12 @@
 
 These limitations are not reasons to invent metrics or to halt all work. They define the minimum consumer validation package.
 
+## E2. Portfolio reality check — stale repo prose is not store evidence
+
+A separate live read of consumer GitHub READMEs found a concrete warning: **seeds-bits README links a historical release document labeled 'published 1.0.0'**, while the owner's explicit status on 11 Nov 2026 is that Seeds **has not been published or submitted to RuStore**. Therefore a filename, signed APK, old release document or a README status cannot replace a *direct current Console or owner-confirmed public listing check*. The same caution applies to Road Lines and other games whose top-level READMEs can refer to early content snapshots while later production plans describe more levels. Treat all game-specific stage and store assertions as UNKNOWN until the exact consumer HEAD / release history / store URL is inspected.
+
+This directly invalidates a tempting retrospective experiment: measuring pre-release AppMetrica devices as if they were a publicly acquired RuStore cohort. The acquisition research must **not** invent a public baseline from test/dev traffic.
+
 ## F. Safe consumer experiment and review gate
 
 Before one real release, a consumer should provide: current commit/build and publishing status; verified store account and country; 3–7 query-intent terms; working direct store link; source/campaign ledger; actual Console screenshots/CSV definitions; first-open and first meaningful action events; baseline bug/ads report; one allowed audience-fit source; daily effort log; D1/D7 only when cohorts mature. Use [Launch Brief Template](LAUNCH_BRIEF_TEMPLATE.md). Human research must be consensual and without fake reviews or incentivized ranking behavior.
