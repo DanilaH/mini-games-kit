@@ -26,12 +26,12 @@
 | --- | --- | --- |
 | Повторяющаяся реальная ситуация | | |
 | Что человек хочет почувствовать / закончить | | |
-| Предыдущий реальный выбор и что заменяет игру | | |
+| Предыдущий реальный выбор, что заменяет или дополняет игру | | |
 | Что нравится в существующей альтернативе | | |
 | Что он добровольно терпит (tradeoffs) | | |
 | Что действительно мешает и повторяется | | |
 | Как новый core action решит это иначе | | |
-| Что будет решающим reason to switch | | |
+| Что будет причиной попробовать / добавить / выбрать вместо альтернативы | | |
 | Как пользователь вообще увидит новую игру | | |
 
 Типы доказательства: **OFFICIAL** (правило/метрика платформы), **PUBLIC_OBSERVED** (проверяемая страница/отзыв), **HUMAN_OBSERVED** (отдельный участник в игровом тесте), **INTERVIEW_REPORTED** (недавний эпизод по памяти), **SELF_REPORTED_FUTURE** (слова об ожидаемом будущем), **HYPOTHESIS**, **UNKNOWN**. Не приравнивать все категории по силе.
@@ -106,7 +106,7 @@
 | --- | --- | --- | --- |
 | G1 real need / genuine substitute | | | |
 | G2 target audience reachable | | | |
-| G3 reason to switch | | | |
+| G3 reason to choose/add/occasionally switch | | | |
 | G4 actual core payoff observed | | | |
 | G5 production + content maintenance bounded | | | |
 | G6 legal/platform/monetization feasible | | | |
@@ -119,7 +119,7 @@
 
 **Источник selection bias:** …
 
-**Почему довольные игроки могут не переключиться:** …
+**Почему довольные игроки могут не захотеть даже попробовать или добавить нашу игру:** …
 
 **Почему большой рынок может быть недоступным нам:** …
 
@@ -135,7 +135,7 @@
 
 **Итог:** PROTOTYPE / CONTINUE LIMITED / HOLD / REJECT / NO NEW GAME
 
-**Критическая цепочка:** Need → Alternative → Distinct reason to switch → Reach → Core payoff → Cost and payout.
+**Критическая цепочка:** Need → Alternative → Distinct reason to choose/add → Reach → Core payoff → Cost and payout.
 
 **Что действительно подтверждено:** …
 
