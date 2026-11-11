@@ -40,6 +40,10 @@ Do not import Signal 2000 concepts such as CHIPS, Signal, Hidden Pocket, Overcha
 
 When extracting from a project, carry over or recreate focused tests that prove the reusable behavior. Record the original source revision and any intentional semantic changes in the PR description or nearby docs.
 
+## First-time player experience research — only with a witnessed problem
+
+When a game's cold start, onboarding or early enjoyment is in question, consult [FTUE Diagnostic Protocol](docs/puzzle-design/FTUE_DIAGNOSTIC_PROTOCOL_2026-11-12.md) and [its independent evidence audit](docs/puzzle-design/FTUE_INDEPENDENT_EVIDENCE_AUDIT_2026-11-12.md), then optionally copy [FTUE Playtest Record](docs/puzzle-design/FTUE_PLAYTEST_RECORD_TEMPLATE.md) into the **consumer**. Compare genuine cold starts, novice vs mechanic-experienced users, accepted actions, causal feedback, unassisted rule transfer and voluntary continuation. Never infer fun from tutorial completion or impose 30s/3m/15m time constants, mandatory tutorials, fake first wins or extra analytics without evidence. For durable onboarding, reuse [Event-driven onboarding playbook](docs/ONBOARDING_PLAYBOOK.md). HOLD/NO CHANGE is a valid outcome.
+
 ## Public API documentation is part of the implementation
 
 Every exported reusable utility or subsystem must have focused explanatory documentation linked from `docs/API.md`.
