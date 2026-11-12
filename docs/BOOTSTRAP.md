@@ -55,6 +55,18 @@ During release preparation (not the disposable gameplay prototype), use [Store P
 
 For a new puzzle game, or when explicitly tasked with product/UX improvement, consult [Puzzle Design: choose directions](puzzle-design/PROJECT_SELECTION.md) after establishing the game's core loop and current evidence. Record SELECT / HOLD / REJECT for **relevant** directions in the generated project's decision log. **No selected direction is required**; these methods do not change the mandatory technical bootstrap or create an obligation to add new directors, meta systems or advertising.
 
+## Agent guidance initialization for all small games
+
+For Android/web projects that do **not** use the Yandex Games Phaser host, run guidance-only initialization:
+
+    npm run guidance:init -- ../my-android-game --platform android
+
+This safely adds project AGENTS.md, PROJECT_DECISIONS.md and pinned local agent workflows.
+
+For a project with an existing AGENTS.md, use `npm run guidance:adopt -- <repository> --kit-ref <research-sha>` after reviewing its source-of-truth. The command appends an idempotent task-routing note without replacing existing instructions. The research guidance snapshot SHA and the consumer's installed runtime kit dependency SHA may differ; compare them explicitly before using runtime APIs. **It does not scaffold Android/Capacitor/Gradle/SDK or migrate an existing game's AGENTS.** Refuses overwrites; use review/merge for existing repos. See [New Game Repo Setup](agent-workflows/NEW_PROJECT_SETUP.md).
+
+The normal Yandex Phaser bootstrap installs the **same** task router, original-reference protocol and kit-feedback loop automatically while retaining its tested runtime baseline. These guides are small on purpose: agents read **only** the relevant full studies at the pinned kit revision, rather than injecting all research into every context.
+
 ## Generator behavior
 
 `tools/bootstrap/create-yandex-phaser.mjs` copies the full template and substitutes project name plus an **exact 40-character kit commit SHA**. It refuses a non-empty destination and leaves no unresolved placeholders.

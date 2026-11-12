@@ -124,6 +124,15 @@ Additional modules added later must be linked here as part of the same change th
 - [Current rules and conflicts](store-presence/PLATFORM_REQUIREMENTS.md) — required vs recommended vs conditional; revalidate at submission.
 - [Store release agent protocol](store-presence/AGENT_PROTOCOL.md) — truthful gameplay capture, per-target exports, owner approval and A/B handoff.
 
+## Agent task routing and project initialization (not public API)
+
+- [Task Router](agent-workflows/TASK_ROUTER.md) — choose the one or two relevant game/research/production contracts per task instead of reading the entire research library.
+- [Reference Teardown](agent-workflows/REFERENCE_PROTOCOL.md) — observable gameplay, input, state/motion/feel comparison for video/GIF/competitor/reference requests, with evidence vs inference.
+- [Kit Feedback Loop](agent-workflows/KIT_FEEDBACK_LOOP.md) — consumer agent reports NONE/REUSE/IMPROVE/CANDIDATE/EXTRACTED; only verified shared behavior migrates upstream.
+- [New Game Repo Setup](agent-workflows/NEW_PROJECT_SETUP.md) — tested Yandex Phaser runtime bootstrap plus guidance-only init for Android/web; pins docs and dependency to exact kit SHA when applicable.
+
+These are **process docs**, not public runtime exports. Full research studies are selected by the router and stay in the kit, not copied to every consumer.
+
 ## Design research (not public API)
 
 - [Puzzle Design entry point](puzzle-design/README.md) — **optional design and evaluation methodology**, not a new runtime export.

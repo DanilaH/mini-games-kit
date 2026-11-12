@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { installKitGuidance } from './init-game-guidance.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, '../..');
@@ -84,6 +85,10 @@ export const createYandexPhaserBootstrap = async ({ destination, kitRef, project
     await fs.writeFile(output, content);
   }
 
+  // The entire research library stays in mini-games-kit; copy only the small
+  // task/reference/feedback guidance with immutable pinned source links.
+  const guidanceFiles = await installKitGuidance({ destination: target, kitRef: ref });
+
   const unresolved = [];
   for (const relative of await listFiles(target)) {
     if (!isTextFile(relative)) continue;
@@ -92,7 +97,7 @@ export const createYandexPhaserBootstrap = async ({ destination, kitRef, project
   }
   if (unresolved.length > 0) throw new Error(`Unresolved bootstrap placeholders: ${unresolved.join(', ')}`);
 
-  return { destination: target, projectName: name, kitRef: ref, files: files.length };
+  return { destination: target, projectName: name, kitRef: ref, files: files.length + guidanceFiles.length };
 };
 
 const parseCli = (argv) => {
@@ -120,7 +125,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
     console.log(`Created ${result.projectName} from mandatory Yandex Phaser bootstrap (${result.files} files).`);
     console.log(`Pinned mini-games-kit: ${result.kitRef}`);
     console.log(`Next: cd ${result.destination} && npm install && npm run typecheck && npm test && npm run build`);
-    console.log('Then read AGENTS.md/BOOTSTRAP.md and inspect the full current mini-games-kit docs/API.md before feature work.');
+    console.log('Then read AGENTS.md, docs/PROJECT_DECISIONS.md, and docs/kit-guidance/TASK_ROUTER.md; inspect pinned mini-games-kit docs/API.md before reusable work.');
   } catch (error) {
     console.error(error instanceof Error ? error.message : String(error));
     process.exitCode = 1;
