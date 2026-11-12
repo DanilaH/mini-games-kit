@@ -55,6 +55,26 @@ Fill this document as product/technical decisions become real. Bootstrap default
 - Owner approval and Art Bible link:
 - Visual approval status: UNDECIDED / APPROVED / HOLD:
 
+## Research and reference selection — only when task requires it
+
+- Active question/observed defect, affected scene and baseline SHA:
+- Selected **one or two** Task Router routes and actual pinned documents read:
+- SELECT / HOLD / REJECT decision and minimal test:
+- If a reference exists: URL/file/timecode/device/version, OBSERVED vs INFERRED vs NOT INSPECTED, interaction gap, original assets excluded:
+- Human feel vs independent browser/CI evidence (do not conflate):
+
+## Kit adoption and feedback
+
+| Task / capability | Pinned kit API or documentation | REUSE / PROJECT POLICY / NOT APPLICABLE / MISSING | Tests / reason |
+| --- | --- | --- | --- |
+| | | | |
+
+- Source kit commit, deliberate upgrade or private wrapper:
+- Existing kit primitive improved? Exact bug/reproducer and upstream proposal:
+- New local reusable primitive candidate? Second real consumer evidence or HOLD:
+- Last substantial change KIT IMPACT: NONE / REUSE / IMPROVE / CANDIDATE / EXTRACTED:
+- Upstream PR / owner decision, if actually created:
+
 ## Intentional bootstrap deviations
 
 For every removed/replaced baseline mechanism, record the old contract, replacement, reason and validation evidence.
