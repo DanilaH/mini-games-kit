@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { createYandexPhaserBootstrap } from './create-yandex-phaser.mjs';
+import { initGameGuidance } from './init-game-guidance.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, '../..');
@@ -63,6 +64,47 @@ try {
       errors.push(`generated project missing required file: ${required}`);
     }
   }
+  const guidanceNames = ['TASK_ROUTER.md', 'REFERENCE_PROTOCOL.md', 'KIT_FEEDBACK_LOOP.md', 'NEW_PROJECT_SETUP.md'];
+  for (const name of guidanceNames) {
+    const file = path.join(target, 'docs', 'kit-guidance', name);
+    try {
+      const contents = await fs.readFile(file, 'utf8');
+      if (!contents.includes(fakeSha)) errors.push('guidance missing pinned source SHA: ' + name);
+      if (contents.includes('github.com/DanilaH/mini-games-kit/blob/main/docs/')) {
+        errors.push('guidance refers to unpinned main: ' + name);
+      }
+    } catch {
+      errors.push('missing generated guidance: ' + name);
+    }
+  }
+  const gameAgents = await fs.readFile(path.join(target, 'AGENTS.md'), 'utf8');
+  if (!gameAgents.includes('docs/kit-guidance/TASK_ROUTER.md') || !gameAgents.includes('KIT IMPACT')) {
+    errors.push('generated AGENTS does not route tasks and kit feedback');
+  }
+
+  // Guidance-only initialization must work without copying the Yandex web SDK.
+  const androidTarget = path.join(tempRoot, 'sample-android');
+  const android = await initGameGuidance({
+    destination: androidTarget, kitRef: fakeSha, projectName: 'Sample Android', platform: 'android',
+  });
+  for (const required of ['AGENTS.md', 'docs/PROJECT_DECISIONS.md', ...guidanceNames.map((n) => 'docs/kit-guidance/' + n)]) {
+    try { await fs.access(path.join(androidTarget, required)); }
+    catch { errors.push('guidance-only init missing: ' + required); }
+  }
+  if (android.files.length !== 6) errors.push('guidance-only init produced wrong file count');
+  const androidAgents = await fs.readFile(path.join(androidTarget, 'AGENTS.md'), 'utf8');
+  if (!androidAgents.includes(fakeSha) || !androidAgents.includes('docs/kit-guidance/TASK_ROUTER.md')) {
+    errors.push('guidance-only AGENTS missing pinned routing');
+  }
+  let refusedOverwrite = false;
+  try {
+    await initGameGuidance({ destination: androidTarget, kitRef: fakeSha, platform: 'android' });
+  } catch (error) {
+    refusedOverwrite = /Refusing to overwrite/.test(String(error?.message));
+  }
+  if (!refusedOverwrite) errors.push('guidance-only init overwrote existing project files');
+  const preserved = await fs.readFile(path.join(androidTarget, 'AGENTS.md'), 'utf8');
+  if (preserved !== androidAgents) errors.push('guidance-only init changed existing AGENTS after refusal');
   try {
     await fs.access(path.join(target, 'BOOTSTRAP_MANIFEST.json'));
     errors.push('template-only BOOTSTRAP_MANIFEST.json leaked into generated project');
