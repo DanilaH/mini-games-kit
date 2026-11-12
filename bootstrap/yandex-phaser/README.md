@@ -2,7 +2,7 @@
 
 Generated from `DanilaH/mini-games-kit` mandatory Yandex + Phaser bootstrap at commit `__MINI_GAMES_KIT_REF__`.
 
-Before feature work, read `AGENTS.md`, `BOOTSTRAP.md` and the docs in `docs/`, then inspect the current `mini-games-kit/docs/API.md` for additional reusable primitives that fit this game.
+Before feature work, read `AGENTS.md`, `BOOTSTRAP.md`, `docs/PROJECT_DECISIONS.md` and `docs/kit-guidance/TASK_ROUTER.md`; the router links to the full pinned `mini-games-kit` methodology. Inspect the pinned `docs/API.md` before reimplementing common infrastructure.
 
 ## Commands
 
