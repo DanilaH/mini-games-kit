@@ -162,6 +162,18 @@ try {
     errors.push('duplicate adopt modified existing instructions');
   }
 
+  // Real consumer repositories previously adopted these two historical spellings.
+  // Their pinned links are valid and should not be rejected as unpinned.
+  for (const variant of ['Guidance snapshot:', 'Research guidance snapshot:']) {
+    const legacy = adoptedAgents.replace('Research guidance snapshot SHA:', variant);
+    await fs.writeFile(path.join(existingTarget, 'AGENTS.md'), legacy);
+    const inspected = await inspectGameGuidance({ destination: existingTarget, expectedKitRef: fakeSha });
+    if (inspected.errors.length || inspected.guidanceRef !== fakeSha) {
+      errors.push('guidance doctor rejected historical consumer pin notation: ' + variant);
+    }
+  }
+  await fs.writeFile(path.join(existingTarget, 'AGENTS.md'), adoptedAgents);
+
   try {
     await fs.access(path.join(target, 'BOOTSTRAP_MANIFEST.json'));
     errors.push('template-only BOOTSTRAP_MANIFEST.json leaked into generated project');
