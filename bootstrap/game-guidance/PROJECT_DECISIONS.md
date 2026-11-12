@@ -1,7 +1,8 @@
 # Project Decisions — __PROJECT_NAME__
 
 **Target platform:** __PROJECT_PLATFORM__  
-**Original mini-games-kit pin:** __MINI_GAMES_KIT_REF__  
+**Guidance snapshot SHA:** __MINI_GAMES_KIT_REF__  
+**Installed runtime mini-games-kit dependency SHA (if any):** NOT INSTALLED / UNKNOWN / exact SHA  
 **Status:** INITIAL / PROTOTYPE / PREVIEW / RELEASED / MAINTENANCE (choose based on actual evidence)  
 **Source of truth:** newest owner-approved product decisions and actual code/build; this document is updated as changes become real.
 
@@ -32,7 +33,7 @@
 | Android/Yandex platform and advertising | | | |
 | Assets, loading/performance, QA | | | |
 
-- Exact dependency pin and intentional upgrade decision:
+- Installed runtime dependency pin (may differ from newer guidance) and intentional upgrade decision:
 - Source-specific deviations from a mandatory bootstrap:
 - Provenance and tests for code extracted from an existing game:
 
