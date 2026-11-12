@@ -10,6 +10,8 @@ This experimental kit preserves repeatedly useful **production primitives, measu
 4. Before writing reusable code, inspect [Public API](docs/API.md) and the consumer's **exact pinned** dependency. Check for an existing solution. Keep project-specific balance, RNG, game content, art, store economics, ad cadence and save schema in the consumer.
 5. After a substantial change, report real tests, unknowns and **KIT IMPACT**: NONE / REUSE / IMPROVE / CANDIDATE / EXTRACTED using [Kit Feedback Loop](docs/agent-workflows/KIT_FEEDBACK_LOOP.md). Existing common bug: fix with a reproducible consumer; new generic API: usually require two independent real consumer needs, not a hypothetical future game.
 
+**Agent instruction verification:** run npm run guidance:doctor -- <consumer-path> --strict after generation or adoption, then smoke-test the actual harness by asking for instruction sources, selected task route and pinned runtime API. Claude Code uses a small CLAUDE.md bridge; Codex reads AGENTS.md; Copilot depends on client. Doctor only checks local files/refs and never upgrades a running game.
+
 ## Repo setup and platform boundaries
 
 - **New Yandex Games + Phaser game:** mandatory tested [bootstrap/yandex-phaser](bootstrap/yandex-phaser/BOOTSTRAP.md). Use npm run bootstrap:create -- <destination> from reviewed kit SHA, then typecheck/test/build and appropriate hosted draft checks. It copies tested Yandex runtime plus the local task/reference/kit-feedback guides.
