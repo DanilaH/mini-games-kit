@@ -133,6 +133,8 @@ Additional modules added later must be linked here as part of the same change th
 
 These are **process docs**, not public runtime exports. Full research studies are selected by the router and stay in the kit, not copied to every consumer.
 
+**Agent guidance verification:** npm run guidance:doctor -- <consumer> --strict checks local task-router/reference/feedback links and pins; optional --expected-kit-ref <sha> reports research drift without changing consumer files. Generated CLAUDE.md bridges Claude Code to the canonical project AGENTS.md; actual harness loading must be separately tested.
+
 ## Design research (not public API)
 
 - [Puzzle Design entry point](puzzle-design/README.md) — **optional design and evaluation methodology**, not a new runtime export.
