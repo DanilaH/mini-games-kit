@@ -17,6 +17,12 @@ This directory is the minimum production baseline for a new small Yandex Games p
 - upload-root audit and hosted Yandex DRAFT release checklist;
 - explicit asset-production and project-decision documents.
 
+## Automatic task-guided agent context
+
+This bootstrap also installs four small local guides in docs/kit-guidance/: TASK_ROUTER, REFERENCE_PROTOCOL, KIT_FEEDBACK_LOOP and NEW_PROJECT_SETUP. They are copied from mini-games-kit at generator time, while links to the **full research/API source** are rewritten to the exact pinned commit. AGENTS.md instructs agents to route every substantive task, inspect original references and report reusable upstream improvements — without importing the entire research library or duplicating the runtime.
+
+The bundled agents guidance is a **snapshot**. An intentional kit dependency upgrade should also review guidance drift; never silently rewrite project policy or assume current main is compatible with a pinned consumer.
+
 ## After creation
 
 Do **not** start by deleting baseline files. First inspect the whole current `mini-games-kit` repository from `docs/API.md` and identify additional primitives relevant to the game: persistence, durable pending transactions, audio, ads, rendering density, game feel, image tooling, runtime loading, etc.
