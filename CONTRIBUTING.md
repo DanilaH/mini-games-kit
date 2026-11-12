@@ -12,4 +12,6 @@ When adding or materially changing an exported utility/subsystem:
 4. Keep project-specific policy/configuration out of the reusable contract.
 5. Record provenance or intentional semantic changes when the implementation was extracted from a production project.
 
+A material **consumer** improvement should also be triaged using [Kit Feedback Loop](docs/agent-workflows/KIT_FEEDBACK_LOOP.md). Fix a proven existing shared bug with an exact consumer reproducer; add a **new** shared primitive generally only after two independent real consumers demonstrate the same behavior and its maintenance payoff. A proposal is not yet an upstream implementation. Consumer code, art, balance, analytics and published save IDs remain consumer-owned.
+
 Public API documentation is part of the change, not optional follow-up work.
