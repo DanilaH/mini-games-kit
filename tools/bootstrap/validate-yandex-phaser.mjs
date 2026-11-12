@@ -102,6 +102,27 @@ try {
     catch { errors.push('guidance-only init missing: ' + required); }
   }
   if (android.files.length !== 7) errors.push('guidance-only init produced wrong file count');
+  const androidDoctor = await inspectGameGuidance({ destination: androidTarget, expectedKitRef: fakeSha });
+  if (androidDoctor.errors.length || androidDoctor.guidanceRef !== fakeSha) {
+    errors.push('generated Android guidance doctor failed: ' + JSON.stringify(androidDoctor.errors));
+  }
+  const androidClaude = await fs.readFile(path.join(androidTarget, 'CLAUDE.md'), 'utf8');
+  if (!androidClaude.includes('AGENTS.md') || !androidClaude.includes('TASK_ROUTER.md') || !androidClaude.includes(fakeSha)) {
+    errors.push('generated Android CLAUDE.md does not bridge AGENTS and pinned router');
+  }
+  const alternateRef = 'abcdefabcdefabcdefabcdefabcdefabcdefabcd';
+  const differentKit = await inspectGameGuidance({ destination: androidTarget, expectedKitRef: alternateRef });
+  if (!differentKit.warnings.some((w) => w.category === 'GUIDANCE_UPDATE_AVAILABLE')) {
+    errors.push('guidance doctor failed to detect explicit target-kit drift');
+  }
+  const guideToCorrupt = path.join(androidTarget, 'docs/kit-guidance/TASK_ROUTER.md');
+  const originalGuide = await fs.readFile(guideToCorrupt, 'utf8');
+  await fs.writeFile(guideToCorrupt, originalGuide.replaceAll(fakeSha, alternateRef));
+  const corrupted = await inspectGameGuidance({ destination: androidTarget, expectedKitRef: fakeSha });
+  if (!corrupted.errors.some((e) => e.category === 'PIN_MISMATCH' || e.category === 'MIXED_GUIDANCE_REFS')) {
+    errors.push('guidance doctor failed to reject an inconsistent pinned router');
+  }
+  await fs.writeFile(guideToCorrupt, originalGuide);
   const androidAgents = await fs.readFile(path.join(androidTarget, 'AGENTS.md'), 'utf8');
   if (!androidAgents.includes(fakeSha) || !androidAgents.includes('docs/kit-guidance/TASK_ROUTER.md')) {
     errors.push('guidance-only AGENTS missing pinned routing');
