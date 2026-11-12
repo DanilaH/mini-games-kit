@@ -91,6 +91,7 @@ export const initGameGuidance = async ({ destination, kitRef, projectName, platf
   const context = { kitRef: ref, projectName: name, platform };
   const files = await Promise.all([
     ['AGENTS.md', 'AGENTS.md'],
+    ['CLAUDE.md', 'CLAUDE.md'],
     ['PROJECT_DECISIONS.md', 'docs/PROJECT_DECISIONS.md'],
   ].map(async ([source, output]) => {
     const raw = await fs.readFile(path.join(repoRoot, templateRoot, source), 'utf8');
