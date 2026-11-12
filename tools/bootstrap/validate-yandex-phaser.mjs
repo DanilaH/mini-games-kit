@@ -79,6 +79,14 @@ try {
       errors.push('missing generated guidance: ' + name);
     }
   }
+  const gameDoctor = await inspectGameGuidance({ destination: target, expectedKitRef: fakeSha });
+  if (gameDoctor.errors.length || gameDoctor.guidanceRef !== fakeSha || gameDoctor.runtimeRef !== fakeSha) {
+    errors.push('generated Yandex guidance doctor failed: ' + JSON.stringify(gameDoctor.errors));
+  }
+  const gameClaude = await fs.readFile(path.join(target, 'CLAUDE.md'), 'utf8');
+  if (!gameClaude.includes('AGENTS.md') || !gameClaude.includes('TASK_ROUTER.md') || !gameClaude.includes(fakeSha)) {
+    errors.push('generated Yandex CLAUDE.md does not bridge AGENTS and pinned router');
+  }
   const gameAgents = await fs.readFile(path.join(target, 'AGENTS.md'), 'utf8');
   if (!gameAgents.includes('docs/kit-guidance/TASK_ROUTER.md') || !gameAgents.includes('KIT IMPACT')) {
     errors.push('generated AGENTS does not route tasks and kit feedback');
