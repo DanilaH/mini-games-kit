@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { pathToFileURL } from 'node:url';
 
 const GUIDES = ['TASK_ROUTER.md', 'REFERENCE_PROTOCOL.md', 'KIT_FEEDBACK_LOOP.md', 'NEW_PROJECT_SETUP.md'];
 const SHA = /^[0-9a-f]{40}$/i;
@@ -10,7 +10,6 @@ const readIfExists = async (file) => {
   try { return await fs.readFile(file, 'utf8'); }
   catch (error) { if (error?.code === 'ENOENT') return null; throw error; }
 };
-const matchAllSha = (source) => [...source.matchAll(/[0-9a-f]{40}/gi)].map(([sha]) => sha.toLowerCase());
 const codeMessage = (category, message) => ({ category, message });
 
 /** Read-only diagnostic; never upgrades dependency or rewrites project instructions. */
@@ -33,9 +32,9 @@ export async function inspectGameGuidance({ destination, expectedKitRef } = {}) 
   const pins = [];
   if (agents) {
     const direct = [
-      /Guidance snapshot pin:\s*([0-9a-f]{40})/i,
+      /Guidance snapshot pin:\*{0,2}\s*([0-9a-f]{40})/i,
       /Research guidance snapshot SHA:\s*([0-9a-f]{40})/i,
-      /mini-games-kit pinned commit:\s*([0-9a-f]{40})/i,
+      /mini-games-kit pinned commit:\*{0,2}\s*([0-9a-f]{40})/i,
     ];
     for (const pattern of direct) {
       const result = agents.match(pattern);
