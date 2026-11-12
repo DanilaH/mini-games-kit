@@ -92,7 +92,7 @@ try {
     try { await fs.access(path.join(androidTarget, required)); }
     catch { errors.push('guidance-only init missing: ' + required); }
   }
-  if (android.files.length !== 6) errors.push('guidance-only init produced wrong file count');
+  if (android.files.length !== 7) errors.push('guidance-only init produced wrong file count');
   const androidAgents = await fs.readFile(path.join(androidTarget, 'AGENTS.md'), 'utf8');
   if (!androidAgents.includes(fakeSha) || !androidAgents.includes('docs/kit-guidance/TASK_ROUTER.md')) {
     errors.push('guidance-only AGENTS missing pinned routing');
