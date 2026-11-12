@@ -8,6 +8,8 @@ Seeds 1.1 adds [calendar/streak models](core/DAILY_STREAK.md), [free/shared hint
 
 **Scope boundary:** This document covers low-pressure UI, save/progress, workers and tactile feedback. For independent evaluation of **which puzzle levels or procedural deals are worth producing** (solvability vs decision variety vs editorial/human acceptance), consult the separate optional [Content Quality & Procedural Gameplay method](content-quality/README.md). No runtime generator, content redesign or new SDK is implied by this link.
 
+**Inclusive input boundary:** 48dp recommended Android touch regions for controls, pointer/drag alternatives where appropriate, real font scaling, color-independent state and TalkBack/Canvas limitations require a **separate case-by-case QA**, not a new game framework. See [Accessibility & Inclusive Puzzle UX](accessibility/README.md); game-specific actual device evidence takes priority over browser-only geometry checks.
+
 ## UI that behaves like a game
 
 Use one clear primary play/continue action, with current progress or the next concrete task visible nearby. Review the whole viewport at actual device sizes: a menu occupying one quarter of a tall screen may feel abandoned. Rebalance composition and useful progress information before adding decorative cards or marketing copy. Retain safe areas and banner reservation while changing composition; removing unused-looking space must not remove an ad slot.
