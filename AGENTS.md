@@ -14,7 +14,7 @@ This experimental kit preserves repeatedly useful **production primitives, measu
 
 - **New Yandex Games + Phaser game:** mandatory tested [bootstrap/yandex-phaser](bootstrap/yandex-phaser/BOOTSTRAP.md). Use npm run bootstrap:create -- <destination> from reviewed kit SHA, then typecheck/test/build and appropriate hosted draft checks. It copies tested Yandex runtime plus the local task/reference/kit-feedback guides.
 - **Android/RuStore or other host:** this repo does NOT yet have an equivalent verified Android/Capacitor runtime bootstrap. Use npm run guidance:init -- <destination> --platform android to set up **guidance only**, then a tested Android game-specific scaffold and [Android Ads](docs/android/ADS_AND_LIFECYCLE.md)/[release acceptance](docs/ANDROID_RELEASE_ACCEPTANCE.md). Never treat Yandex Games web SDK as Android Mobile Ads.
-- Existing consumer AGENTS and project decisions are source-of-truth: don't overwrite them. Keep kit dependencies and research links at an exact commit. Upgrades are reviewed, never silent.
+- Existing consumer AGENTS and project decisions are source-of-truth: don't overwrite them. Keep kit runtime dependencies and research guidance snapshots at **separately recorded exact commits**; existing consumers may need newer studies while retaining old runtime APIs. Upgrades are reviewed, never silent.
 - [New Project Setup](docs/agent-workflows/NEW_PROJECT_SETUP.md) explains all modes, what is actually installed and how to select optional kit imports.
 
 ## Changes to the public kit
