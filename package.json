@@ -60,6 +60,7 @@
     "dist"
   ],
   "scripts": {
+    "guidance:adopt": "node tools/bootstrap/adopt-agent-guidance.mjs",
     "guidance:init": "node tools/bootstrap/init-game-guidance.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
