@@ -1,0 +1,129 @@
+# Cross-Promotion Decision Brief — одна добровольная пара игр
+
+**Для чего:** конкретная проверка одного направления origin A → destination B. Копировать в consumer repo **только** когда есть минимум два реально опубликованных совместимых продукта и наблюдаемые живые игроки source A. [Methodology](README.md) · [Independent Audit](INDEPENDENT_AUDIT_2026-11-12.md). Никакой обязательной интеграции во все игры.
+
+## 0. Допуск — не строить фичу заранее
+
+| Проверка | Статус и ссылка на текущий факт |
+| --- | --- |
+| Source A (repo + exact HEAD + version) | |
+| Source store URL, country/device, доступна ли публично | |
+| Destination B (repo + exact HEAD + version) | |
+| Destination public store URL + compatible store/geo/device | |
+| Издатель / developer page ownership совпадают | |
+| Платформа (RuStore Android / Play / Yandex Games web / другие) | |
+| Yandex Games TV? Если да, in-game links запрещены | |
+| Исходная реальная DAU/MAU, источник, качество данных | |
+| Релевантные реальные player situations / мотив | |
+| Проверка текущей политики и рекламной/ссылочной маркировки | |
+| Существующие Ads/SDK/store constraints и место показа | |
+| Контроль без cross-promo уже возможен? | |
+
+**Если A или B не опубликованы, нет verified store URL, или нет настоящих source players → HOLD/NO INTEGRATION.**
+
+## 1. Почему это могло бы быть полезно конкретному человеку
+
+**Источник (что человек только что сделал):** …
+
+**Контекст: спокойствие / короткий пазл / пространственная задача / другой:** …
+
+**Что реально предлагает B, а не просто «ещё одна игра»:** …
+
+**Почему B может дополнить A, а не обязательно заменить:** …
+
+**Одна наиболее сильная контргипотеза («B никому здесь не нужен»):** …
+
+**Как обнаружить неправильное ожидание ещё до разработки:** …
+
+**Если человек любит оставаться в A, как не помешать:** …
+
+## 2. Разные технические места показа
+
+| Продукт | Разрешённое место/метод | Что нельзя |
+| --- | --- | --- |
+| RuStore Android | Официальный RuStore HTTPS/deeplink для конкретного packageName / developer screen, пользователь явно выбирает | Auto-open, чужой магазин из запрещённой metadata, unverified destination |
+| Google Play | Listing/developer links + честная UTM, если нужно | Deceptive redirects, fake Store UI, Install Click как install |
+| Yandex Games web | SDK GamesAPI available games only, menu/post-level, текущая вкладка сохраняется | Raw href external URLs, active gameplay interruption, TV links |
+| No public destination | Ничего | Demo/placeholder карточка в production |
+
+**Предлагаемое размещение:** …
+**Чёткая подпись, объясняющая, куда перейдёт пользователь:** …
+**Что остается главной кнопкой текущего экрана:** …
+**Сохранение текущего state до нажатия, возврат, error fallback:** …
+**QA маленький viewport, Back, no-store, offline, rotate, save-pending, ads/lifecycle:** …
+
+## 3. Самая дешёвая первая альтернатива
+
+**Developer page официального стора уже опубликована?** YES/NO.
+**Может ли она решать текущую задачу без in-game UI?** …
+**Есть ли честный доступный способ распространить адрес без спама?** …
+**Если да — почему нужен второй экран в игре?** …
+
+Если цель — просто ссылаться на все игры издателя, начинать с official developer page. Не делать собственный каталог, сервер, карточную карусель или shared identity.
+
+## 4. Измерения (каждое событие имеет свой знаменатель)
+
+| Метрика | Реальный источник, окно и число | Что нельзя заключить |
+| --- | --- | --- |
+| Origin eligible players | | Не значит, что увидели offer |
+| Offer actually visible | | Не значит click |
+| Explicit user taps | | Не значит Store visit |
+| Navigation handoff/error | | Не значит Store visit |
+| Store UTM visits | | Не значит install intent |
+| Play unique Install Click / RuStore install counts | | Click не значит completed acquire |
+| Completed new installs, источник | | Attribution может не быть causal |
+| Destination first meaningful game action | | Не равно D1 и player satisfaction |
+| Mature target D1/D7 / source D1/D7 | | Не собирать незрелые cohort |
+| Source paid impressions/revenue, format | | Не умножать на fill после counted impressions |
+| Destination revenue/per-user contribution | | Не равно portfolio incremental lift |
+| Development + QA + maintenance hours | | Не равно нулю у static link |
+
+**Отсутствие cross-app идентификатора:** не создавать fingerprinting / SDK для связывания игроков. Если агрегатных данных недостаточно для causal portfolio ROI, так и записать UNKNOWN.
+
+## 5. Минимальный эксперимент, только если нужен и есть трафик
+
+**Гипотеза:** …
+**Eligible source population (фиксированный rule):** …
+**Stable unit of randomization (independent player/device, privacy compliant):** …
+**Control:** одинаковая игра A, no promo
+**Treatment:** идентичная A + один добровольный offer B
+**Primary outcome:** qualified destination first plays per eligible user, **только при корректной измеримости**; иначе более скромный observed store contact
+**Guardrails:** source continue/return, source counted paid ads, origin engagement, complaints, crashes, game lifecycle; target FTUE and source overlap
+**Study horizon / cohort maturity:** …
+**Sample/power and reason test feasible:** …
+**No-fill, store country, test users and referral unavailable exclusions:** …
+**ITT analysis (по назначению, не только по нажавшим):** …
+**Independent counterfactual: мог ли пользователь установить B без нашего offer:** …
+**Stop rule:** …
+**Fallback when measurement insufficient:** HOLD — qualitative UX only
+
+**Нет достаточного N → не называть малое before/after сравнение A/B-эффектом.**
+
+## 6. Portfolio economic check
+
+**Origin A: изменение активных дней/earned revenue за горизонт:** …
+**Target B: действительно дополнительная, а не атрибутированная выручка:** …
+**Возможный paid inventory/opportunity cost источника:** …
+**Будущие расходы QA, store compliance, ссылок и SDK:** …
+**Пересекающаяся аудитория/каннибализация и неизвестные:** …
+
+**Portfolio incremental contribution:** изменение contribution во всём портфеле − дополнительные реальные расходы. Если source и target не связаны надежными данными, verdict — неизвестная портфельная прибыль, а не 100% кредит за install.
+
+## 7. Независимое опровержение, без которого не принимать работу
+
+1. **Неправильная аудитория:** …
+2. **Неправильный platform/geo/store:** …
+3. **Source потеряет больше, чем приобретёт target:** …
+4. **Пользователь B и так пришёл бы органически:** …
+5. **UI нарушает главную ценность A или platform policy:** …
+6. **Измерение не даёт причинности и будущих доходов:** …
+
+## 8. Решение и его ограниченная стоимость
+
+**Verdict:** PROVE LIVE AUDIENCE / PROVE PUBLIC DESTINATION / USE DEVELOPER PAGE / PILOT ONE PAIR / HOLD / REJECT / NO CHANGE
+
+**Что точно доказано:** …
+**Что неизвестно и какие ссылки на source:** …
+**Самая дешевая следующая проверка и лимит часов:** …
+**Не сделано осознанно:** общий SDK, роутер между играми, внешние кросс-платформенные ссылки в Yandex, popup, fake reward, shared currency, full portfolio feature rollout.
+**Owner approval для любой настоящей публикации/изменения live ad/store:** …

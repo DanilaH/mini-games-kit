@@ -90,6 +90,8 @@ This keeps game boot code mostly platform-agnostic.
 
 `loadYandexGamesGlobal({ sdkUrl, document, globalObject })` is exposed separately for hosts that only need controlled SDK script loading. It fails if the script loads but `YaGames.init` is still missing.
 
+**Game links are a platform feature, not part of this shared runtime contract.** Yandex Games allows cross-promotion of the developer's **other Yandex Games** via its native GamesAPI.getAllGames/getGameByID, only outside active gameplay and with the current tab preserved; external store URLs are not allowed, and TV games cannot have links to the developer's other games. See [Portfolio & Cross-Promotion](../portfolio/README.md) before implementing an optional feature in a real consumer; do not add a common game-links subsystem to this runtime speculatively.
+
 ## Non-goals
 
 The runtime does not:
