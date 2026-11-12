@@ -97,7 +97,7 @@ try {
   const android = await initGameGuidance({
     destination: androidTarget, kitRef: fakeSha, projectName: 'Sample Android', platform: 'android',
   });
-  for (const required of ['AGENTS.md', 'docs/PROJECT_DECISIONS.md', ...guidanceNames.map((n) => 'docs/kit-guidance/' + n)]) {
+  for (const required of ['AGENTS.md', 'CLAUDE.md', 'docs/PROJECT_DECISIONS.md', ...guidanceNames.map((n) => 'docs/kit-guidance/' + n)]) {
     try { await fs.access(path.join(androidTarget, required)); }
     catch { errors.push('guidance-only init missing: ' + required); }
   }
