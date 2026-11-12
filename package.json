@@ -62,6 +62,7 @@
   "scripts": {
     "guidance:adopt": "node tools/bootstrap/adopt-agent-guidance.mjs",
     "guidance:init": "node tools/bootstrap/init-game-guidance.mjs",
+    "guidance:doctor": "node tools/bootstrap/doctor-game-guidance.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "build": "tsc -p tsconfig.build.json",
