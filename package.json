@@ -60,6 +60,7 @@
     "dist"
   ],
   "scripts": {
+    "guidance:init": "node tools/bootstrap/init-game-guidance.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "build": "tsc -p tsconfig.build.json",
