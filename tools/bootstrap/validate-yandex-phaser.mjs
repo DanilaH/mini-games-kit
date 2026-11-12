@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { createYandexPhaserBootstrap } from './create-yandex-phaser.mjs';
 import { initGameGuidance } from './init-game-guidance.mjs';
 import { adoptGameGuidance } from './adopt-agent-guidance.mjs';
+import { inspectGameGuidance } from './doctor-game-guidance.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, '../..');
