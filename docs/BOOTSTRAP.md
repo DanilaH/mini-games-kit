@@ -67,6 +67,12 @@ For a project with an existing AGENTS.md, use `npm run guidance:adopt -- <reposi
 
 The normal Yandex Phaser bootstrap installs the **same** task router, original-reference protocol and kit-feedback loop automatically while retaining its tested runtime baseline. These guides are small on purpose: agents read **only** the relevant full studies at the pinned kit revision, rather than injecting all research into every context.
 
+## Guidance verification after initialization
+
+Generator installs a short CLAUDE.md bridge while AGENTS.md remains the canonical contract. Run npm run guidance:doctor -- <destination> --strict in the mini-games-kit repo to verify local Task Router, Reference Protocol, Kit Feedback Loop and pinned source links. Optional --expected-kit-ref <sha> reports version drift but does not update the consumer runtime or rewrite project instructions.
+
+Separately start a **new** agent session and ask which instruction files were actually loaded and which route it selected for a concrete task. File verification is not proof that any given harness followed the instructions. Existing consumer guidance:adopt is intentionally one-time and non-overwriting; upgrades require reviewed diffs.
+
 ## Generator behavior
 
 `tools/bootstrap/create-yandex-phaser.mjs` copies the full template and substitutes project name plus an **exact 40-character kit commit SHA**. It refuses a non-empty destination and leaves no unresolved placeholders.
