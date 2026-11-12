@@ -6,6 +6,8 @@ Implementation requirements extracted from [Seeds](SEEDS_EXTRACTION.md). This is
 
 Seeds 1.1 adds [calendar/streak models](core/DAILY_STREAK.md), [free/shared hint budgets](core/HINT_BUDGET.md), [tier progress and reward presentation](core/TIER_PROGRESS.md), [local reminders](android/LOCAL_REMINDERS.md), [rare review requests](android/IN_APP_REVIEW.md) and [stable counter/time-input acceptance](layout/STABLE_PROGRESS_UI.md). Read their focused contracts before implementing another local variant. Use existing receipt/snapshot writers for durable grants; the models do not save on their own. [Provenance and exclusions](extraction/SEEDS_110.md).
 
+**Scope boundary:** This document covers low-pressure UI, save/progress, workers and tactile feedback. For independent evaluation of **which puzzle levels or procedural deals are worth producing** (solvability vs decision variety vs editorial/human acceptance), consult the separate optional [Content Quality & Procedural Gameplay method](content-quality/README.md). No runtime generator, content redesign or new SDK is implied by this link.
+
 ## UI that behaves like a game
 
 Use one clear primary play/continue action, with current progress or the next concrete task visible nearby. Review the whole viewport at actual device sizes: a menu occupying one quarter of a tall screen may feel abandoned. Rebalance composition and useful progress information before adding decorative cards or marketing copy. Retain safe areas and banner reservation while changing composition; removing unused-looking space must not remove an ad slot.
