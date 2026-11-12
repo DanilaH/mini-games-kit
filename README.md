@@ -8,6 +8,8 @@ The goal is not to build a generic game engine. The goal is to preserve expensiv
 
 | Need | Entry point | Status |
 | --- | --- | --- |
+| Initialize agent-aware workflow for an Android/web game | [Agent workflow](docs/agent-workflows/NEW_PROJECT_SETUP.md) | `npm run guidance:init -- <destination> --platform android`; creates guidance only, safely pins kit research and never installs Android SDK |
+| Route development tasks, references and kit improvements | [Task Router](docs/agent-workflows/TASK_ROUTER.md) | Thin AGENTS contract loads relevant studies only; reference teardown and kit-impact reporting are conditional |
 | New Yandex + Phaser game | [Bootstrap](docs/BOOTSTRAP.md) | Generated runnable project |
 | Select reusable mechanisms | [API guide](docs/API.md) | Implemented APIs with focused usage docs |
 | Android advertising | [Integration contract](docs/android/ADS_AND_LIFECYCLE.md) | Specification and geometry; no bundled native SDK |
