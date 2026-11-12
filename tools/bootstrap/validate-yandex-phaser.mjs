@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { createYandexPhaserBootstrap } from './create-yandex-phaser.mjs';
 import { initGameGuidance } from './init-game-guidance.mjs';
 import { adoptGameGuidance } from './adopt-agent-guidance.mjs';
+import { inspectGameGuidance } from './doctor-game-guidance.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, '../..');
@@ -78,6 +79,14 @@ try {
       errors.push('missing generated guidance: ' + name);
     }
   }
+  const gameDoctor = await inspectGameGuidance({ destination: target, expectedKitRef: fakeSha });
+  if (gameDoctor.errors.length || gameDoctor.guidanceRef !== fakeSha || gameDoctor.runtimeRef !== fakeSha) {
+    errors.push('generated Yandex guidance doctor failed: ' + JSON.stringify(gameDoctor.errors));
+  }
+  const gameClaude = await fs.readFile(path.join(target, 'CLAUDE.md'), 'utf8');
+  if (!gameClaude.includes('AGENTS.md') || !gameClaude.includes('TASK_ROUTER.md') || !gameClaude.includes(fakeSha)) {
+    errors.push('generated Yandex CLAUDE.md does not bridge AGENTS and pinned router');
+  }
   const gameAgents = await fs.readFile(path.join(target, 'AGENTS.md'), 'utf8');
   if (!gameAgents.includes('docs/kit-guidance/TASK_ROUTER.md') || !gameAgents.includes('KIT IMPACT')) {
     errors.push('generated AGENTS does not route tasks and kit feedback');
@@ -88,11 +97,32 @@ try {
   const android = await initGameGuidance({
     destination: androidTarget, kitRef: fakeSha, projectName: 'Sample Android', platform: 'android',
   });
-  for (const required of ['AGENTS.md', 'docs/PROJECT_DECISIONS.md', ...guidanceNames.map((n) => 'docs/kit-guidance/' + n)]) {
+  for (const required of ['AGENTS.md', 'CLAUDE.md', 'docs/PROJECT_DECISIONS.md', ...guidanceNames.map((n) => 'docs/kit-guidance/' + n)]) {
     try { await fs.access(path.join(androidTarget, required)); }
     catch { errors.push('guidance-only init missing: ' + required); }
   }
-  if (android.files.length !== 6) errors.push('guidance-only init produced wrong file count');
+  if (android.files.length !== 7) errors.push('guidance-only init produced wrong file count');
+  const androidDoctor = await inspectGameGuidance({ destination: androidTarget, expectedKitRef: fakeSha });
+  if (androidDoctor.errors.length || androidDoctor.guidanceRef !== fakeSha) {
+    errors.push('generated Android guidance doctor failed: ' + JSON.stringify(androidDoctor.errors));
+  }
+  const androidClaude = await fs.readFile(path.join(androidTarget, 'CLAUDE.md'), 'utf8');
+  if (!androidClaude.includes('AGENTS.md') || !androidClaude.includes('TASK_ROUTER.md') || !androidClaude.includes(fakeSha)) {
+    errors.push('generated Android CLAUDE.md does not bridge AGENTS and pinned router');
+  }
+  const alternateRef = 'abcdefabcdefabcdefabcdefabcdefabcdefabcd';
+  const differentKit = await inspectGameGuidance({ destination: androidTarget, expectedKitRef: alternateRef });
+  if (!differentKit.warnings.some((w) => w.category === 'GUIDANCE_UPDATE_AVAILABLE')) {
+    errors.push('guidance doctor failed to detect explicit target-kit drift');
+  }
+  const guideToCorrupt = path.join(androidTarget, 'docs/kit-guidance/TASK_ROUTER.md');
+  const originalGuide = await fs.readFile(guideToCorrupt, 'utf8');
+  await fs.writeFile(guideToCorrupt, originalGuide.replaceAll(fakeSha, alternateRef));
+  const corrupted = await inspectGameGuidance({ destination: androidTarget, expectedKitRef: fakeSha });
+  if (!corrupted.errors.some((e) => e.category === 'PIN_MISMATCH' || e.category === 'MIXED_GUIDANCE_REFS')) {
+    errors.push('guidance doctor failed to reject an inconsistent pinned router');
+  }
+  await fs.writeFile(guideToCorrupt, originalGuide);
   const androidAgents = await fs.readFile(path.join(androidTarget, 'AGENTS.md'), 'utf8');
   if (!androidAgents.includes(fakeSha) || !androidAgents.includes('docs/kit-guidance/TASK_ROUTER.md')) {
     errors.push('guidance-only AGENTS missing pinned routing');

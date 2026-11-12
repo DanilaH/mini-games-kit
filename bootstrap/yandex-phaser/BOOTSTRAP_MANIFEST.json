@@ -3,6 +3,7 @@
   "templateId": "yandex-phaser",
   "requiredFiles": [
     "AGENTS.md",
+    "CLAUDE.md",
     "BOOTSTRAP.md",
     "README.md",
     ".gitignore",

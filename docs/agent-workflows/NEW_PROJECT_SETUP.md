@@ -52,6 +52,25 @@
 
 **Если доступ к pinned GitHub закрыт:** писать NOT READ / UNKNOWN, использовать уже локально собранный код/отчёты, не придумывать содержание исследования. Возможность скачать полный архив заранее для offline работы — отдельный ручной action, не обязательная дублирующая часть bootstrap.
 
+## 5. Проверка целостности агентских инструкций
+
+Новые проекты получают короткий CLAUDE.md-мост для Claude Code и основной AGENTS.md для Codex/Copilot. Для уже существующих репозиториев не перезаписывать чужой CLAUDE.md; если он используется, вручную связать его с AGENTS.md и локальным Task Router после review.
+
+Команды из рабочего mini-games-kit:
+
+    npm run guidance:doctor -- ../my-android-game --strict
+    npm run guidance:doctor -- ../existing-game --expected-kit-ref <new-approved-kit-sha>
+
+Doctor только читает файлы: наличие local router/reference/kit feedback, согласованность ссылок на точный SHA, pinned ревизии в AGENTS и видимую установленную runtime-зависимость. Флаг --json выводит JSON, --strict возвращает ошибку при нарушении обязательных инвариантов. --expected-kit-ref сообщает о возможном устаревании исследовательских материалов, но никогда не переписывает runtime/pins/проектные решения.
+
+Две независимые проверки:
+- File check: doctor доказывает, что необходимые документы и ссылки есть и согласованы.
+- Actual harness smoke: в новой агентской сессии попросить назвать реально загруженные instructions, выбранный Task Router route и guidance SHA, а перед импортом API — отдельный runtime SHA. Doctor не доказывает, что модель прочла файлы.
+
+По официальным документам Codex загружает AGENTS.md при старте сессии, Claude Code загружает CLAUDE.md; Copilot использует AGENTS.md и/или отдельные репозиторные инструкции в зависимости от режима. Не создавать конфликтующих копий. Источники: [Codex](https://learn.chatgpt.com/docs/agent-configuration/agents-md), [Claude](https://support.claude.com/en/articles/14553240-give-claude-context-claude-md-and-better-prompts), [Copilot](https://docs.github.com/en/copilot/concepts/prompting-and-context/custom-instructions).
+
+**Обновление текущего проекта:** новый research SHA — сигнал для отдельного review diff, не основание тихо менять pinned runtime. В существующем проекте AGENTS/PROJECT_DECISIONS могли редактироваться; команды автоматического безопасного overwrite старых инструкций нет.
+
 ## 5. Назначение AGENTS.md и отличие платформ
 
 У Codex, GitHub Copilot и Claude Code есть поддержка проектных инструкций, но **конкретный loader и precedence зависят от агента/harness**. Краткий repo-root AGENTS — наиболее переносимый общий минимум; в Codex инструкции автоматически читаются при старте, nested AGENTS в подпапках применяются к своим областям; у Copilot/Claude может потребоваться собственная конфигурация/проверка. Проверить реально loaded instructions на целевой среде, не обещать магическое 100% выполнение по Markdown.
