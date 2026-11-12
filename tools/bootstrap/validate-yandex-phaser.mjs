@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 import { createYandexPhaserBootstrap } from './create-yandex-phaser.mjs';
 import { initGameGuidance } from './init-game-guidance.mjs';
+import { adoptGameGuidance } from './adopt-agent-guidance.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, '../..');
@@ -105,6 +106,32 @@ try {
   if (!refusedOverwrite) errors.push('guidance-only init overwrote existing project files');
   const preserved = await fs.readFile(path.join(androidTarget, 'AGENTS.md'), 'utf8');
   if (preserved !== androidAgents) errors.push('guidance-only init changed existing AGENTS after refusal');
+  // An existing game must retain its own contract and receive only a small appendix.
+  const existingTarget = path.join(tempRoot, 'existing-android-game');
+  await fs.mkdir(existingTarget);
+  const existingAgents = '# Existing product contract\n\nCore rules and release history are game-owned.\n';
+  await fs.writeFile(path.join(existingTarget, 'AGENTS.md'), existingAgents);
+  await adoptGameGuidance({ destination: existingTarget, kitRef: fakeSha });
+  const adoptedAgents = await fs.readFile(path.join(existingTarget, 'AGENTS.md'), 'utf8');
+  if (!adoptedAgents.startsWith(existingAgents) || !adoptedAgents.includes('KIT IMPACT') ||
+      !adoptedAgents.includes(fakeSha) || !adoptedAgents.includes('docs/kit-guidance/TASK_ROUTER.md')) {
+    errors.push('guidance:adopt damaged or failed to extend existing instructions');
+  }
+  for (const name of guidanceNames) {
+    try { await fs.access(path.join(existingTarget, 'docs', 'kit-guidance', name)); }
+    catch { errors.push('guidance:adopt missing guide: ' + name); }
+  }
+  let adoptRefusedDuplicate = false;
+  try {
+    await adoptGameGuidance({ destination: existingTarget, kitRef: fakeSha });
+  } catch (error) {
+    adoptRefusedDuplicate = /Refusing to adopt twice/.test(String(error?.message));
+  }
+  if (!adoptRefusedDuplicate) errors.push('guidance:adopt allowed a duplicate setup');
+  if (await fs.readFile(path.join(existingTarget, 'AGENTS.md'), 'utf8') !== adoptedAgents) {
+    errors.push('duplicate adopt modified existing instructions');
+  }
+
   try {
     await fs.access(path.join(target, 'BOOTSTRAP_MANIFEST.json'));
     errors.push('template-only BOOTSTRAP_MANIFEST.json leaked into generated project');
