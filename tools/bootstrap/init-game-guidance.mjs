@@ -16,7 +16,7 @@ export const exactKitRef = (value) => {
   return value.toLowerCase();
 };
 
-const resolveKitRef = (kitRef) => {
+export const resolveKitRef = (kitRef) => {
   if (kitRef) return exactKitRef(kitRef);
   try {
     return exactKitRef(execFileSync('git', ['rev-parse', 'HEAD'], {
