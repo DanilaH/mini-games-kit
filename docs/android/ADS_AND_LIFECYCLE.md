@@ -4,6 +4,8 @@ Water Sort adds the [independent dismissal/foreground transition recipe](../plat
 
 Production knowledge from [Seeds](../SEEDS_EXTRACTION.md), not a bundled Java/Capacitor adapter. Native SDK integration must be implemented and tested per consumer; the existing `/yandex` adapter targets **Yandex Games web**, not Yandex Mobile Ads for Android.
 
+**Commercial evidence boundary:** this document proves engineering and UX integration, **not publisher earnings**. Before projecting revenue or claiming active advertising, consult the [Game Economics & Revenue Modeling guide](../game-economics/README.md). In particular Yandex Advertising Network test-mode ads in unpublished apps are unpaid; real payments require eligible contract, published/verified app and Active moderation status. Source-of-truth earnings and payout are distinct from AppMetrica estimated reports.
+
 ## Banner geometry and reservation
 
 Use [`resolveNativeBannerPlacement`](../layout/NATIVE_BANNER_PLACEMENT.md) for the shared coordinate contract. It returns `hidden`, `reserve` or `place`, with inward pixel rounding, safe-root/WebView containment and parent-padding-adjusted margins. Pass the actual SDK height measured at the same mapped width. The rules below describe integration around that helper; do not implement a second rounding/mapping algorithm in a new consumer.
