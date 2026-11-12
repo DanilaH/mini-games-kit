@@ -12,6 +12,7 @@ The goal is not to build a generic game engine. The goal is to preserve expensiv
 | Select reusable mechanisms | [API guide](docs/API.md) | Implemented APIs with focused usage docs |
 | Android advertising | [Integration contract](docs/android/ADS_AND_LIFECYCLE.md) | Specification and geometry; no bundled native SDK |
 | Daily progression and engagement | [Calendar/streaks](docs/core/DAILY_STREAK.md), [hints](docs/core/HINT_BUDGET.md), [tiers](docs/core/TIER_PROGRESS.md) | Portable models; Android reminders/review/haptics are linked recipes |
+| Decide whether a small game's economics justify the next investment | [Game Economics & Revenue Modeling](docs/game-economics/README.md) | Conditional monetization/payout checks, actuals versus scenarios, maintenance and marginal portfolio decisions |
 | Evaluate a *new game idea* before production | [Audience & Game-Market Fit](docs/game-market-fit/README.md) | Optional evidence-led market hypothesis, real player need, alternatives, reach, production cost and explicit HOLD/REJECT |
 | Produce and review puzzle content | [Content Quality & Procedural Gameplay](docs/content-quality/README.md) | Optional evidence-led pipeline for fixed banks and endless deals; validates decision variety, oracle, editorial cost and human limits |
 | Choose puzzle-design research directions | [Puzzle Design selection](docs/puzzle-design/PROJECT_SELECTION.md) | Opt-in design methods; each project records SELECT / HOLD / REJECT instead of installing all mechanics |
