@@ -34,6 +34,7 @@ export async function inspectGameGuidance({ destination, expectedKitRef } = {}) 
     const direct = [
       /Guidance snapshot pin:\*{0,2}\s*([0-9a-f]{40})/i,
       /Research guidance snapshot SHA:\s*([0-9a-f]{40})/i,
+      /(?:Research )?Guidance snapshot:\s*([0-9a-f]{40})/i,
       /mini-games-kit pinned commit:\*{0,2}\s*([0-9a-f]{40})/i,
     ];
     for (const pattern of direct) {
