@@ -56,7 +56,9 @@ clicks for positives and no automatic scroll. Reports/screenshots are written to
 they do not retest the source app, Android text glyphs, native overlays or TalkBack.
 
 The CI native-reference job compiles the **unchanged pinned donor Java bridge**
-against its original deterministic Android/SDK doubles and uploads the 30-case
+against its original deterministic Android/SDK doubles. Install the donor locked
+dependencies first (`npm ci --ignore-scripts`): the fixture also compiles the real
+Capacitor Preferences Java sources. CI uploads the 30-case
 result with source and harness hashes. This tests source callback/geometry history;
 it is not an adapter of the new kit option into a shipped APK, an actual SDK show
 or evidence that other consumer dependencies were upgraded.
