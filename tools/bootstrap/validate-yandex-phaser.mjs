@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { createYandexPhaserBootstrap } from './create-yandex-phaser.mjs';
 import { initGameGuidance } from './init-game-guidance.mjs';
 import { adoptGameGuidance } from './adopt-agent-guidance.mjs';
-import { inspectGameGuidance } from './doctor-game-guidance.mjs';
+import { inspectGameGuidance, UI_GUIDANCE_PATHS } from './doctor-game-guidance.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, '../..');
@@ -14,6 +14,16 @@ const templateRoot = path.join(repoRoot, 'bootstrap/yandex-phaser');
 const manifestPath = path.join(templateRoot, 'BOOTSTRAP_MANIFEST.json');
 const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf8'));
 const errors = [];
+
+for (const document of UI_GUIDANCE_PATHS) {
+  try { await fs.access(path.join(repoRoot, document)); }
+  catch { errors.push('missing current UI guidance source: ' + document); }
+}
+const requireUiRoutes = (label, inspected) => {
+  if (inspected.uiRoutes.missing.length || inspected.uiRoutes.linked.length !== UI_GUIDANCE_PATHS.length) {
+    errors.push(label + ' lacks current pinned UI routes: ' + inspected.uiRoutes.missing.join(', '));
+  }
+};
 
 for (const required of manifest.requiredFiles ?? []) {
   try {
@@ -83,6 +93,7 @@ try {
   if (gameDoctor.errors.length || gameDoctor.guidanceRef !== fakeSha || gameDoctor.runtimeRef !== fakeSha) {
     errors.push('generated Yandex guidance doctor failed: ' + JSON.stringify(gameDoctor.errors));
   }
+  requireUiRoutes('generated Yandex guidance', gameDoctor);
   const gameClaude = await fs.readFile(path.join(target, 'CLAUDE.md'), 'utf8');
   if (!gameClaude.includes('AGENTS.md') || !gameClaude.includes('TASK_ROUTER.md') || !gameClaude.includes(fakeSha)) {
     errors.push('generated Yandex CLAUDE.md does not bridge AGENTS and pinned router');
@@ -106,6 +117,7 @@ try {
   if (androidDoctor.errors.length || androidDoctor.guidanceRef !== fakeSha) {
     errors.push('generated Android guidance doctor failed: ' + JSON.stringify(androidDoctor.errors));
   }
+  requireUiRoutes('generated Android guidance', androidDoctor);
   const androidClaude = await fs.readFile(path.join(androidTarget, 'CLAUDE.md'), 'utf8');
   if (!androidClaude.includes('AGENTS.md') || !androidClaude.includes('TASK_ROUTER.md') || !androidClaude.includes(fakeSha)) {
     errors.push('generated Android CLAUDE.md does not bridge AGENTS and pinned router');
@@ -121,6 +133,38 @@ try {
   const corrupted = await inspectGameGuidance({ destination: androidTarget, expectedKitRef: fakeSha });
   if (!corrupted.errors.some((e) => e.category === 'PIN_MISMATCH' || e.category === 'MIXED_GUIDANCE_REFS')) {
     errors.push('guidance doctor failed to reject an inconsistent pinned router');
+  }
+  // UI routing checks inspect exact link destinations, not document-name mentions.
+  const motionPath = 'docs/feel/UI_MOTION_RECIPES.md';
+  const pinnedMotionUrl = `https://github.com/DanilaH/mini-games-kit/blob/${fakeSha}/${motionPath}`;
+  const wrongDirectory = originalGuide.replaceAll(pinnedMotionUrl,
+    `https://github.com/DanilaH/mini-games-kit/blob/${fakeSha}/docs/other/UI_MOTION_RECIPES.md`);
+  await fs.writeFile(guideToCorrupt, wrongDirectory);
+  const wrongUiPath = await inspectGameGuidance({ destination: androidTarget });
+  if (!wrongUiPath.uiRoutes.missing.includes(motionPath) ||
+      !wrongUiPath.warnings.some((w) => w.category === 'UI_ROUTES_MISSING')) {
+    errors.push('guidance doctor accepted a UI basename in the wrong destination directory');
+  }
+  await fs.writeFile(guideToCorrupt, originalGuide.replaceAll(pinnedMotionUrl,
+    `https://github.com/DanilaH/mini-games-kit/blob/${alternateRef}/${motionPath}`));
+  const wrongUiPin = await inspectGameGuidance({ destination: androidTarget });
+  if (!wrongUiPin.uiRoutes.missing.includes(motionPath) ||
+      !wrongUiPin.errors.some((e) => e.category === 'PIN_MISMATCH' || e.category === 'MIXED_GUIDANCE_REFS')) {
+    errors.push('guidance doctor accepted a UI destination at a different SHA');
+  }
+  let historicalRouter = originalGuide;
+  for (const document of UI_GUIDANCE_PATHS) {
+    const url = `https://github.com/DanilaH/mini-games-kit/blob/${fakeSha}/${document}`;
+    historicalRouter = historicalRouter.replaceAll(`](${url})`, ']()');
+    // Even an exact URL mentioned as text does not replace the clickable route.
+    historicalRouter += '\n' + url + '\n';
+  }
+  await fs.writeFile(guideToCorrupt, historicalRouter);
+  const historicalUi = await inspectGameGuidance({ destination: androidTarget });
+  if (historicalUi.errors.length || historicalUi.status !== 'READY_FOR_AGENT_DISCOVERY' ||
+      historicalUi.uiRoutes.missing.length !== UI_GUIDANCE_PATHS.length ||
+      !historicalUi.warnings.some((w) => w.category === 'UI_ROUTES_MISSING')) {
+    errors.push('guidance doctor did not keep missing historical UI routes advisory or counted bare URL text as routing');
   }
   await fs.writeFile(guideToCorrupt, originalGuide);
   const androidAgents = await fs.readFile(path.join(androidTarget, 'AGENTS.md'), 'utf8');
@@ -151,6 +195,11 @@ try {
     try { await fs.access(path.join(existingTarget, 'docs', 'kit-guidance', name)); }
     catch { errors.push('guidance:adopt missing guide: ' + name); }
   }
+  const adoptedDoctor = await inspectGameGuidance({ destination: existingTarget, expectedKitRef: fakeSha });
+  if (adoptedDoctor.errors.length || adoptedDoctor.guidanceRef !== fakeSha) {
+    errors.push('adopted guidance doctor failed: ' + JSON.stringify(adoptedDoctor.errors));
+  }
+  requireUiRoutes('adopted guidance', adoptedDoctor);
   let adoptRefusedDuplicate = false;
   try {
     await adoptGameGuidance({ destination: existingTarget, kitRef: fakeSha });

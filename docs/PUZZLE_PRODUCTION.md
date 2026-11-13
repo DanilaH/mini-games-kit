@@ -12,6 +12,8 @@ Seeds 1.1 adds [calendar/streak models](core/DAILY_STREAK.md), [free/shared hint
 
 ## UI that behaves like a game
 
+For a new or changed control, use the relevant [UX & Art System](visual-preproduction/UX_AND_ART_SYSTEM.md) section and [UI Motion Recipes](feel/UI_MOTION_RECIPES.md) before implementation. Reuse the game's accepted components and verify the affected states; one small fix does not require a full visual redesign.
+
 Use one clear primary play/continue action, with current progress or the next concrete task visible nearby. Review the whole viewport at actual device sizes: a menu occupying one quarter of a tall screen may feel abandoned. Rebalance composition and useful progress information before adding decorative cards or marketing copy. Retain safe areas and banner reservation while changing composition; removing unused-looking space must not remove an ad slot.
 
 Keep one restrained accent and neutral surfaces for a large task library. Use selected/current/completed states, typography and small markers to express meaning rather than giving every notebook a different saturated color. Do not depend on color alone. A completed task should show its result immediately, without a redundant expand/collapse action. Remove or disable gameplay-only hint/undo controls once the board is complete.

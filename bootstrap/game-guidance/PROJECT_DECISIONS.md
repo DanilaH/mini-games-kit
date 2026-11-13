@@ -61,6 +61,16 @@ Do not fill this with all studies every task. Record only decisions that matter 
 - Real store listing/monetization/analytics and live acceptance:
 - Native/Android device checks, screen-reader limitations, physical evidence:
 
+## UI profile — fill only as choices become real
+
+- Existing component/token source; roles for color, type, spacing and icons:
+- Main actions and truthful states in the affected screens:
+- Motion choices for press, selection, drag/release, panels and rewards; frequent-action limits:
+- Cancellation/reduced-motion behavior and deliberate exceptions:
+- Comparable screen/transition evidence at actual target sizes:
+
+Keep project values here or link the existing Art Bible/style source. The kit supplies contracts and optional recipes; it does not prescribe one theme or global animation duration.
+
 ## Kit feedback / upstream proposals (non-automatic)
 
 | Local commit and evidence | Kit current API or new candidate | NONE / REUSE / IMPROVE / CANDIDATE / EXTRACTED | Second consumer evidence if new API | Owner decision / kit PR |

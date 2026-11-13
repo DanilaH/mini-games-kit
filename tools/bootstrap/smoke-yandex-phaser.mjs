@@ -5,6 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 import { createYandexPhaserBootstrap } from './create-yandex-phaser.mjs';
+import { inspectGameGuidance } from './doctor-game-guidance.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, '../..');
@@ -16,6 +17,15 @@ const runNpm = (args) => execFileSync('npm', args, { cwd: target, stdio: 'inheri
 try {
   const head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repoRoot, encoding: 'utf8' }).trim();
   await createYandexPhaserBootstrap({ destination: target, kitRef: head, projectName: 'bootstrap-smoke' });
+
+  const guidance = await inspectGameGuidance({ destination: target, expectedKitRef: head });
+  if (guidance.errors.length || guidance.uiRoutes.missing.length ||
+      guidance.guidanceRef !== head || guidance.runtimeRef !== head) {
+    throw new Error('Generated bootstrap guidance is incomplete: ' + JSON.stringify({
+      errors: guidance.errors, missingUiRoutes: guidance.uiRoutes.missing,
+      guidanceRef: guidance.guidanceRef, runtimeRef: guidance.runtimeRef,
+    }));
+  }
 
   const packagePath = path.join(target, 'package.json');
   const pkg = JSON.parse(await fs.readFile(packagePath, 'utf8'));
