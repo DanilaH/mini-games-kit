@@ -5,10 +5,10 @@
 ## Before implementing a material task
 
 1. Read BOOTSTRAP.md, docs/PROJECT_DECISIONS.md, docs/ASSET_POLICY.md, docs/RELEASE_CHECKLIST.md and inspect the actual current game source and most recent approved product decisions.
-2. Open **docs/kit-guidance/TASK_ROUTER.md** (generated with this project) and select 1–2 relevant **pinned** research/playbook routes. Do not blindly apply all topics or produce a new director for a local UX fix.
+2. Open **docs/kit-guidance/TASK_ROUTER.md** (generated with this project) and select 1–2 relevant **pinned** research/playbook routes. For any UI change, select its UI route before implementation, reuse the approved project components/tokens and verify affected states without waiting for an owner reminder. A small fix only needs its relevant section. Do not blindly apply all topics or produce a new director for a local UX fix.
 3. If the task cites a reference game, original video, GIF, screenshot or «as in the original», follow **docs/kit-guidance/REFERENCE_PROTOCOL.md** before coding. Record OBSERVED vs INFERRED vs NOT INSPECTED; compare actual input/state transitions and feel, not only appearance.
 4. Before any reusable mechanism, inspect the pinned [kit API](https://github.com/DanilaH/mini-games-kit/blob/__MINI_GAMES_KIT_REF__/docs/API.md). Reuse existing suitable primitives rather than copying code. Do not silently upgrade the dependency.
-5. Make the smallest evidence-backed change; verify actual gameplay, state/save, responsive input, SDK lifecycle and build under the cases changed. Simulation/CI is not phone performance, human pleasure or live revenue evidence.
+5. Make the smallest evidence-backed change; verify actual gameplay, state/save, responsive input, SDK lifecycle and build under the cases changed. For substantial UI work show the applied rule, affected state and comparable screen/transition evidence, including intentional exceptions. Simulation/CI is not phone performance, human pleasure or live revenue evidence.
 6. At the end of substantial work explicitly report **KIT IMPACT: NONE / REUSE / IMPROVE / CANDIDATE / EXTRACTED** with the evidence described in docs/kit-guidance/KIT_FEEDBACK_LOOP.md. Raise candidate upstream changes before keeping a second divergent copy.
 
 ## Yandex baseline is binding

@@ -5,6 +5,11 @@ import { pathToFileURL } from 'node:url';
 const GUIDES = ['TASK_ROUTER.md', 'REFERENCE_PROTOCOL.md', 'KIT_FEEDBACK_LOOP.md', 'NEW_PROJECT_SETUP.md'];
 const SHA = /^[0-9a-f]{40}$/i;
 const routerPath = 'docs/kit-guidance/TASK_ROUTER.md';
+export const UI_GUIDANCE_PATHS = [
+  'docs/visual-preproduction/UX_AND_ART_SYSTEM.md',
+  'docs/layout/STABLE_PROGRESS_UI.md',
+  'docs/feel/UI_MOTION_RECIPES.md',
+];
 
 const readIfExists = async (file) => {
   try { return await fs.readFile(file, 'utf8'); }
@@ -54,10 +59,12 @@ export async function inspectGameGuidance({ destination, expectedKitRef } = {}) 
 
   const hrefPins = [];
   const linksWithoutPins = [];
+  let router = '';
   for (const name of GUIDES) {
     const file = path.join(root, 'docs/kit-guidance', name);
     const body = await readIfExists(file);
     if (!body) { errors.push(codeMessage('GUIDE_MISSING', 'Missing docs/kit-guidance/' + name)); continue; }
+    if (name === 'TASK_ROUTER.md') router = body;
     const urls = [...body.matchAll(/https:\/\/github\.com\/DanilaH\/mini-games-kit\/blob\/([^/)\s]+)\/([^\s)#]+)/g)];
     if (!urls.length) warnings.push(codeMessage('NO_PINNED_LINKS', name + ' has no pinned kit source links'));
     for (const match of urls) {
@@ -77,6 +84,19 @@ export async function inspectGameGuidance({ destination, expectedKitRef } = {}) 
   }
   if (expected && guidanceRef && expected !== guidanceRef) {
     warnings.push(codeMessage('GUIDANCE_UPDATE_AVAILABLE', 'Local guidance ' + guidanceRef + ' differs from explicitly supplied target kit ref ' + expected + '; review and adopt deliberately'));
+  }
+  // A document name in prose or a different directory is not a usable route.
+  // Missing newer routes remain advisory for coherent historical snapshots.
+  const routerDestinations = new Set([...router.matchAll(/\[[^\]\n]*\]\((https:\/\/github\.com\/DanilaH\/mini-games-kit\/blob\/[^\s)#]+)(?:#[^\s)]*)?\)/g)]
+    .map((match) => match[1]));
+  const uiRoutes = { linked: [], missing: [] };
+  for (const document of UI_GUIDANCE_PATHS) {
+    const destination = `https://github.com/DanilaH/mini-games-kit/blob/${guidanceRef}/${document}`;
+    (guidanceRef && routerDestinations.has(destination) ? uiRoutes.linked : uiRoutes.missing).push(document);
+  }
+  if (uiRoutes.missing.length) {
+    warnings.push(codeMessage('UI_ROUTES_MISSING', routerPath + ' lacks direct links at the guidance pin to: ' +
+      uiRoutes.missing.join(', ') + '. Review newer UI guidance before adoption; this does not invalidate an older snapshot.'));
   }
   if (claude && (!claude.includes('AGENTS.md') || !claude.includes('TASK_ROUTER.md'))) {
     warnings.push(codeMessage('CLAUDE_SHIM', 'Existing CLAUDE.md does not point to the kit AGENTS/Task Router; review before changing this file'));
@@ -111,7 +131,7 @@ export async function inspectGameGuidance({ destination, expectedKitRef } = {}) 
   // Markdown cannot prove that a particular Codex/Copilot/Claude harness loaded them.
   return { destination: root, status: errors.length ? 'NEEDS_REVIEW' : 'READY_FOR_AGENT_DISCOVERY',
     guidanceRef, runtimeRef, runtimeSpecifier, expectedKitRef: expected ?? null,
-    errors, warnings, notes };
+    uiRoutes, errors, warnings, notes };
 }
 
 const parseArgs = (args) => {

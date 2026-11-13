@@ -24,6 +24,13 @@ Fill this document as product/technical decisions become real. Bootstrap default
 - DPR/render-density cap:
 - Target device/browser acceptance set:
 
+## UI profile
+
+Record the accepted UI profile alongside the layout choices: existing components/tokens,
+main actions and states, motion for frequent input versus rewards, cancellation/reduced
+motion and comparable screen/transition evidence. Link an existing Art Bible/style
+source instead of duplicating it. UI values belong to this game, not the kit.
+
 ## Persistence and recovery
 
 - Save schema/version:
