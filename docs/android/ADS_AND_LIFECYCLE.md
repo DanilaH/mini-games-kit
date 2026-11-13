@@ -20,6 +20,41 @@ Use [`resolveNativeBannerPlacement`](../layout/NATIVE_BANNER_PLACEMENT.md) for t
 
 Acceptance: portrait → landscape → portrait, rapid repeated rotation, no-fill, failed load, late callbacks, dialog open/close, enlarged fonts, gesture and three-button navigation, cutout, small landscape, ad returning after background. Capture the native screen, not merely DOM bounds. Confirm banner visibility and control non-overlap separately.
 
+## Compact banner integration
+
+Seeds 1.1.2 provides a concrete follow-up to the shared geometry contract:
+
+- Choose the creative size through the SDK, before layout. The donor requested
+  an adaptive inline creative with a **maximum 50dp** height instead of cropping
+  a larger sticky creative. Format and limit are consumer configuration; verify
+  the current native SDK API when adopting. Fifty dp is not a kit default.
+- Keep density (SDK dp → native pixels) separate from WebView width scale
+  (native pixels → CSS pixels). Report the measured SDK height to JS. A valid
+  reservation can be below 45 CSS pixels; reject only actual insufficient geometry.
+- Set the CSS slot height, remeasure, then attach/show. An undersized slot stays
+  hidden; enlarging it can restore the existing view without another ad request.
+  `verticalAlign: 'bottom'` is available in the shared helper; keep the default
+  center behavior for consumers that already depend on it.
+- Give the system bottom inset one owner. With ads it can belong to the ad strip;
+  without ads it can belong to the screen edge. Applying it to both footer and
+  strip creates an empty band. Keep the neutral reservation stable while loading
+  or no-fill so a button does not move underneath a finger.
+- Distinguish width invalidation from a load failure: resize/orientation replaces
+  stale geometry immediately; a failed load retains its configured retry delay.
+  Every callback checks the current view/generation, including synchronous failure
+  during `loadAd`. Repeated identical geometry must not reload the banner.
+
+Required regression cases: one creative across different density/WebView scales
+(including 40/60/80 CSS-pixel reservations); bottom containment; insufficient slot
+then recovery without a new request; resize during retry; obsolete callback after
+replacement; system inset 0 → nonzero with and without ads; initial visibility of
+all critical actions on a large board at enlarged text in short landscape.
+Use [the no-scroll action check](../layout/STABLE_PROGRESS_UI.md#critical-actions-in-the-initial-viewport)
+for DOM controls and actual native screenshots for the ad itself.
+
+[Donor, accepted revisions and limits](../extraction/SEEDS_112.md). This is an
+adapter recipe, not a new ad loader, native bootstrap or universal size policy.
+
 ## Full-screen ads and earned rewards
 
 - Interstitial opportunities belong to a deliberate user transition after the completed state has saved. Preloading does not authorize showing. A late load callback never opens a full-screen ad by itself.
@@ -34,6 +69,8 @@ Acceptance: portrait → landscape → portrait, rapid repeated rotation, no-fil
 Use separate banner/interstitial/rewarded ids and an explicit test/live build mode. Seeds used `YANDEX_BANNER_AD_UNIT_ID`, `YANDEX_INTERSTITIAL_AD_UNIT_ID`, `YANDEX_REWARDED_AD_UNIT_ID` and `APPMETRICA_API_KEY`. Check required configuration without printing its values. Never bundle a release test hook that selects a mock bridge via a window global.
 
 Track request, load success/error, show, impression, dismissal, show error, earned reward and durable grant as distinct events. Emit game-start on the first meaningful gameplay action, not every screen open; persist attempt start/completion markers when duplicate events matter. Keep raw saves, boards and identifiers used for configuration out of custom event payloads. A test-event flag does not isolate the SDK's automatic test-device audience/session counters.
+
+For state-changing game milestones, follow the [committed analytics recipe](../platform/COMMITTED_ANALYTICS.md).
 
 A signed APK and mocked SDK tests prove neither live fill nor analytics delivery. Verify the native banner, interstitial, rewarded credit, audio/input return and analytics dashboard on a real device. VPN/network differences are diagnostic variables, not proof that unavailable inventory is an application bug. SDK/configuration/disclosure details must be rechecked against current official docs before a new consumer ships.
 

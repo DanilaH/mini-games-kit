@@ -74,3 +74,13 @@ Short procedural WebAudio cues can avoid heavy sound assets, with restrained vol
 Theme previews are session-only; ownership/equipment changes require an explicit durable purchase. Rotate unowned offers, prioritize affordability, state shortages, and keep Continue usable. Fix the exact cosmetic reward in durable pending before presentation; define a deterministic duplicate/all-owned fallback and preserve older pending versions. Existing DurablePendingTransactionSession owns that staged lifecycle; no universal wheel is needed.
 
 Gift animations present already-owned rewards. Skip/Back/background/reload must not grant again. Layered art can keep accepted source faces and add an occluded interior/back wall/light; bounded particles and deterministic cleanup matter more than a universal gift class. Preserve whole-bank continuation across set boundaries. A cancelled/unknown hint is not proof of no solution and must not debit resources. Keep solver, catalog, economy and content local.
+
+## Seeds 1.1.2 production follow-up
+
+[Compact banner and initial-action acceptance](extraction/SEEDS_112.md) adds
+specific regression cases to existing contracts. Consult the
+[initial no-scroll action check](layout/STABLE_PROGRESS_UI.md#critical-actions-in-the-initial-viewport)
+when a layout appears to fit but Continue/Cancel is only reachable after scrolling.
+[Committed analytics](platform/COMMITTED_ANALYTICS.md) separates a successful
+state write from SDK enqueue and server delivery. These are opt-in integration
+recipes; no new director, outbox runtime or presentation engine is mandatory.

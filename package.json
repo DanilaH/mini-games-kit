@@ -71,7 +71,7 @@
     "bootstrap:create": "node tools/bootstrap/create-yandex-phaser.mjs",
     "bootstrap:check": "node tools/bootstrap/validate-yandex-phaser.mjs",
     "bootstrap:smoke": "node tools/bootstrap/smoke-yandex-phaser.mjs",
-    "test:browser": "npm run build && node tools/browser-acceptance.mjs"
+    "test:browser": "npm run build && node tools/browser-acceptance.mjs && node tools/critical-actions-acceptance.mjs"
   },
   "peerDependencies": {
     "phaser": "4.2.1",
