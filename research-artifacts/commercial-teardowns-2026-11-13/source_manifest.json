@@ -1,0 +1,178 @@
+{
+  "checked_date": "2026-11-13",
+  "base_kit_revision": "f154e0b537e395309763e0dd6514725c7196f690",
+  "media_not_vendored": true,
+  "videos": [
+    {
+      "id": "subway-surfers",
+      "author": "Ayo Omolewa (@ayoships)",
+      "published_date": "2026-10-18",
+      "primary_post": "https://x.com/thedonayo/status/2111658387272597714",
+      "primary_media": "https://video.twimg.com/amplify_video/2111658299322183680/vid/avc1/1080x1920/5t-D7il9aiumTVKq.mp4?tag=29",
+      "bytes": 20200384,
+      "duration_seconds": 56.0,
+      "sha256": "5b1102927574ea32a34a2cf627752aa049ea4147f0f19866cd1007341a56b052",
+      "inspection": "Decoded frame sequences, embedded captions and selected detailed frames. No independent APK/source extraction. Audio not separately transcribed.",
+      "episodes_approximate_seconds": [
+        {
+          "seconds": [
+            12,
+            29
+          ],
+          "observed": "Player fields, conditions and remote configuration names; assignment/runtime prevalence not independently checked."
+        },
+        {
+          "seconds": [
+            35,
+            39
+          ],
+          "observed": "Shown analytics event joins ad revenue, placement and experiment assignment."
+        },
+        {
+          "seconds": [
+            42,
+            45
+          ],
+          "observed": "Hoverboard costs 300 vs 1000 Coins; these are virtual currency prices."
+        }
+      ]
+    },
+    {
+      "id": "tinder",
+      "author": "Ayo Omolewa (@ayoships)",
+      "published_date": "2026-10-20",
+      "primary_post": "https://x.com/ayoships/status/2112591782857109809",
+      "primary_media": "https://video.twimg.com/amplify_video/2112591756588146688/vid/avc1/720x1280/Uaj2Lr4_hwBWWo8d.mp4?tag=29",
+      "bytes": 6024585,
+      "duration_seconds": 78.848,
+      "sha256": "007999646e244ead8589bb1db758ba1b3324d7935a7fd9e584e716142068506d",
+      "inspection": "Decoded frame sequences, embedded captions and selected detailed frames. No independent APK/source extraction. Audio not separately transcribed.",
+      "episodes_approximate_seconds": [
+        {
+          "seconds": [
+            18,
+            29
+          ],
+          "observed": "Android 13.0.0 (2022) labels and local model output names."
+        },
+        {
+          "seconds": [
+            66,
+            74
+          ],
+          "observed": "iOS17.39.2 strings and web upsell identifiers; not a verified unified current backend flow."
+        }
+      ]
+    },
+    {
+      "id": "candy-crush",
+      "author": "Ayo Omolewa (@ayoships)",
+      "published_date": "2026-10-25",
+      "primary_post": "https://x.com/thedonayo/status/2114203791302246520",
+      "primary_media": "https://video.twimg.com/amplify_video/2114203735396335616/vid/avc1/720x1280/5TLc3uR15UfEr6QY.mp4?tag=29",
+      "bytes": 5512857,
+      "duration_seconds": 74.641995,
+      "sha256": "05b3230570c9409fe5008c76c1c2d115994578ed89ba6d618c350d769e0e4dc1",
+      "inspection": "Decoded frame sequences, embedded captions and selected detailed frames. No independent APK/source extraction. Audio not separately transcribed.",
+      "episodes_approximate_seconds": [
+        {
+          "seconds": [
+            14,
+            34
+          ],
+          "observed": "Segment eligibility, progress bounds, easier/harder action names; incomplete call graph."
+        },
+        {
+          "seconds": [
+            51,
+            64
+          ],
+          "observed": "Goal completion and other context in reward/offer snippets; one reward branch marked legacy; variable moves for 10 Gold."
+        }
+      ]
+    },
+    {
+      "id": "royal-kingdom",
+      "author": "Ayo Omolewa (@ayoships)",
+      "published_date": "2026-11-12",
+      "primary_post": "https://x.com/ayoships/status/2120696957320749453",
+      "primary_media": "https://video.twimg.com/amplify_video/2120696873531133952/vid/avc1/720x1280/bv-F-9l23ZVu_EDt.mp4?tag=29",
+      "bytes": 6107200,
+      "duration_seconds": 90.005333,
+      "sha256": "c64c4bf31b64fd43d17f0faf6ec5d2d57b9745eb69e4bff06d0828bff7776fb5",
+      "inspection": "Decoded frame sequences, embedded captions and selected detailed frames. No independent APK/source extraction. Audio not separately transcribed.",
+      "episodes_approximate_seconds": [
+        {
+          "seconds": [
+            13,
+            35
+          ],
+          "observed": "Alternate level config, low-match flag, author-reported single-level simulation; selection and simulation not reproduced."
+        },
+        {
+          "seconds": [
+            45,
+            66
+          ],
+          "observed": "Payer segmentation and ad-value estimation snippets; full call graph unavailable."
+        },
+        {
+          "seconds": [
+            67,
+            78
+          ],
+          "observed": "Continue offers have different contents; coin pack shortlist refers to shortage and prior largest purchase."
+        }
+      ]
+    }
+  ],
+  "other_sources": [
+    {
+      "id": "dicero",
+      "primary": "https://www.instagram.com/reel/DeQ5k57R21Z/",
+      "secondary_transcript": "https://creatorhouse.app/video/DeQ5k57R21Z",
+      "inspection": "Secondary transcript read; original video and code NOT INSPECTED."
+    },
+    {
+      "id": "duolingo",
+      "primary": "https://www.instagram.com/reel/DeUlQTQxv5O/",
+      "inspection": "Author/date in public HTML inspected; video NOT INSPECTED. Independent company paper read separately."
+    },
+    {
+      "id": "block-blast",
+      "primary": "https://ayoships.com/breakdowns/block-blast",
+      "inspection": "Article and public archives inspected; local reproduction in separate JSON. No independent signed-app decryption."
+    },
+    {
+      "id": "tiktok",
+      "primary": "https://x.com/ayoships/status/2117650684774580249",
+      "demo": "https://ayoships.com/tools/tiktok-face",
+      "inspection": "Publication/demo identified; video not analyzed for monetization and no recommender/monetization call graph established."
+    }
+  ],
+  "financial_sources": [
+    {
+      "entity": "King segment",
+      "period": "2022",
+      "source": "https://www.sec.gov/Archives/edgar/data/718877/000162828023004842/R24.htm",
+      "net_revenues_million_usd": 2785,
+      "segment_operating_income_million_usd": 1121,
+      "not_net_profit": true
+    },
+    {
+      "entity": "Duolingo",
+      "period": "2025",
+      "source": "https://www.sec.gov/Archives/edgar/data/1562088/000162828026025737/duolingodecember312025an.htm",
+      "revenue_million_usd": 1037.589,
+      "operating_income_million_usd": 135.57,
+      "ad_revenue_million_usd": 79.725
+    }
+  ],
+  "causal_source": {
+    "source": "https://research.duolingo.com/papers/yancey.kdd20.pdf",
+    "year": 2020,
+    "table": 8,
+    "reported_experiment_not_reproduced": true,
+    "financial_uplift_not_measured": true
+  }
+}
