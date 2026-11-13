@@ -19,6 +19,7 @@ export interface NativeBannerPlacementInput {
   parentPadding?: { left: number; top: number }; // FrameLayout padding, native pixels
   adHeight: number; // actual SDK height at the mapped slot width, native pixels
   minWidth?: number; // optional SDK minimum, native pixels (not CSS px or dp)
+  verticalAlign?: 'center' | 'bottom'; // within the mapped slot; center preserves existing behavior
 }
 export type NativeBannerPlacement =
   | { kind: 'hidden'; reason: 'invalid-geometry' | 'outside-viewport' | 'outside-root' | 'too-narrow' }
@@ -65,8 +66,10 @@ export function resolveNativeBannerPlacement(input: NativeBannerPlacementInput):
   const insets = input.safeInsets ?? { left: 0, top: 0, right: 0, bottom: 0 };
   const padding = input.parentPadding ?? { left: 0, top: 0 };
   const minWidth = input.minWidth ?? 0;
+  const verticalAlign = input.verticalAlign === undefined ? 'center' : input.verticalAlign;
   if (!validRect(slot) || !validRect(webView) || !positive(viewport.width) || !positive(viewport.height) ||
     !positive(root.width) || !positive(root.height) || !positive(adHeight) ||
+    (verticalAlign !== 'center' && verticalAlign !== 'bottom') ||
     ![insets.left, insets.top, insets.right, insets.bottom, padding.left, padding.top, minWidth].every(n => finite(n) && n >= 0)) {
     return { kind: 'hidden', reason: 'invalid-geometry' };
   }
@@ -87,6 +90,7 @@ export function resolveNativeBannerPlacement(input: NativeBannerPlacementInput):
     const heightCss = Math.ceil((y + sdkHeight - webView.y) / scale - slot.y);
     return { kind: 'reserve', heightCss, widthNative: width };
   }
-  const rect = { x, y: y + Math.floor((height - sdkHeight) / 2), width, height: sdkHeight };
+  const offsetY = verticalAlign === 'bottom' ? height - sdkHeight : Math.floor((height - sdkHeight) / 2);
+  const rect = { x, y: y + offsetY, width, height: sdkHeight };
   return { kind: 'place', rect, marginLeft: rect.x - padding.left, marginTop: rect.y - padding.top };
 }

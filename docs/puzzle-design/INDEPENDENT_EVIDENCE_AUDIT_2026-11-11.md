@@ -161,3 +161,18 @@
 Не новая фундаментальная теория, а **продуктовые задачи на доказательствах**: человеческий FTUE «Семечек», генератор блоков, readabilty/semantic diversity стрелок, meaning of actions в сортировке/дорогах/солитёре, надёжность native ads и app analytics. После открытия настоящего рынка — когортные данные и корректные эксперименты.
 
 **Независимое заключение:** Playbook можно передавать агентам, если им отдельно указать, что это не backlog и не автоматическая лицензия на усложнение игр. Приоритет прежний: корректность → понятность базового действия → игра и ритм → доказанное улучшение → только потом абстракция.
+
+## Status follow-up — 13 November 2026 (Seeds 1.1.2)
+
+The Seeds findings above describe inspected revision `54a18e0e` on 11 November;
+they remain historical evidence. At release-branch revision
+`24ae94ffbe4a2652b8e3ce410c6e15d74ef251d9`, the premature `game_complete` finding
+is closed **in source**: `complete()` stages the event with `attempt` in a bounded
+journal; `save()` publishes only IDs from a successfully written snapshot after
+`platform.saveState` resolves. The sender calls SDK acceptance local enqueue,
+not a server receipt. Nine targeted donor analytics/result tests passed in the
+follow-up investigation. This is not proof of dashboard delivery, globally
+exactly-once telemetry, historical cohort repair or store publication.
+
+Use the [current donor and ownership recipe](../extraction/SEEDS_112.md) when
+planning work; do not reassign the dated source defect without reinspection.

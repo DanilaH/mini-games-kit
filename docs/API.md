@@ -73,7 +73,7 @@ For combined receipt/snapshot writers, follow [the coordination contract](platfo
 
 ## Layout
 
-- [`native banner placement`](layout/NATIVE_BANNER_PLACEMENT.md) — CSS-to-native slot geometry, safe containment and SDK-height reservation; pure math, no bundled native SDK.
+- [`native banner placement`](layout/NATIVE_BANNER_PLACEMENT.md) — CSS-to-native slot geometry, safe containment, SDK-height reservation and optional bottom alignment (center by default); pure math, no bundled native SDK.
 
 - [`logical layout`](layout/LOGICAL_LAYOUT.md) — fixed-height landscape metrics, safe areas and a configurable Yandex 2:1 preset.
 - [`mobile viewport runtime`](layout/VIEWPORT_RUNTIME.md) — coherent geometry resolution plus settle/watchdog observation for Android/WebView rotation behavior.
@@ -103,7 +103,8 @@ For combined receipt/snapshot writers, follow [the coordination contract](platfo
 - [Local daily reminders](android/LOCAL_REMINDERS.md) — permission, inexact local scheduling, truthful state-based text and current-day entry; Android recipe, no bundled scheduler.
 - [In-app review](android/IN_APP_REVIEW.md) — rare eligibility, prepare/launch generations and external-window coordination; SDK integration recipe.
 - [Native haptics](android/HAPTICS.md) — priority, monotonic generation cancellation and device acceptance; recipe, profiles remain in the game.
-- [Stable progress UI](layout/STABLE_PROGRESS_UI.md) — counters, earned markers, native time input and transition acceptance; no shared CSS component.
+- [Stable progress UI](layout/STABLE_PROGRESS_UI.md) — counters, initial no-scroll action checks, saved completion, native time input and transition acceptance; no shared CSS component.
+- [Committed analytics recipe](platform/COMMITTED_ANALYTICS.md) — publish state-changing milestone IDs only from successful save snapshots; no new queue export.
 - [`puzzle UI, progress and feel`](PUZZLE_PRODUCTION.md) — undo-safe progression, daily/catalog validation, bounded worker analysis, large-field UX and restrained feedback.
 - [`Android release acceptance`](ANDROID_RELEASE_ACCEPTANCE.md) — release shrinking, signing/artifact identity, independent test layers and honest evidence.
 - [`performance`](PERFORMANCE_PLAYBOOK.md) — measured startup/image optimization method and rejected shortcuts.
@@ -150,3 +151,5 @@ These record extraction history and validation limits; they are not required set
 - [Sudoku 0.17 extraction plan](extraction/SUDOKU_017.md) — Android ads/rewards, optional profiles, daily catalogs, progress and responsive UX; implementation specification and evidence, no new runtime API.
 - [`Seeds extraction map`](SEEDS_EXTRACTION.md) — code versus specification boundaries, source revisions and known defects excluded from reuse.
 - [Seeds 1.1 follow-up](extraction/SEEDS_110.md) — daily progression, shared hints, engagement and stable presentation; source revisions, intentional changes and validation limits.
+
+- [Seeds 1.1.2 follow-up](extraction/SEEDS_112.md) — compact banners, initial-action acceptance, saved finales and analytics status; explicit donor and adoption limits.

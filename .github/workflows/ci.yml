@@ -32,3 +32,46 @@ jobs:
           name: road-lines-browser-evidence
           path: .test-output/road-lines
           if-no-files-found: ignore
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: initial-action-browser-evidence
+          path: .test-output/ui-acceptance
+          if-no-files-found: ignore
+
+  seeds-112-native-reference:
+    # Frozen donor regression, not a dependency upgrade or a live SDK/device check.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          repository: DanilaH/seeds-bits
+          ref: 24ae94ffbe4a2652b8e3ce410c6e15d74ef251d9
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: python3 scripts/regression-061/native-harness.py
+      - name: Record source identity and limits
+        if: always()
+        run: |
+          python3 - <<'PYTHON'
+          import pathlib, json, hashlib, subprocess
+          root=pathlib.Path('.')
+          def sha(name): return hashlib.sha256((root/name).read_bytes()).hexdigest()
+          result={'source':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+            'nativeSha256':sha('native/android/SeedsMonetizationPlugin.java'),
+            'harnessSha256':sha('scripts/regression-061/native-harness.py'),
+            'method':'Unchanged pinned donor Java against deterministic Android/SDK doubles',
+            'liveSdkOrDeviceTest':False,'consumerKitAdoption':False}
+          target=root/'test-results/regression-061';target.mkdir(parents=True,exist_ok=True)
+          (target/'source.json').write_text(json.dumps(result,indent=2)+'\n')
+          PYTHON
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seeds-112-native-reference
+          path: test-results/regression-061/*.json
+          if-no-files-found: error

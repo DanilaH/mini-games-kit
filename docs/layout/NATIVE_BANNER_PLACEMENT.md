@@ -34,6 +34,7 @@ const result = resolveNativeBannerPlacement({
   webView: { x: 0, y: 24, width: 780, height: 1688 }, // native px, root-relative
   root: { width: 780, height: 1736 },
   parentPadding: { left: 0, top: 24 }, // native px
+  verticalAlign: 'bottom', // opt in; omitted keeps the existing center alignment
   adHeight: 100, // SDK measurement in native px at the mapped width
 });
 
@@ -53,7 +54,7 @@ Map inward to whole native pixels:
 - right = floor(webView.x + (slot.x + slot.width) × scale)
 - mapped width = right - left
 
-Measure SDK height using **that same mapped width** before calling this utility. `adHeight` must describe the current orientation/width, not a previously loaded banner. Native px, CSS px and SDK dp must not be mixed. Top/bottom use the same inward rounding; SDK height rounds up, and placement is vertically centered within the slot.
+Measure SDK height using **that same mapped width** before calling this utility. `adHeight` must describe the current orientation/width, not a previously loaded banner. Native px, CSS px and SDK dp must not be mixed. Top/bottom use the same inward rounding; SDK height rounds up. `verticalAlign` accepts `'center'` (the unchanged default) or `'bottom'`. Bottom alignment attaches the unscaled SDK view to the inward-rounded bottom edge; it does not move/enlarge the slot, relax containment or crop a taller creative. Unknown runtime values return `hidden/invalid-geometry`. Reservation and minimum-width rules are identical for both alignments.
 
 Optional `safeInsets` exclude root areas on all four sides. These are actual forbidden areas; `parentPadding` only adjusts FrameLayout margins and is not itself an exclusion. Parent-relative margins can be negative if padding has already been accounted for in the physical placement.
 
@@ -73,3 +74,21 @@ Keep the same neutral slot surface through loading/no fill. Retry timing, minimu
 Source: Sudoku Doku 0.17 native banner placement (`DokuNativePlugin.java`, `BannerPlacement.java`) and DOM slot reservation (`App.tsx`), revision `f97cc1ed1c32e7d2f438fbaea6671530b1a5fc59`.
 
 Strengthened extraction: finite input checks, both-axis containment, explicit safe bounds, inward rounding and deterministic reservation feedback. Native source did not provide all these guarantees. Tests cover portrait, short landscape, offsets/padding, SDK height negotiation, fractional rounding, invalid geometry and both-axis containment. These TypeScript tests do not replace a real Android SDK orientation test; the source 0.17 had real demo-banner evidence, this newly extracted helper has not been wired into a native release yet.
+
+## Compact-banner follow-up (Seeds 1.1.2)
+
+The optional bottom alignment follows `SeedsMonetizationPlugin.applyBanner` at
+`DanilaH/seeds-bits@24ae94ffbe4a2652b8e3ce410c6e15d74ef251d9`.
+Existing consumers that omit it retain their coordinates. The kit deliberately
+keeps its stronger inward rounding and explicit WebView/safe-root containment;
+the donor's `Math.round` mapping is not copied.
+
+A requested SDK maximum in dp is not a fixed CSS reservation. For the donor's
+50dp creative at density 3, a measured 150 native-pixel height maps to 40, 60 or
+80 CSS pixels at different WebView scales. Native layout must still negotiate
+whole CSS pixels and remeasure because edge rounding can require one extra pixel.
+The native adapter owns the format, maximum dp height, retries and asynchronous
+callback identity; see the [compact integration recipe](../android/ADS_AND_LIFECYCLE.md#compact-banner-integration).
+Tests cover unchanged default coordinates, bottom alignment/padding, fractional
+edges, 40/60/80 CSS sizes, reserve/re-layout and unchanged rejection boundaries.
+Neither the API nor these tests claim live SDK fill or a consumer dependency upgrade.

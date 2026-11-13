@@ -59,3 +59,19 @@ See the [Water Sort acceptance recipe](extraction/WATER_SORT_PRODUCTION.md) for 
 ## Provenance and extraction boundary
 
 These lessons came from [Signal 2000's Russian Hidden Pocket copy correction (#191)](https://github.com/DanilaH/cases-yg/pull/191), [follow-up localization fixes and regression tests (#194)](https://github.com/DanilaH/cases-yg/pull/194), and the accompanying RU/EN screenshot-selection work. The source experience revealed both literal-translation pitfalls and how easily synthetic artwork or repetitive collection captures can be mistaken for useful store screenshots. This document preserves the **review and provenance method**, not Signal-specific content or implementation. No new public API or localization dependency is introduced.
+
+## Edited video first-frame check
+
+Record real actions and keep original recordings, source hashes and edit ranges.
+After trimming/scaling/compositing a recording, normalize each input timeline
+(e.g. FFmpeg `setpts=PTS-STARTPTS` before overlay) so the background does not appear
+alone while a delayed input waits for its first timestamp. Keep meaningful action
+and UI inside the target's safe area; do not crop the interface to mask a defect.
+
+Decode and inspect frame zero **from the final MP4**, samples around every cut,
+the reward/continuation and the last frame. Container/codec/duration checks alone
+cannot find a blank opening or a clipped action. A source screenshot is not proof
+of the encoded video's first frame. Check muted playback and preserve actual
+animation timing; label an edit as a montage rather than uninterrupted human play.
+This lesson comes from [Seeds 1.1.2](extraction/SEEDS_112.md); it supplies no shared
+video engine and makes no conversion/moderation claim.
