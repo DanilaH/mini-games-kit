@@ -1,0 +1,275 @@
+{
+  "checked_at_utc": "2026-11-13T07:20:26.739146+00:00",
+  "original_investigator": "Ayo Omolewa (@ayoships)",
+  "source_article": "https://ayoships.com/breakdowns/block-blast",
+  "research_revision": "f154e0b537e395309763e0dd6514725c7196f690",
+  "scope": "Fresh offline reproduction of public evidence; no APK, account, ad SDK or running game used.",
+  "runtimes": {
+    "python": "3.12.14",
+    "node": "v24.22.1"
+  },
+  "archives": [
+    {
+      "url": "https://ayoships.com/breakdowns/block-blast/evidence.zip",
+      "bytes": 116008,
+      "sha256": "bd55151e6a1527f628459c2fffa115d5b14a765a3fb5a3f729387fbac6f707c8",
+      "matches_published_sha256": true
+    },
+    {
+      "url": "https://ayoships.com/breakdowns/block-blast/evidence-ios-live.zip",
+      "bytes": 276353,
+      "sha256": "5f36863daabd2b500c8062d005f41e6c5e7dcea5a238c89e558e19a928dcc57f",
+      "matches_published_sha256": true
+    }
+  ],
+  "archive_safety_review": "Relative extraction paths and absence of symlinks checked; total uncompressed size bounded before extraction.",
+  "internal_manifest_checks": {
+    "android": {
+      "entries": 63,
+      "matching": 63,
+      "mismatches": []
+    },
+    "ios_live": {
+      "entries": 11,
+      "matching": 10,
+      "mismatches": [
+        {
+          "path": "block-blast-ios-live/SHA256SUMS",
+          "expected_sha256": "aa6befefaef6e7e3ac278542a30fa6a26250e366d2c7cf56aea616d08284b9a9",
+          "actual_sha256": "e08a4d7ba585517dc1d26dfc2c9bda2275e6ac744af32a00b51ae2c29b2e55ca",
+          "manifest_self_entry": true
+        }
+      ]
+    }
+  },
+  "manifest_caveat": "iOS live SHA256SUMS contains a stale self-entry. Its other 10 entries and the full ZIP match; Android verifies all 63 entries.",
+  "inspection_before_execution": [
+    "Read all four author harnesses before execution.",
+    "Read both JavaScript source files loaded by the executed VM harnesses.",
+    "Executions used local files, bounded synthetic dependencies and no app or network operations."
+  ],
+  "author_harnesses": [
+    {
+      "cwd": "<android bundle>/block-blast-evidence",
+      "command": "node proof/verify_reward_harvest.js",
+      "exit_code": 0,
+      "passed": true,
+      "checks_passed": 28,
+      "executed_source_sha256": "f94a5d54d7f6ab0af097f408bda09b091e7767b17749f8ba828b41b638b330ad",
+      "selected_algorithms": [
+        [
+          9
+        ],
+        [
+          9
+        ]
+      ],
+      "scope": "Unmodified published decoded rule with mocked histories, scores and ad inputs."
+    },
+    {
+      "cwd": "<android bundle>/block-blast-evidence",
+      "command": "node proof/verify_packaged_algorithm.js",
+      "exit_code": 0,
+      "generator_source_sha256": "f845055fc34be29b5bd10ec5a2e4be5e7e656db0a0c374ada4ea069d6cd0d4e1",
+      "selected_ids": [
+        2,
+        3,
+        13
+      ],
+      "scope": "Published rC/iC excerpt; fixture board; candidate list [2,3,13]; identity shuffle; timeout false; no downgrade."
+    },
+    {
+      "cwd": "<android bundle>/block-blast-evidence",
+      "command": "python3 proof/verify_unsolvable.py",
+      "exit_code": 0,
+      "complete_solutions": 0,
+      "fixed_order_placement_attempts": 171,
+      "reproduced_fixture_matches_original": true
+    },
+    {
+      "cwd": "<iOS live bundle>/block-blast-ios-live",
+      "command": "python3 verify.py",
+      "exit_code": 0,
+      "complete_solutions": 0,
+      "piece_ids": [
+        11,
+        22,
+        14
+      ]
+    }
+  ],
+  "independent_solver": {
+    "path": "blockblast_independent_solver.py",
+    "sha256": "eb4a3cd8121854a1424461dc4923fa5b94b87a29f4edf1dab85c678cac0a8e1b",
+    "command": "python3 blockblast_independent_solver.py --android <android bundle>/block-blast-evidence --ios-live <iOS live bundle>/block-blast-ios-live --output /tmp/placement-results.json",
+    "exit_code": 0,
+    "results": {
+      "method": "Independent exhaustive coordinate-set search",
+      "rules": {
+        "board": "8x8",
+        "rotation": false,
+        "extra_powers": false,
+        "all_piece_orders": true,
+        "all_legal_positions": true,
+        "simultaneous_row_column_clears": true
+      },
+      "simultaneous_clear_control": true,
+      "limits": [
+        "Checks supplied board and geometry only; no game or ad SDK executed.",
+        "Android fixture is synthetic; iOS fixture is an author-supplied capture.",
+        "Does not authenticate decoding, runtime capture, prevalence, or current deployment."
+      ],
+      "fixtures": {
+        "android_synthetic": {
+          "input_sha256": "3649cae33b77da5043592a0cdcca91940225b9ebcf03c977fbd31f2ddb6ad381",
+          "occupied_cells": 39,
+          "piece_ids": [
+            2,
+            3,
+            13
+          ],
+          "result": {
+            "initial_legal_positions": {
+              "2": 8,
+              "3": 8,
+              "13": 0
+            },
+            "nodes_by_depth": {
+              "0": 1,
+              "1": 16,
+              "2": 139
+            },
+            "recursion_nodes_including_root": 156,
+            "legal_transitions": 155,
+            "complete_solutions": 0,
+            "solutions_by_order": {
+              "2,3,13": 0,
+              "2,13,3": 0,
+              "3,2,13": 0,
+              "3,13,2": 0,
+              "13,2,3": 0,
+              "13,3,2": 0
+            },
+            "first_solution": null
+          },
+          "fixed_order_placement_attempts": {
+            "per_order": {
+              "2,3,13": 81,
+              "2,13,3": 8,
+              "3,2,13": 74,
+              "3,13,2": 8,
+              "13,2,3": 0,
+              "13,3,2": 0
+            },
+            "total": 171
+          },
+          "empty_board_positive_control": [
+            [
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              1,
+              0
+            ],
+            [
+              13,
+              0,
+              3,
+              0
+            ]
+          ]
+        },
+        "ios_author_capture": {
+          "input_sha256": "df9087cece2389fe436d499256302329ee647995cab179bf8fa12b7f6ddaeff3",
+          "occupied_cells": 33,
+          "piece_ids": [
+            11,
+            22,
+            14
+          ],
+          "result": {
+            "initial_legal_positions": {
+              "11": 0,
+              "22": 3,
+              "14": 2
+            },
+            "nodes_by_depth": {
+              "0": 1,
+              "1": 5,
+              "2": 10
+            },
+            "recursion_nodes_including_root": 16,
+            "legal_transitions": 15,
+            "complete_solutions": 0,
+            "solutions_by_order": {
+              "11,22,14": 0,
+              "11,14,22": 0,
+              "22,11,14": 0,
+              "22,14,11": 0,
+              "14,11,22": 0,
+              "14,22,11": 0
+            },
+            "first_solution": null
+          },
+          "fixed_order_placement_attempts": {
+            "per_order": {
+              "11,22,14": 0,
+              "11,14,22": 0,
+              "22,11,14": 3,
+              "22,14,11": 9,
+              "14,11,22": 2,
+              "14,22,11": 6
+            },
+            "total": 20
+          },
+          "empty_board_positive_control": [
+            [
+              11,
+              0,
+              0,
+              0
+            ],
+            [
+              22,
+              0,
+              5,
+              0
+            ],
+            [
+              14,
+              1,
+              0,
+              0
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "interpretation": {
+    "supported": [
+      "Published decoded harvest rule conditionally requests algorithm 9 under synthetic qualifying state; 28 boundary/lifecycle checks reproduced.",
+      "Published generator excerpt accepts [2,3,13] on the supplied synthetic board under specified harness conditions.",
+      "Independent exhaustive search confirms both supplied hands cannot be fully placed, even with line clears and all orders.",
+      "Both shape sets can be placed on empty boards; simultaneous-clear control passes."
+    ],
+    "not_established": [
+      "Independent reconstruction of decoded files from signed application artifacts; decryption tooling not in these bundles.",
+      "Fresh live activation, enrollment, prevalence or serving frequency in current Android/iOS releases.",
+      "That every qualifying harvest invocation reaches the player unchanged; earlier and later pipeline rules can affect outcomes.",
+      "The iOS fixture is not a live harvest-rule trigger: its provided trace names PersonalMarginBreakTrait; the saved record was reset in the author test setup.",
+      "Revenue uplift, retention impact, distribution across players, or legal conclusions."
+    ],
+    "precision_notes": [
+      "Recent successful ads means app success flags; callback paths can synthesize success, so physical ad attention/completion is not independently shown.",
+      "Stored last-ad eCPM may use a fallback quote/backfill; it is not invariably the immediately previous paid impression.",
+      "The 420-second property is unused by this decoded rule decision; the author harness reproduces the same eligibility at 0, 419.999 and 420 seconds.",
+      "171 counts repeated partial placement attempts across fixed permutations, not unique boards or complete solutions."
+    ]
+  }
+}
