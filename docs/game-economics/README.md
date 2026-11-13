@@ -6,6 +6,7 @@
 
 ## 0. Что добавляем сверх уже завершённых исследований
 
+- [Commercial Source Atlas — 2026-11-13](COMMERCIAL_SOURCE_ATLAS_2026-11-13.md): проверенные точки входа в reverse engineering, полевые эксперименты, продуктовые разборы и финансовую отчётность; доступность первоисточников и приоритетная очередь Meowdoku / Arrow Out / PlaySimple.
 - [Commercial Teardowns — Ayo Omolewa, 2026-11-13](COMMERCIAL_TEARDOWNS_2026-11-13.md): опубликованный reverse engineering и оригинальные видео о контекстных офферах, сегментации, рекламной ценности и UA-сигналах; [независимая проверка](COMMERCIAL_TEARDOWNS_AUDIT_2026-11-13.md) и [карточка одного эксперимента](MONETIZATION_EXPERIMENT_BRIEF_TEMPLATE.md). Есть собственное офлайн-воспроизведение Block Blast; коммерческий uplift в нашем портфеле не заявлен.
 - [Hidden Friction & Monetization](../puzzle-design/research/hidden-friction-monetization-psychology-puzzle-games-2026-11-11.md) §§11–14: уже есть LTV, вред рекламных прерываний, тесты ad policy; этот документ НЕ дублирует психологию.
 - [Android ad lifecycle](../android/ADS_AND_LIFECYCLE.md): SDK, no-fill, баннеры, reward commitment, экранное восстановление. Нового AdsDirector не требуется.
