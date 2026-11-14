@@ -27,11 +27,14 @@ function leaveScreenOrBackground() { motion.cancelAll(); }
 ## Contract
 
 - `animate(target, frames, timing, policy?)` returns `Animation | null`. Use an
-  explicit array of at least two keyframes and the game's timing. Null targets
+  explicit array of at least two keyframes, replace compositing and the game's
+  timing. Additive/accumulating compositing is rejected before replacement: a
+  computed total is not an additive contribution. Null targets
   are ignored; disconnected targets cancel their owned effects and are skipped.
 - Effects on different elements or disjoint CSS properties coexist. The browser's
-  `KeyframeEffect.getKeyframes()` normalizes shorthands/aliases before ownership
-  comparison. Overlap cancels the entire previous effect, including other
+  `KeyframeEffect.getKeyframes()` plus CSSOM neutral-value property expansion
+  normalize shorthands/aliases before ownership comparison, including pending
+  `var()` shorthands. Overlap cancels the entire previous effect, including other
   properties in that indivisible effect. `transform` and individual `translate`
   remain separate CSS properties. Only effects created by this owner are owned;
   unrelated CSS transitions, other owners and native listeners are untouched.

@@ -5,11 +5,13 @@ import {OwnedDomMotion} from '../src/feel/owned-dom-motion';
 // normalization, interpolation, DOM removal and animation event delivery.
 class Effect {
   frames: Keyframe[];
+  composite: CompositeOperation = 'replace';
   constructor(_target: Element, frames: Keyframe[], timing: number | KeyframeEffectOptions) {
     if (typeof timing === 'number' && timing < 0) throw new TypeError('duration');
+    if (typeof timing !== 'number') this.composite = timing.composite ?? 'replace';
     this.frames = frames.map(f => ({...f}));
   }
-  getKeyframes() { return this.frames.map(f => ({...f, computedOffset: 0, easing: 'linear', composite: 'replace'})); }
+  getKeyframes() { return this.frames.map(f => ({computedOffset: 0, easing: 'linear', composite: 'replace', ...f})); }
   setKeyframes(frames: Keyframe[]) { this.frames = frames.map(f => ({...f})); }
 }
 class Motion {
@@ -34,7 +36,10 @@ function setup() {
   Motion.instances = [];
   const values: Record<string, string> = {opacity: '0.42', transform: 'matrix(1, 0, 0, 1, 3, 0)', 'background-color': 'rgb(30, 80, 60)'};
   const read = vi.fn(() => ({getPropertyValue: (key: string) => values[key] ?? ''}));
-  const document = {defaultView: {Animation: Motion, KeyframeEffect: Effect, getComputedStyle: read}, timeline: {}};
+  const document = {defaultView: {Animation: Motion, KeyframeEffect: Effect, getComputedStyle: read}, timeline: {}, createElement: () => {
+    let property = '';
+    return {style: {cssText: '', setProperty: (key: string) => {property=key;}, [Symbol.iterator]: function* () {yield property;}}};
+  }};
   const target = {ownerDocument: document, isConnected: true} as unknown as Element;
   const second = {ownerDocument: document, isConnected: true} as unknown as Element;
   return {owner: new OwnedDomMotion(), target, second, values, read};
@@ -176,6 +181,8 @@ describe('OwnedDomMotion', () => {
     const old = fake(owner.animate(target, opacity, 100));
     expect(() => owner.animate(target, [{opacity: 1}], 100)).toThrow(TypeError);
     expect(() => owner.animate(target, opacity, -1)).toThrow(TypeError);
+    expect(() => owner.animate(target, opacity, {duration: 100, composite: 'add'})).toThrow(TypeError);
+    expect(() => owner.animate(target, [{opacity: 0, composite: 'accumulate'}, {opacity: 1}], 100)).toThrow(TypeError);
     expect(old.playState).toBe('running');
   });
 });

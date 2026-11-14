@@ -64,6 +64,7 @@ try {
     const afterRepeat=getComputedStyle(a).backgroundColor;
     return {before,after,beforeRepeat,afterRepeat,oldState:old.playState,selectedState:selected.playState,frames:repeated.effect.getKeyframes()};
   });
+  await writeFile(output+'/color-observation.json',JSON.stringify(color,null,2)+'\n');
   assert.equal(color.before,color.after);assert.equal(color.beforeRepeat,color.afterRepeat);
   assert.equal(color.oldState,'idle');assert.equal(color.selectedState,'idle');
   report.checks.push({case:'CSS variable shorthand ↔ longhand replacement',data:color});
@@ -112,13 +113,14 @@ try {
     let failures=0;
     try{owner.animate(a,[{opacity:1}],200);}catch{failures++;}
     try{owner.animate(a,[{opacity:0},{opacity:1}],-1);}catch{failures++;}
+    try{owner.animate(a,[{opacity:0},{opacity:1}],{duration:200,composite:'add'});}catch{failures++;}
     const state=old.playState;
     owner.cancelAll();
     const delayed=owner.animate(a,[{opacity:.3,offset:.3},{opacity:1}],300,{fromCurrent:'always'});
     delayed.pause();const frames=delayed.effect.getKeyframes();
     return {failures,state,firstOffset:frames[0].offset,count:frames.length};
   });
-  assert.equal(validation.failures,2);assert.equal(validation.state,'running');assert.equal(validation.firstOffset,0);assert.equal(validation.count,3);
+  assert.equal(validation.failures,3);assert.equal(validation.state,'running');assert.equal(validation.firstOffset,0);assert.equal(validation.count,3);
   report.checks.push({case:'invalid replacement leaves owner; explicit delayed start',data:validation});
 
   await page.waitForFunction(()=>document.querySelector('#frame').contentDocument?.querySelector('#inside'));
