@@ -72,12 +72,17 @@ try {
 
   const prefixed=await page.evaluate(()=>{
     owner.cancelAll();a.style.webkitTextFillColor='rgb(1, 2, 3)';
-    const animation=owner.animate(a,[{webkitTextFillColor:'red'},{webkitTextFillColor:'blue'}],300,{fromCurrent:'always'});
-    animation.pause();
-    return {color:getComputedStyle(a).getPropertyValue('-webkit-text-fill-color'),frames:animation.effect.getKeyframes()};
+    const frames=[{webkitTextFillColor:'red'},{webkitTextFillColor:'blue'}];
+    const native=new KeyframeEffect(a,frames,300).getKeyframes();
+    const supported=native.some(frame=>Object.keys(frame).some(key=>!['offset','computedOffset','easing','composite'].includes(key)));
+    const animation=owner.animate(a,frames,300,{fromCurrent:'always'});
+    animation?.pause();
+    return {supported,skipped:animation===null,color:getComputedStyle(a).getPropertyValue('-webkit-text-fill-color'),native,frames:animation?.effect.getKeyframes()};
   });
-  assert.equal(prefixed.color,'rgb(1, 2, 3)');
-  report.checks.push({case:'prefixed CSS property normalization',data:prefixed});
+  await writeFile(output+'/prefixed-observation.json',JSON.stringify(prefixed,null,2)+'\n');
+  assert.equal(prefixed.skipped,!prefixed.supported);
+  if(prefixed.supported)assert.equal(prefixed.color,'rgb(1, 2, 3)');
+  report.checks.push({case:'prefixed property recognition follows native WAAPI support',data:prefixed});
 
   const independent=await page.evaluate(()=>{
     owner.cancelAll();
