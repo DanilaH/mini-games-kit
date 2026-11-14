@@ -29,6 +29,12 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
+          name: owned-dom-motion-evidence
+          path: .test-output/owned-dom-motion
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
           name: road-lines-browser-evidence
           path: .test-output/road-lines
           if-no-files-found: ignore

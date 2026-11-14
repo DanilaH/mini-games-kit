@@ -31,6 +31,8 @@ For combined receipt/snapshot writers, follow [the coordination contract](platfo
 
 ## Feel
 
+- [`OwnedDomMotion`](feel/OWNED_DOM_MOTION.md) — scoped DOM/WAAPI property ownership, visible-value handoff and cancellation; game state and lifecycle policy stay in the consumer.
+
 - [`continuous damped motion`](feel/DAMPED_MOTION.md) — impulse-preserving underdamped motion with explicit game tuning; no scheduler.
 
 - [`pointer-response`](feel/POINTER_RESPONSE.md) — normalized pointer input, idle drift, response smoothing and parallax math.
