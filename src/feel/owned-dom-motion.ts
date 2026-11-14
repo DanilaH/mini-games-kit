@@ -16,10 +16,12 @@ interface OwnedEffect {
 const metadata = new Set(['offset', 'computedOffset', 'easing', 'composite']);
 const cssName = (name: string): string => name.startsWith('--') ? name
   : name === 'cssFloat' ? 'float' : name === 'cssOffset' ? 'offset'
-    : name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
+    : (/^(webkit|moz|ms|o)[A-Z]/.test(name) ? '-' : '')
+      + name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
 const animationName = (name: string): string => name.startsWith('--') ? name
   : name === 'float' ? 'cssFloat' : name === 'offset' ? 'cssOffset'
-    : name.replace(/-([a-z])/g, (_match, letter: string) => letter.toUpperCase());
+    : name.replace(/^-(webkit|moz|ms|o)-/, '$1-')
+      .replace(/-([a-z])/g, (_match, letter: string) => letter.toUpperCase());
 
 /** Own a finite set of DOM/WAAPI effects. No global listeners, preferences or game state. */
 export class OwnedDomMotion {
@@ -32,7 +34,7 @@ export class OwnedDomMotion {
   private properties(effect: KeyframeEffect, document: Document): Set<string> {
     let schema = this.propertySchemas.get(document);
     if (!schema) {
-      schema = {style: document.createElement('span').style, names: new Map()};
+      schema = {style: document.createElementNS('http://www.w3.org/1999/xhtml', 'span').style, names: new Map()};
       this.propertySchemas.set(document, schema);
     }
     const result = new Set<string>();
@@ -63,6 +65,9 @@ export class OwnedDomMotion {
   ): Animation | null {
     if (!target) return null;
     if (frames.length < 2) throw new TypeError('OwnedDomMotion needs at least two explicit keyframes');
+    if (typeof timing !== 'number' && (timing.fill === 'forwards' || timing.fill === 'both')) {
+      throw new TypeError('OwnedDomMotion needs non-persisting fill; set final state in CSS');
+    }
     if (!target.isConnected) {
       this.cancel(target);
       return null;

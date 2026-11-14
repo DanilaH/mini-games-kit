@@ -29,7 +29,9 @@ function leaveScreenOrBackground() { motion.cancelAll(); }
 - `animate(target, frames, timing, policy?)` returns `Animation | null`. Use an
   explicit array of at least two keyframes, replace compositing and the game's
   timing. Additive/accumulating compositing is rejected before replacement: a
-  computed total is not an additive contribution. Null targets
+  computed total is not an additive contribution. Persistent `forwards`/`both`
+  fill is also rejected: no completed, unowned effect may reappear later. Set
+  the final static state in CSS before playing feedback. Null targets
   are ignored; disconnected targets cancel their owned effects and are skipped.
 - Effects on different elements or disjoint CSS properties coexist. The browser's
   `KeyframeEffect.getKeyframes()` plus CSSOM neutral-value property expansion
@@ -51,6 +53,8 @@ function leaveScreenOrBackground() { motion.cancelAll(); }
   a new effect safely. Native callbacks attached directly to the returned
   `Animation` are outside this guard; never use animation completion for rewards,
   saving, input acceptance or gameplay authority.
+  Do not rewrite the returned effect's keyframes/timing behind the owner; use a
+  new `animate()` request for replacement. External `cancel()` is supported.
 - `cancel(target)` cancels that element's owned effects. `cancelAll()` cancels the
   scope and releases listeners; both are idempotent. The owner is reusable for the
   next screen. They do not block future calls: async results still need the host's

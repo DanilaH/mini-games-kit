@@ -36,7 +36,7 @@ function setup() {
   Motion.instances = [];
   const values: Record<string, string> = {opacity: '0.42', transform: 'matrix(1, 0, 0, 1, 3, 0)', 'background-color': 'rgb(30, 80, 60)'};
   const read = vi.fn(() => ({getPropertyValue: (key: string) => values[key] ?? ''}));
-  const document = {defaultView: {Animation: Motion, KeyframeEffect: Effect, getComputedStyle: read}, timeline: {}, createElement: () => {
+  const document = {defaultView: {Animation: Motion, KeyframeEffect: Effect, getComputedStyle: read}, timeline: {}, createElementNS: () => {
     let property = '';
     return {style: {cssText: '', setProperty: (key: string) => {property=key;}, [Symbol.iterator]: function* () {yield property;}}};
   }};
@@ -81,6 +81,13 @@ describe('OwnedDomMotion', () => {
     const {owner, target} = setup();
     const animation = fake(owner.animate(target, [{opacity: .2, offset: .3}, {opacity: 1}], 120, {fromCurrent: 'always'}));
     expect(animation.effect.frames).toEqual([{opacity: '0.42', offset: 0}, {opacity: .2, offset: .3}, {opacity: 1}]);
+  });
+
+  it('round-trips vendor-prefixed CSS names through computed style', () => {
+    const {owner, target, values} = setup();
+    values['-webkit-text-fill-color'] = 'rgb(1, 2, 3)';
+    const animation = fake(owner.animate(target, [{webkitTextFillColor: 'red'}, {webkitTextFillColor: 'blue'}], 100, {fromCurrent:'always'}));
+    expect(animation.effect.frames[0]!.webkitTextFillColor).toBe('rgb(1, 2, 3)');
   });
 
   it('does not cancel a different target or independent visual property', () => {
@@ -182,6 +189,7 @@ describe('OwnedDomMotion', () => {
     expect(() => owner.animate(target, [{opacity: 1}], 100)).toThrow(TypeError);
     expect(() => owner.animate(target, opacity, -1)).toThrow(TypeError);
     expect(() => owner.animate(target, opacity, {duration: 100, composite: 'add'})).toThrow(TypeError);
+    expect(() => owner.animate(target, opacity, {duration: 100, fill: 'forwards'})).toThrow(TypeError);
     expect(() => owner.animate(target, [{opacity: 0, composite: 'accumulate'}, {opacity: 1}], 100)).toThrow(TypeError);
     expect(old.playState).toBe('running');
   });

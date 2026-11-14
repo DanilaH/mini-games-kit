@@ -70,6 +70,15 @@ try {
   report.checks.push({case:'CSS variable shorthand ↔ longhand replacement',data:color});
   await page.screenshot({path:output+'/color-handoff.png'});
 
+  const prefixed=await page.evaluate(()=>{
+    owner.cancelAll();a.style.webkitTextFillColor='rgb(1, 2, 3)';
+    const animation=owner.animate(a,[{webkitTextFillColor:'red'},{webkitTextFillColor:'blue'}],300,{fromCurrent:'always'});
+    animation.pause();
+    return {color:getComputedStyle(a).getPropertyValue('-webkit-text-fill-color'),frames:animation.effect.getKeyframes()};
+  });
+  assert.equal(prefixed.color,'rgb(1, 2, 3)');
+  report.checks.push({case:'prefixed CSS property normalization',data:prefixed});
+
   const independent=await page.evaluate(()=>{
     owner.cancelAll();
     const opacity=owner.animate(a,[{opacity:.2},{opacity:1}],1000);
@@ -114,13 +123,14 @@ try {
     try{owner.animate(a,[{opacity:1}],200);}catch{failures++;}
     try{owner.animate(a,[{opacity:0},{opacity:1}],-1);}catch{failures++;}
     try{owner.animate(a,[{opacity:0},{opacity:1}],{duration:200,composite:'add'});}catch{failures++;}
+    try{owner.animate(a,[{opacity:0},{opacity:1}],{duration:200,fill:'forwards'});}catch{failures++;}
     const state=old.playState;
     owner.cancelAll();
     const delayed=owner.animate(a,[{opacity:.3,offset:.3},{opacity:1}],300,{fromCurrent:'always'});
     delayed.pause();const frames=delayed.effect.getKeyframes();
     return {failures,state,firstOffset:frames[0].offset,count:frames.length};
   });
-  assert.equal(validation.failures,3);assert.equal(validation.state,'running');assert.equal(validation.firstOffset,0);assert.equal(validation.count,3);
+  assert.equal(validation.failures,4);assert.equal(validation.state,'running');assert.equal(validation.firstOffset,0);assert.equal(validation.count,3);
   report.checks.push({case:'invalid replacement leaves owner; explicit delayed start',data:validation});
 
   await page.waitForFunction(()=>document.querySelector('#frame').contentDocument?.querySelector('#inside'));
